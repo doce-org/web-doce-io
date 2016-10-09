@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import App from '../components/App.vue';
 // routes
 import dashboardRoutes from './routes/dashboard.routes';
+import temperatureRoutes from './routes/temperature.routes';
 import settingsRoutes from './routes/settings.routes';
 
 Vue.use( VueRouter );
@@ -13,7 +14,7 @@ export const router = new VueRouter( {
     linkActiveClass: 'active'
 } );
 
-const routes = Object.assign( {}, dashboardRoutes, settingsRoutes );
+const routes = Object.assign( {}, dashboardRoutes, temperatureRoutes, settingsRoutes );
 router.map( {
     '/': {
         name: 'app',

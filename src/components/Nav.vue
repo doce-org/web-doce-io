@@ -9,7 +9,7 @@
             <i class="icon dashboard"></i>
             Consommations
         </a>
-        <a href="#" class="item disabled">
+        <a v-link="{name: 'temperatures', exact: true}" class="item">
             <i class="icon fire"></i>
             Températures
         </a>
