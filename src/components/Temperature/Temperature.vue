@@ -74,7 +74,8 @@
 				const date_start = moment().subtract( 24, 'hours' );
 				return temperatureSensorRecordService.find( { query: {
 					created_at: { $gte: date_start, $lte: date_end },
-					$sort: { created_at: -1 }
+					$sort: { created_at: -1 },
+					withSensor: true
 				} } )
 						.then( datas => ( { records: datas.length > 0 && datas } ) )
 						.catch( console.error );
