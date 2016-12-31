@@ -31,6 +31,7 @@
 	// lib
 	import graphs from 'metrics-graphics';
 	import moment from 'moment';
+	import _pick from 'lodash/pick';
 	// services
 	import { temperatureSensorRecordService } from 'services';
 
@@ -38,14 +39,14 @@
 
 		data() {
 			return {
-				records: false
+				datas: false
 			}
 		},
 
 		route: {
 
 			data() {
-				return this.getSensorData();
+				this.getSensorData();
 			}
 
 		},
@@ -56,8 +57,48 @@
 
 		watch: {
 
-			'records'() {
-				records ? this.makeTempChart() : this.makeEmptyChart();
+			/**
+			 * redo the chart each time the
+			 * records data changes
+			 */
+			'filtered_records'() {
+				this.makeTempChart();
+			}
+
+		},
+
+		computed: {
+
+			/**
+			 * prepare sensors listing
+			 */
+			filtered_sensors() {
+				const sensors = [];
+				if( this.datas ) {
+					this.datas.sensors.forEach( sensor => {
+						sensors.push( _pick( sensor, [ 'name' ] ) );
+					} );
+				}
+				return sensors;
+			},
+
+			/**
+			 * prepare records listing
+			 */
+			filtered_records() {
+				let records = [];
+				if( this.datas ) {
+					Object.keys( this.datas.records ).forEach( key => {
+						const records_list = this.datas.records[ key ];
+						// pick only the wanted data
+						records_list.forEach( record =>
+								records.push( _pick( record, [ 'created_at', 'temperature' ] ) ) );
+						// convert to date
+						records.forEach( ( record, idx ) =>
+								records[ idx ].created_at = new Date( records[ idx ].created_at ) );
+					} );
+				}
+				return records;
 			}
 
 		},
@@ -72,12 +113,14 @@
 			getSensorData() {
 				const date_end = moment();
 				const date_start = moment().subtract( 24, 'hours' );
-				return temperatureSensorRecordService.find( { query: {
+				temperatureSensorRecordService.find( { query: {
 					created_at: { $gte: date_start, $lte: date_end },
 					$sort: { created_at: -1 },
 					withSensor: true
 				} } )
-						.then( datas => ( { records: datas.length > 0 && datas } ) )
+						.then( datas => {
+							this.datas = datas;
+						} )//( { datas: datas.length > 0 && datas } ) )
 						.catch( console.error );
 			},
 
@@ -101,13 +144,12 @@
 			makeTempChart() {
 				graphs.data_graphic({
 					title: 'Temperature',
-					missing_text: 'This is an example of a missing chart',
-					data: this.records,
+					data: this.filtered_records,
 					height: 400,
 					full_width: true,
 					target: '#temperature-chart',
-					x_accessor: 'year',
-					y_accessor: 'value',
+					x_accessor: 'created_at',
+					y_accessor: 'temperature',
 					area: false
 				})
 			}
