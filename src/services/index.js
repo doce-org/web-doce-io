@@ -12,6 +12,9 @@ export const feathers_socket = feathers()
     .configure( socketio( socket ) )
     .configure( hooks() );
 
+// ports
+export const portService = feathers_socket.service( '/ports' );
+// rooms
 export const roomService = feathers_socket.service( '/rooms' );
 export const roomIconService = feathers_socket.service( '/rooms/icons' );
 export const temperatureSensorService = feathers_socket.service( '/temperatures/sensors' );

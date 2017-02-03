@@ -13,5 +13,5 @@ if [ ! -z $container_exist ];
 fi
 
 docker run -d -p 8080:8080 --name ${CONTAINER_NAME} -e "NODE_ENV=development" \
-    -v /home/shad/Documents/D.O.C.E/web.doce.io:/app \
+    -v $(cd ../ && pwd):/app \
     node:6 /app/scripts/dev_entrypoint.sh
