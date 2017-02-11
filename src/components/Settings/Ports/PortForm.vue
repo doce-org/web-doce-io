@@ -4,14 +4,14 @@
 
 		<div v-for="port in ports" class="ui segment">
 			<div v-if="port">
+				{{port.comName}}
 				{{port.manufacturer}}
-				{{port.product}}
-				{{port.serial_number}}
+				{{port.serialNumber}}
 			</div>
 		</div>
 
 
-        <button class="ui orange basic button" type="submit">Sauvegarder</button>
+        <button v-on:click="listConnectedPorts" class="ui orange basic button" type="button">Recharger la liste</button>
         <a v-link="{name: 'rooms_list'}" class="ui red basic button">Annuler</a>
 
     </form>
@@ -38,7 +38,7 @@
 		methods: {
 
 			listConnectedPorts() {
-				portService.find( { query: { listConnectedsSerialPorts: true } } )
+				portService.find()
 					.then( ports => {
 						this.ports = ports;
 					} )
