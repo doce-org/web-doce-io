@@ -30,7 +30,7 @@
 
 				<!-- com name -->
 				<div class="field required">
-					<label>Connection</label>
+					<label>Connexion</label>
 					<input v-model="port.com_name" type="text" readonly disabled>
 				</div>
 

@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Connection</th>
+                <th>Connexion</th>
                 <th>Constructeur</th>
                 <th>Numero de Serie</th>
                 <th class="collapsing">
@@ -37,7 +37,13 @@
 				<!-- serial number -->
 				<td>{{port.serial_number}}</td>
 
-				<td>
+				<td class="single line">
+
+					<!-- open connection -->
+					<button v-on:click="openConnection(port)" v-bind:class="{'disabled': is_opening_connection}"
+							class="ui green basic button" type="button">
+						Ouvrir la connexion
+					</button>
 
 					<!-- edit port -->
 					<button class="ui orange basic button disabled" type="button">
@@ -57,7 +63,7 @@
 <script>
 
 	// services
-	import { portService } from 'services';
+	import { portService, connectionService } from 'services';
 
 	export default {
 
@@ -66,7 +72,11 @@
 
 				// contain the registered ports listing
 				// @type {Array}
-				'ports': false
+				'ports': false,
+
+				// true when a connection is being open
+				// @type {Boolean}
+				'is_opening_connection': false
 
 			}
 		},
@@ -93,6 +103,28 @@
 				return portService.find()
 				.then( ports => ( { ports } ) )
 				.catch( this.handlingErrors );
+
+			},
+
+			/**
+			 * open the selected port connection
+			 *
+			 * @param {Object} port
+			 *
+			 * @author shad
+			 */
+			openConnection( port ) {
+
+				this.is_opening_connection = true;
+
+				connectionService.create( port )
+				.then( () => this.is_opening_connection = false )
+				.catch( err => {
+
+					this.is_opening_connection = false;
+					console.error( err );
+
+				} );
 
 			}
 

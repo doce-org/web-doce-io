@@ -15,6 +15,7 @@ export const feathers_socket = feathers()
 // ports
 export const portService = feathers_socket.service( '/ports' );
 export const portListService = feathers_socket.service( '/ports/list' );
+export const connectionService = feathers_socket.service( '/connections' );
 
 // rooms
 export const roomService = feathers_socket.service( '/rooms' );
