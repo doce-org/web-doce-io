@@ -14,9 +14,15 @@ export const feathers_socket = feathers()
 
 // ports
 export const portService = feathers_socket.service( '/ports' );
+export const portListService = feathers_socket.service( '/ports/list' );
+
 // rooms
 export const roomService = feathers_socket.service( '/rooms' );
-export const roomIconService = feathers_socket.service( '/rooms/icons' );
+
+// hardware
+// export const newHardwareService = feathers_socket.service( '/hardwares/new' );
+
+// sensors
 export const temperatureSensorService = feathers_socket.service( '/temperatures/sensors' );
 export const temperatureSensorRecordService = feathers_socket.service( '/temperatures/sensors/records' );
 export const humiditySensorService = feathers_socket.service( '/humidities/sensors' );
@@ -25,4 +31,3 @@ export const powerGaugeService = feathers_socket.service( '/powers/gauges' );
 export const powerGaugeRecordService = feathers_socket.service( '/powers/gauges/records' );
 export const waterGaugeService = feathers_socket.service( '/waters/gauges' );
 export const waterGaugeRecordService = feathers_socket.service( '/waters/gauges/records' );
-export const newHardwareService = feathers_socket.service( '/hardwares/new' );
