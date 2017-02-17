@@ -11,10 +11,37 @@
 
 <script>
 
-    import navigation from './Nav.vue';
+	// components
+    import Navigation from './Nav.vue';
+	// services
+	import { logService } from 'services';
 
     export default {
-        components: { navigation }
+
+        components: {
+
+			Navigation
+
+		},
+
+		ready() {
+			this.logsToConsole();
+		},
+
+		methods: {
+
+			logsToConsole() {
+
+				logService.on( 'created', data => {
+
+					console.log( data.message );
+
+				} );
+
+			}
+
+		}
+
     }
 
 </script>

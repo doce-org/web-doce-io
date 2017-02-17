@@ -31,3 +31,6 @@ export const powerGaugeService = feathers_socket.service( '/powers/gauges' );
 export const powerGaugeRecordService = feathers_socket.service( '/powers/gauges/records' );
 export const waterGaugeService = feathers_socket.service( '/waters/gauges' );
 export const waterGaugeRecordService = feathers_socket.service( '/waters/gauges/records' );
+
+// others
+export const logService = feathers_socket.service( '/logs' );
