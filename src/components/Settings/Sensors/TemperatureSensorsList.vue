@@ -1,51 +1,68 @@
 <template>
 
-    <table class="ui very basic selectable table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-				<th>Connection</th>
-				<th>Piece</th>
-                <th class="collapsing">
+	<div class="ui padded grid">
 
-					<!-- add a temperature sensor -->
-                    <a v-link="{name: 'temperatures_sensor_form'}" class="ui green basic button">
-						Ajouter une sonde
-					</a>
+		<div class="sixteen wide column">
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+			<h2 class="ui blue light header">
+				<i class="circle icon"></i>
+				Listes des Sondes de Temperatures
+			</h2>
 
-			<!-- each temperature sensor -->
-            <tr v-for="hardware in hardwares">
+		</div>
 
-				<!-- identifier -->
-				<td>{{hardware.identifier}}</td>
+		<div class="sixteen wide column">
+			<div class="ui segment">
+				<table class="ui very basic selectable table">
+			        <thead>
+			            <tr>
+			                <th>ID</th>
+			                <th>Nom</th>
+							<th>Connection</th>
+							<th>Piece</th>
+			                <th class="collapsing">
 
-				<!-- name -->
-                <td>{{hardware.name}}</td>
+								<!-- add a temperature sensor -->
+			                    <a v-link="{name: 'temperatures_sensor_form'}" class="ui green basic button">
+									Ajouter une sonde
+								</a>
 
-				<!-- port name -->
-				<td></td>
+			                </th>
+			            </tr>
+			        </thead>
+			        <tbody>
 
-				<!-- room_name -->
-				<td></td>
+						<!-- each temperature sensor -->
+			            <tr v-for="hardware in hardwares">
 
-                <td class="single line">
+							<!-- identifier -->
+							<td>{{hardware.identifier}}</td>
 
-                    <a v-link="" class="ui blue basic button disabled">Informations</a>
+							<!-- name -->
+			                <td>{{hardware.name}}</td>
 
-                    <a v-link="" class="ui orange basic button disabled">Modifier</a>
+							<!-- port name -->
+							<td></td>
 
-                </td>
+							<!-- room_name -->
+							<td></td>
 
-            </tr>
+			                <td class="single line">
 
-        </tbody>
-    </table>
+			                    <a v-link="" class="ui blue basic button disabled">Informations</a>
+
+			                    <a v-link="" class="ui orange basic button disabled">Modifier</a>
+
+			                </td>
+
+			            </tr>
+
+			        </tbody>
+			    </table>
+			</div>
+		</div>
+
+	</div>
 
 </template>
 

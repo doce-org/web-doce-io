@@ -1,57 +1,123 @@
 <template>
 
-	<form v-on:submit.prevent="save" class="ui form">
+	<div class="ui padded grid">
 
-		<div class="ui grid">
+		<div class="sixteen wide column">
 
-			<div class="sixteen wide column">
+			<!-- edit mode -->
+			<h2 v-if="port_id" class="ui orange light header">
+				<i class="write icon"></i>
+				Modifier le port
+			</h2>
 
-				<!-- edit mode -->
-				<h2 v-if="port_id" class="ui dividing header">
-					<i class="write icon"></i>
-					Modifier le port
-				</h2>
+			<!-- create mode -->
+			<h2 v-else class="ui green light header">
+				<i class="plus icon"></i>
+				Enregistrer un nouveau port
+			</h2>
 
-				<!-- create mode -->
-				<h2 v-else class="ui dividing header">
-					<i class="plus icon"></i>
-					Enregistrer un nouveau port
-				</h2>
+		</div>
 
-			</div>
+		<div class="sixteen wide column">
+			<form v-on:submit.prevent="save" class="ui form">
 
-			<div class="four wide column">
+				<div class="ui grid">
 
-				<!-- name -->
-				<div class="field required">
-					<label>Nom</label>
-					<input v-model="port.name" type="text">
-				</div>
+					<div class="four wide column">
 
-				<!-- com name -->
-				<div class="field required">
-					<label>Connexion</label>
-					<input v-model="port.com_name" type="text" readonly disabled>
-				</div>
+						<!-- name -->
+						<div class="field required">
+							<label>Nom</label>
+							<input v-model="port.name" type="text">
+						</div>
 
-				<!-- manufacturer -->
-				<div class="field">
-					<label>Fabricant</label>
-					<input v-model="port.manufacturer" type="text" readonly disabled>
-				</div>
+						<!-- com name -->
+						<div class="field required">
+							<label>Connexion</label>
+							<input v-model="port.com_name" type="text" readonly disabled>
+						</div>
 
-				<!-- serial number -->
-				<div class="field">
-					<label>Numero de Serie</label>
-					<input v-model="port.serial_number" type="text" readonly disabled>
+						<!-- manufacturer -->
+						<div class="field">
+							<label>Fabricant</label>
+							<input v-model="port.manufacturer" type="text" readonly disabled>
+						</div>
+
+						<!-- serial number -->
+						<div class="field">
+							<label>Numero de Serie</label>
+							<input v-model="port.serial_number" type="text" readonly disabled>
+						</div>
+
+					</div>
+
+					<div class="six wide column">
+
+						<div class="ui basic segment ports">
+
+							<!-- each found port -->
+							<table class="ui table">
+								<thead>
+									<tr>
+										<th>
+
+											<button v-on:click="listAvailablePorts" class="ui orange basic button disabled" type="button">
+												Recharger la liste
+											</button>
+
+										</th>
+										<th>Connection</th>
+										<th>Fabricant</th>
+										<th>Numero de Serie</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="port in ports">
+
+										<td>
+											<button v-on:click="selectPort(port)" class="ui small green basic button" type="button">
+												<i class="plus icon"></i>
+												Selectionner
+											</button>
+										</td>
+
+										<!-- com name -->
+										<td v-if="port">
+											{{port.comName}}
+										</td>
+
+										<!-- manufacturer -->
+										<td v-if="port">
+											{{port.manufacturer}}
+										</td>
+
+										<!-- serial number -->
+										<td v-if="port">
+											{{port.serialNumber}}
+										</td>
+
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
 				</div>
 
 				<div class="ui divider"></div>
 
-				<!-- save -->
-				<button type="submit" class="ui orange basic button">
+				<!-- edit mode -->
+				<button v-if="" type="submit" class="ui orange basic button">
 					<i class="write icon"></i>
-					Enregistrer
+					Sauvegarder
+				</button>
+
+				<!-- create mode -->
+				<button type="submit" class="ui green basic button">
+					<i class="plus icon"></i>
+					Sauvegarder
 				</button>
 
 				<!-- cancel -->
@@ -59,60 +125,10 @@
 					Annuler
 				</button>
 
-			</div>
-
-			<div class="six wide column ports">
-
-				<!-- each found port -->
-				<table class="ui table">
-					<thead>
-						<tr>
-							<th>
-
-								<button v-on:click="listAvailablePorts" class="ui orange basic button disabled" type="button">
-									Recharger la liste
-								</button>
-
-							</th>
-							<th>Connection</th>
-							<th>Fabricant</th>
-							<th>Numero de Serie</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="port in ports">
-
-							<td>
-								<button v-on:click="selectPort(port)" class="ui small green basic button" type="button">
-									<i class="plus icon"></i>
-									Selectionner
-								</button>
-							</td>
-
-							<!-- com name -->
-							<td v-if="port">
-								{{port.comName}}
-							</td>
-
-							<!-- manufacturer -->
-							<td v-if="port">
-								{{port.manufacturer}}
-							</td>
-
-							<!-- serial number -->
-							<td v-if="port">
-								{{port.serialNumber}}
-							</td>
-
-						</tr>
-					</tbody>
-				</table>
-
-			</div>
-
+		    </form>
 		</div>
 
-    </form>
+	</div>
 
 </template>
 
@@ -125,6 +141,10 @@
 
 		data() {
 			return {
+
+				// contain the port id
+				// @type {Integer}
+				'port_id': false,
 
 				// contain the port object
 				// @type {Object}
@@ -199,8 +219,8 @@
 <style lang="scss" scoped>
 
 	// listing of ports
-	.column.ports {
-		height: 250px;
+	.segment.ports {
+		height: 300px;
 		overflow: auto;
 	}
 

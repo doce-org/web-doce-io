@@ -1,67 +1,100 @@
 <template>
 
-    <form v-on:submit.prevent="save" class="ui form">
+	<div class="ui padded grid">
 
-        <!-- name -->
-        <div class="field">
-            <label>Nom</label>
-            <input v-model="hardware.name" type="text" placeholder="Nom de la sonde">
-        </div>
+		<div class="sixteen wide column">
 
-        <!-- id -->
-        <div class="field">
-            <label>ID de la sonde</label>
-            <input v-model="hardware.identifier" type="text" placeholder="ID en 24 caracteres...">
-        </div>
+			<!-- edit mode -->
+			<h2 v-if="port_id" class="ui orange light header">
+				<i class="write icon"></i>
+				Modifier la sonde de temperature
+			</h2>
 
-		<!-- rooms -->
-        <div class="field">
-            <label>Pièce</label>
-            <div class="ui selection search dropdown">
-                <input v-model="hardware.room_id" type="hidden">
-                <div class="default text">Appartient a la pièce...</div>
-                <i class="dropdown icon"></i>
-                <div class="menu">
+			<!-- create mode -->
+			<h2 v-else class="ui green light header">
+				<i class="plus icon"></i>
+				Enregistrer une nouvelle sonde de temperature
+			</h2>
 
-					<!-- each room -->
-                    <div v-for="room in rooms" class="item" data-value="{{room.id}}">
-						{{room.name}}
+		</div>
+
+		<div class="sixteen wide column">
+			<form v-on:submit.prevent="save" class="ui form">
+
+				<div class="fields">
+
+					<!-- name -->
+					<div class="field required">
+						<label>Nom</label>
+						<input v-model="hardware.name" type="text" placeholder="Nom de la sonde">
 					</div>
 
-                </div>
-            </div>
-        </div>
-
-        <!-- port -->
-        <div class="field">
-            <label>Connection</label>
-            <div class="ui selection search dropdown">
-                <input v-model="hardware.port_id" type="hidden">
-                <div class="default text">Selectionner une connection disponible</div>
-                <i class="dropdown icon"></i>
-                <div class="menu">
-
-					<!-- each port -->
-                    <div v-for="port in ports" class="item" data-value="{{port.id}}">
-						{{port.name}}
+					<!-- id -->
+					<div class="field required">
+						<label>ID de la sonde</label>
+						<input v-model="hardware.identifier" type="text" placeholder="ID en 24 caracteres...">
 					</div>
 
-                </div>
-            </div>
-        </div>
+				</div>
 
-		<!-- save -->
-        <button class="ui orange basic button" type="submit">
-			<i class="plus icon"></i>
-			Sauvegarder
-		</button>
+				<div class="field required">
+					<label>Pièce</label>
+					<div class="ui selection search dropdown">
+						<input v-model="hardware.room_id" type="hidden">
+						<div class="default text">Appartient a la pièce...</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
 
-		<!-- cancel -->
-        <a v-link="{name: 'temperatures_sensors_list'}" class="ui red basic button">
-			Annuler
-		</a>
+							<!-- each room -->
+							<div v-for="room in rooms" class="item" data-value="{{room.id}}">
+								{{room.name}}
+							</div>
 
-    </form>
+						</div>
+					</div>
+				</div>
+
+				<!-- port -->
+				<div class="field required">
+					<label>Connection</label>
+					<div class="ui selection search dropdown">
+						<input v-model="hardware.port_id" type="hidden">
+						<div class="default text">Selectionner une connection disponible</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+
+							<!-- each port -->
+							<div v-for="port in ports" class="item" data-value="{{port.id}}">
+								{{port.name}}
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="ui divider"></div>
+
+				<!-- edit mode -->
+		        <button v-if="hardware_id" class="ui orange basic button" type="submit">
+					<i class="write icon"></i>
+					Sauvegarder
+				</button>
+
+				<!-- create mode -->
+		        <button v-else class="ui green basic button" type="submit">
+					<i class="plus icon"></i>
+					Sauvegarder
+				</button>
+
+				<!-- cancel -->
+		        <a v-link="{name: 'temperatures_sensors_list'}" class="ui red basic button">
+					Annuler
+				</a>
+
+		    </form>
+		</div>
+
+	</div>
 
 </template>
 
@@ -82,6 +115,10 @@
 				// contain the listing of registered serial ports
 				// @type {Array}
                 'ports': [],
+
+				// contain the hardware id
+				// @type {Integer}
+				'hardware_id': false,
 
 				// contain the hardware object
 				// @type {Object}

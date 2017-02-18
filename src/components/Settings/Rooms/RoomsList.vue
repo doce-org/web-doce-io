@@ -1,52 +1,71 @@
 <template>
 
-    <table class="ui very basic selectable table">
+	<div class="ui padded grid">
 
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Image</th>
-                <th class="collapsing">
+		<div class="sixteen wide column">
 
-					<!-- add a room -->
-                    <a v-link="{name: 'room_add'}" class="ui green basic button">
-						Ajouter une pièce
-					</a>
+			<h2 class="ui blue light header">
+				<i class="circle icon"></i>
+				Listes des Pièces
+			</h2>
 
-                </th>
-            </tr>
-        </thead>
+		</div>
 
-        <tbody>
+		<div class="sixteen wide column">
+			<div class="ui segment">
+				<table class="ui very basic selectable table">
 
-            <tr v-for="room in rooms">
+					<thead>
+						<tr>
+							<th>Nom</th>
+							<th>Image</th>
+							<th class="collapsing">
 
-				<!-- name -->
-                <td>{{room.name}}</td>
+								<!-- add a room -->
+								<a v-link="{name: 'room_add'}" class="ui green basic button">
+									Ajouter une pièce
+								</a>
 
-				<!-- icon / image -->
-                <td>
-                    <!-- <img class="ui tiny image" v-bind:src="room.room_icon.image" alt="room icon"> -->
-                </td>
+							</th>
+						</tr>
+					</thead>
 
-                <td class="single line">
+					<tbody>
 
-					<!-- informations -->
-                    <a v-link="" class="ui blue basic button disabled">
-						Informations
-					</a>
+						<tr v-for="room in rooms">
 
-					<!-- edit -->
-                    <a v-link="" class="ui orange basic button disabled">
-						Modifier
-					</a>
+							<!-- name -->
+							<td>{{room.name}}</td>
 
-                </td>
+							<!-- icon / image -->
+							<td>
+								<!-- <img class="ui tiny image" v-bind:src="room.room_icon.image" alt="room icon"> -->
+							</td>
 
-            </tr>
+							<td class="single line">
 
-        </tbody>
-    </table>
+								<!-- informations -->
+								<a v-link="" class="ui blue basic button disabled">
+									Informations
+								</a>
+
+								<!-- edit -->
+								<a v-link="" class="ui orange basic button disabled">
+									Modifier
+								</a>
+
+							</td>
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
+	</div>
+
 
 </template>
 

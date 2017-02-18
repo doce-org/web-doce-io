@@ -93,6 +93,7 @@
 
 <style lang="scss" scoped>
 
+	// room header
     .disabled.header {
         text-transform: uppercase;
     }

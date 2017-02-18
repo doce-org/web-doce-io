@@ -1,25 +1,57 @@
 <template>
 
-    <form v-on:submit.prevent="save" class="ui form">
+	<div class="ui padded grid">
 
-        <!-- name -->
-        <div class="field">
-            <label>Nom</label>
-            <input v-model="room.name" type="text" placeholder="Nom de la pièce">
-        </div>
+		<div class="sixteen wide column">
 
-		<!-- save -->
-        <button class="ui orange basic button" type="submit">
-			<i class="plus icon"></i>
-			Sauvegarder
-		</button>
+			<h2 v-if="room_id" class="ui orange light header">
+				<i class="write icon"></i>
+				Editer une Piece
+			</h2>
 
-		<!-- cancel -->
-        <a v-link="{name: 'rooms_list'}" class="ui red basic button">
-			Annuler
-		</a>
+			<h2 v-else class="ui green light header">
+				<i class="plus icon"></i>
+				Ajouter une Piece
+			</h2>
 
-    </form>
+		</div>
+
+		<div class="sixteen wide column">
+			<form v-on:submit.prevent="save" class="ui form">
+
+				<div class="fields">
+
+					<!-- name -->
+					<div class="field required">
+						<label>Nom</label>
+						<input v-model="room.name" type="text" placeholder="Nom de la pièce">
+					</div>
+
+				</div>
+
+				<div class="ui divider"></div>
+
+				<!-- edit mode -->
+		        <button v-if="room_id" class="ui orange basic button" type="submit">
+					<i class="write icon"></i>
+					Sauvegarder
+				</button>
+
+				<!-- create mode -->
+		        <button v-else class="ui green basic button" type="submit">
+					<i class="plus icon"></i>
+					Sauvegarder
+				</button>
+
+				<!-- cancel -->
+		        <a v-link="{name: 'rooms_list'}" class="ui red basic button">
+					Annuler
+				</a>
+
+		    </form>
+		</div>
+
+	</div>
 
 </template>
 
@@ -32,6 +64,10 @@
 
         data() {
             return {
+
+				// contain the room id
+				// @type {Integer}
+				'room_id': false,
 
 				// contain the room object
 				// @type {Object}

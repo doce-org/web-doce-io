@@ -1,61 +1,78 @@
 <template>
 
-	<table class="ui very basic selectable table">
+	<div class="ui padded grid">
 
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Connexion</th>
-                <th>Constructeur</th>
-                <th>Numero de Serie</th>
-                <th class="collapsing">
+		<div class="sixteen wide column">
 
-					<!-- add a new port -->
-                    <a v-link="{name: 'port_add'}" class="ui green basic button">
-						<i class="plus icon"></i>
-						Enregistrer un nouveau port
-					</a>
+			<h2 class="ui blue light header">
+				<i class="circle icon"></i>
+				Listes des Ports
+			</h2>
 
-                </th>
-            </tr>
-        </thead>
+		</div>
 
-        <tbody>
+		<div class="sixteen wide column">
+			<div class="ui segment">
+				<table class="ui very basic selectable table">
 
-			<!-- each port -->
-			<tr v-for="port in ports">
+			        <thead>
+			            <tr>
+			                <th>Nom</th>
+			                <th>Connexion</th>
+			                <th>Constructeur</th>
+			                <th>Numero de Serie</th>
+			                <th class="collapsing">
 
-				<!-- name -->
-				<td>{{port.name}}</td>
+								<!-- add a new port -->
+			                    <a v-link="{name: 'port_add'}" class="ui green basic button">
+									<i class="plus icon"></i>
+									Enregistrer un nouveau port
+								</a>
 
-				<!-- com name -->
-				<td>{{port.com_name}}</td>
+			                </th>
+			            </tr>
+			        </thead>
 
-				<!-- manufacturer -->
-				<td>{{port.manufacturer}}</td>
+			        <tbody>
 
-				<!-- serial number -->
-				<td>{{port.serial_number}}</td>
+						<!-- each port -->
+						<tr v-for="port in ports">
 
-				<td class="single line">
+							<!-- name -->
+							<td>{{port.name}}</td>
 
-					<!-- open connection -->
-					<button v-on:click="openConnection(port)" class="ui green basic button" type="button">
-						Ouvrir la connexion
-					</button>
+							<!-- com name -->
+							<td>{{port.com_name}}</td>
 
-					<!-- edit port -->
-					<button class="ui orange basic button disabled" type="button">
-						<i class="write icon"></i>
-						Editer
-					</button>
+							<!-- manufacturer -->
+							<td>{{port.manufacturer}}</td>
 
-				</td>
+							<!-- serial number -->
+							<td>{{port.serial_number}}</td>
 
-			</tr>
+							<td class="single line">
 
-        </tbody>
-    </table>
+								<!-- open connection -->
+								<button v-on:click="openConnection(port)" class="ui green basic button" type="button">
+									Ouvrir la connexion
+								</button>
+
+								<!-- edit port -->
+								<button class="ui orange basic button disabled" type="button">
+									<i class="write icon"></i>
+									Editer
+								</button>
+
+							</td>
+
+						</tr>
+
+			        </tbody>
+			    </table>
+			</div>
+		</div>
+
+	</div>
 
 </template>
 

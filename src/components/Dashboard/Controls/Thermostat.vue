@@ -12,16 +12,13 @@
 
 <script type="text/babel">
 
-    export default {
-
-
-
-    }
+    export default {}
 
 </script>
 
 <style lang="scss" scoped>
 
+	// column style
 	.column {
 		background: #eff2f8;
 	}

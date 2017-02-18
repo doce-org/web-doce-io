@@ -10,18 +10,22 @@ import temperatureRoutes from './routes/temperature.routes';
 import settingsRoutes from './routes/settings.routes';
 
 Vue.use( VueRouter );
+
 export const router = new VueRouter( {
     linkActiveClass: 'active'
 } );
 
 const routes = Object.assign( {}, dashboardRoutes, temperatureRoutes, settingsRoutes );
+
 router.map( {
+
     '/': {
         name: 'app',
         component: App,
         subRoutes: routes
     }
+
 } );
 
 const Base = Vue.extend();
-router.start( Base, '#app' );
+router.start( Base, '#base' );

@@ -1,6 +1,6 @@
 <template>
 
-    <section>
+    <section id="app">
 
         <navigation></navigation>
 
@@ -27,24 +27,6 @@
 
 			Navigation
 
-		},
-
-		ready() {
-			this.logsToConsole();
-		},
-
-		methods: {
-
-			logsToConsole() {
-
-				logService.on( 'created', data => {
-
-					console.log( data.message );
-
-				} );
-
-			}
-
 		}
 
     }
@@ -55,8 +37,19 @@
 
 <style lang="scss">
 
+	#app {
+		height: 100%;
+	}
+
 	#body {
+		height: 100%;
+		background: #fafafa !important;
 		margin-left: 131px;
+	}
+
+	// special header style
+	.light {
+		font-weight: 300 !important;
 	}
 
 </style>
