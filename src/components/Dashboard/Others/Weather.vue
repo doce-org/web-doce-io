@@ -11,7 +11,9 @@
             </h1>
 
             <!-- time -->
-            <h1 class="ui inverted right aligned header time">{{getTime}}</h1>
+            <h1 class="ui inverted right aligned header time">
+				{{getTime}}
+			</h1>
 
         </div>
 
@@ -32,12 +34,17 @@
 
         data() {
             return {
-                datetime: false
+
+				// contain the current time
+				// @type {Date}
+                'datetime': false
+
             }
         },
 
         created() {
             this.datetime = moment().toDate();
+			// set interval to keep time and day at the right datetime
             setInterval( () => this.datetime = moment().toDate(), 1000 * 30 );
         },
 
@@ -45,7 +52,9 @@
 
             /**
              * @summary get day
+             *
              * @returns {String}
+             *
              * @author shad
              */
             getDay(){
@@ -54,7 +63,9 @@
 
             /**
              * @summary get date and month
+             *
              * @returns {String}
+             *
              * @author shad
              */
             getDate() {
@@ -63,7 +74,9 @@
 
             /**
              * @summary get time
+             *
              * @returns {String}
+             *
              * @author shad
              */
             getTime() {
@@ -77,11 +90,13 @@
 
 <style lang="scss" scoped>
 
+	// header style
     h1.ui.header {
         font-size: 2.5em;
         margin: calc(2rem - .14285em) 0 1rem;
     }
 
+	// add a background image from unsplash
     .overlay {
         display: inline-block;
         position: relative;
@@ -92,6 +107,7 @@
         background-size: cover;
     }
 
+	// black .1 opacity overlay on image
     .overlay:after {
         content: '';
         top: 0;
@@ -105,12 +121,14 @@
         opacity: 0.1;
     }
 
+	// date style
     .date {
         position: absolute;
         bottom: 10px;
         text-transform: capitalize;
     }
 
+	// time style
     .time {
         position: absolute;
         bottom: 10px;

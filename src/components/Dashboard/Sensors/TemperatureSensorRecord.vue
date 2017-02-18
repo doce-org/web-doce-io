@@ -1,6 +1,8 @@
 <template>
 
-    <div>{{record.temperature || '...'}} °C</div>
+    <div>
+		{{record.temperature || '...'}} °C
+	</div>
 
 </template>
 
@@ -11,11 +13,21 @@
 
     export default {
 
-        props: [ 'sensor_id' ],
+        props: [
+
+			// contain the hardware id
+			// @type {Integer}
+			'hardware_id'
+
+		],
 
         data() {
             return {
-                record: {}
+
+				// contain the current last record
+				// @type {Object}
+                'record': {}
+
             }
         },
 
@@ -27,30 +39,53 @@
         methods: {
 
             /**
-             * get the last temperature record
+             * get the last temperature recorded
+             *
              * @author shad
              */
             getLastTemperatureRecord() {
-                temperatureSensorRecordService.find( { query: { 
-                        temperature_sensor_id: this.sensor_id, 
-                        $limit: 1, 
-                        $sort: { created_at: -1 } 
-                    } } )
-                    .then( record => this.record = record[ 0 ] || {} )
-                    .catch( console.error );
+
+				const query = { query: {
+
+					// linked to current hardware id
+                    hardware_id: this.hardware_id,
+
+					// limit to one
+                    $limit: 1,
+
+					// sort to get only the last one
+                    $sort: { created_at: -1 }
+
+                } };
+
+                temperatureSensorRecordService.find( query )
+                .then( record => this.record = record[ 0 ] || {} )
+                .catch( console.error );
+
             },
 
             /**
              * update record temperature each time a new one
              * comes up - check if same as current component
+             *
+             * @on /temperatures/sensors/records
+             * @event created
+             *
              * @author shad
              */
             updateLastTemperatureRecord() {
+
                 temperatureSensorRecordService.on( 'created', record => {
-                    if ( this.record.temperature_sensor_id === record.temperature_sensor_id ) {
+
+					// make sure it's the same hardware id we're receiving data from
+                    if ( this.record.hardware_id === record.hardware_id ) {
+
                         this.record = record;
+
                     }
+
                 } );
+
             }
 
         }

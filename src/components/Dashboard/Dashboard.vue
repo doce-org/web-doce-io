@@ -24,10 +24,10 @@
 
             <!-- rooms -->
             <rooms></rooms>
-            
+
         </section>
 
-        <section class="three wide stretched column" style="background: #eff2f8;">
+        <section class="three wide stretched column">
             <div class="ui equal height grid">
 
                 <!-- thermostat -->
@@ -52,22 +52,33 @@
     import Weather from './Others/Weather.vue';
 
     export default {
-        components: { Rooms, Activity, Thermostat, Weather }
+
+        components: {
+
+			Rooms,
+			Activity,
+			Thermostat,
+			Weather
+		}
+
     }
 
 </script>
 
 <style lang="scss" scoped>
 
+	// dashboard full height
     #dashboard {
         height: 100vh;
     }
 
+	// weather panel style
     #weather {
         padding: 0;
         background: #3498db;
     }
 
+	// permit scolling inside each column directly
     .column {
         overflow-y: auto;
         overflow-x: hidden;

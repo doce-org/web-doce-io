@@ -1,10 +1,15 @@
 <template>
 
     <section>
+
         <navigation></navigation>
-        <div style="margin-left: 132px;">
+
+        <div id="body">
+
             <router-view></router-view>
+
         </div>
+
     </section>
 
 </template>
@@ -47,3 +52,11 @@
 </script>
 
 <style src="../../node_modules/metrics-graphics/dist/metricsgraphics.css"></style>
+
+<style lang="scss">
+
+	#body {
+		margin-left: 131px;
+	}
+
+</style>

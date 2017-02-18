@@ -7,14 +7,14 @@
         <table class="ui very basic table">
             <tbody>
 
-                <tr v-for="temperature in temperatures">
+                <tr v-for="hardware in hardwares">
 
                     <!-- name -->
-                    <td>{{temperature.name | uppercase}}</td>
+                    <td>{{hardware.name | uppercase}}</td>
 
                     <!-- record -->
                     <td class="right aligned">
-                        <temperature-sensor-record :sensor_id="temperature.id"></temperature-sensor-record>
+                        <temperature-sensor-record :hardware_id="hardware.id"></temperature-sensor-record>
                     </td>
 
                 </tr>
@@ -29,37 +29,64 @@
 <script type="text/babel">
 
     // services
-    import { temperatureSensorService } from 'services';
+    import { hardwareService } from 'services';
     // components
     import TemperatureSensorRecord from './TemperatureSensorRecord.vue';
 
     export default {
 
-        props: [ 'room_id' ],
+        props: [
 
-        components: { TemperatureSensorRecord },
+			// contain the room id
+			// @type {Integer}
+			'room_id'
+
+		],
+
+        components: {
+
+			TemperatureSensorRecord
+
+		},
 
         data() {
             return {
-                temperatures: []
+
+				// contain the listing of hardware sensors
+				// linked to the current room id
+				// @type {Array}
+                'hardwares': []
+
             }
         },
 
         created() {
-            this.getTemperatureSensorListing();
+            this.findHardwareSensors();
         },
 
         methods: {
 
             /**
-             * get listing of available temperature 
+             * get listing of available temperature
              * for a specified room
              * @author shad
              */
-            getTemperatureSensorListing() {
-               temperatureSensorService.find( { query: { room_id: this.room_id } } )
-                    .then( temperatures => this.temperatures = temperatures )
-                    .catch( console.error ) 
+            findHardwareSensors() {
+
+				const query = { query: {
+
+					// linked to the current room id
+					'room_id': this.room_id,
+
+					// of type 'temperature'
+					type: 'temperature'
+
+				} };
+
+               	hardwareService.find( query )
+            	.then( hardwares => this.hardwares = hardwares )
+                .catch( console.error );
+
             }
 
         }

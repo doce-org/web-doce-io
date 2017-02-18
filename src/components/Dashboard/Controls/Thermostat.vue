@@ -14,8 +14,16 @@
 
     export default {
 
-    	
+
 
     }
 
 </script>
+
+<style lang="scss" scoped>
+
+	.column {
+		background: #eff2f8;
+	}
+
+</style>

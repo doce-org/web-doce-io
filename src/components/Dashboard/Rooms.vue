@@ -4,7 +4,8 @@
 
         <div class="three wide column">
             <h3 class="ui disabled header">{{room.name}}</h3>
-            <img class="ui small centered image" :src="room.room_icon.image" alt="room icon">
+			<!-- TODO add back room icon / image -->
+            <!-- <img class="ui small centered image" :src="room.room_icon.image" alt="room icon"> -->
         </div>
 
         <div class="four wide column">
@@ -47,11 +48,21 @@
 
     export default {
 
-        components: { TemperaturesSensors, Power, Automation },
+        components: {
+
+			TemperaturesSensors,
+			Power,
+			Automation
+
+		},
 
         data() {
             return {
-                rooms: []
+
+				// contain the rooms listing returned by the server
+				// @type {Array}
+                'rooms': []
+
             }
         },
 
@@ -63,12 +74,15 @@
 
             /**
              * get the rooms listing
+             *
              * @author shad
              */
             getRoomsListing() {
+
                 roomService.find()
                     .then( rooms => this.rooms = rooms )
                     .catch( console.error );
+
             }
 
         }
