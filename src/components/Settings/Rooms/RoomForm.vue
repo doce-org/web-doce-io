@@ -8,23 +8,16 @@
             <input v-model="room.name" type="text" placeholder="Nom de la pièce">
         </div>
 
-        <!-- image -->
-        <div class="field">
-            <label>Image</label>
-            <div class="ui selection dropdown">
-                <input v-model="room.room_icon_id" type="hidden">
-                <div class="default text">Image présentative de la pièce</div>
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <div v-for="room_icon in room_icons" class="item" data-value="{{room_icon.id}}">
-                        <img class="ui large image" :src="room_icon.image">{{room_icon.name}}
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!-- save -->
+        <button class="ui orange basic button" type="submit">
+			<i class="plus icon"></i>
+			Sauvegarder
+		</button>
 
-        <button class="ui orange basic button" type="submit">Sauvegarder</button>
-        <a v-link="{name: 'rooms_list'}" class="ui red basic button">Annuler</a>
+		<!-- cancel -->
+        <a v-link="{name: 'rooms_list'}" class="ui red basic button">
+			Annuler
+		</a>
 
     </form>
 
@@ -32,45 +25,34 @@
 
 <script type="text/babel">
 
-    import { roomService, roomIconService } from 'services';
+	// services
+    import { roomService } from 'services';
 
     export default {
 
         data() {
             return {
-                room: {},
-                room_icons: []
-            }
-        },
 
-        created() {
-            this.getIconsListing();
-        },
-            
-        ready() {
-            $( '.ui.dropdown', this.$el ).dropdown();
+				// contain the room object
+				// @type {Object}
+                'room': {}
+
+            }
         },
 
         methods: {
 
             /**
-             * get rooms icons listing
-             * @author shad
-             */
-            getIconsListing() {
-                roomIconService.find()
-                    .then( icons => this.room_icons = icons )
-                    .catch( console.error );
-            },
-
-            /**
              * create or update a room
+             *
              * @author shad
              */
             save() {
+
                 roomService.create( this.room )
-                    .then( this.$router.go( { name: 'rooms_list' } ) )
-                    .catch( console.error )
+                .then( this.$router.go( { name: 'rooms_list' } ) )
+                .catch( console.error );
+
             }
 
         }

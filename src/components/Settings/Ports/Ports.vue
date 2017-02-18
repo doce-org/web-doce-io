@@ -40,8 +40,7 @@
 				<td class="single line">
 
 					<!-- open connection -->
-					<button v-on:click="openConnection(port)" v-bind:class="{'disabled': is_opening_connection}"
-							class="ui green basic button" type="button">
+					<button v-on:click="openConnection(port)" class="ui green basic button" type="button">
 						Ouvrir la connexion
 					</button>
 
@@ -72,11 +71,7 @@
 
 				// contain the registered ports listing
 				// @type {Array}
-				'ports': false,
-
-				// true when a connection is being open
-				// @type {Boolean}
-				'is_opening_connection': false
+				'ports': false
 
 			}
 		},
@@ -115,16 +110,8 @@
 			 */
 			openConnection( port ) {
 
-				this.is_opening_connection = true;
-
 				connectionService.create( port )
-				.then( () => this.is_opening_connection = false )
-				.catch( err => {
-
-					this.is_opening_connection = false;
-					console.error( err );
-
-				} );
+				.catch( console.error );
 
 			}
 

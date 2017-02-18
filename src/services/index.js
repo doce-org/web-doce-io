@@ -21,16 +21,12 @@ export const connectionService = feathers_socket.service( '/connections' );
 export const roomService = feathers_socket.service( '/rooms' );
 
 // hardware
-// export const newHardwareService = feathers_socket.service( '/hardwares/new' );
+export const hardwareService = feathers_socket.service( '/hardwares' );
 
 // sensors
-export const temperatureSensorService = feathers_socket.service( '/temperatures/sensors' );
 export const temperatureSensorRecordService = feathers_socket.service( '/temperatures/sensors/records' );
-export const humiditySensorService = feathers_socket.service( '/humidities/sensors' );
 export const humiditySensorRecordService = feathers_socket.service( '/humidities/sensors/records' );
-export const powerGaugeService = feathers_socket.service( '/powers/gauges' );
 export const powerGaugeRecordService = feathers_socket.service( '/powers/gauges/records' );
-export const waterGaugeService = feathers_socket.service( '/waters/gauges' );
 export const waterGaugeRecordService = feathers_socket.service( '/waters/gauges/records' );
 
 // others

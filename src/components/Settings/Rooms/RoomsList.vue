@@ -4,11 +4,15 @@
 
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nom</th>
                 <th>Image</th>
                 <th class="collapsing">
-                    <a v-link="{name: 'room_add'}" class="ui green basic button">Ajouter une pièce</a>
+
+					<!-- add a room -->
+                    <a v-link="{name: 'room_add'}" class="ui green basic button">
+						Ajouter une pièce
+					</a>
+
                 </th>
             </tr>
         </thead>
@@ -16,15 +20,29 @@
         <tbody>
 
             <tr v-for="room in rooms">
-                <td>{{room.id}}</td>
+
+				<!-- name -->
                 <td>{{room.name}}</td>
+
+				<!-- icon / image -->
                 <td>
-                    <img class="ui tiny image" v-bind:src="room.room_icon.image" alt="room icon">
+                    <!-- <img class="ui tiny image" v-bind:src="room.room_icon.image" alt="room icon"> -->
                 </td>
+
                 <td class="single line">
-                    <a v-link="" class="ui blue basic button disabled">Informations</a>
-                    <a v-link="" class="ui orange basic button disabled">Modifier</a>
+
+					<!-- informations -->
+                    <a v-link="" class="ui blue basic button disabled">
+						Informations
+					</a>
+
+					<!-- edit -->
+                    <a v-link="" class="ui orange basic button disabled">
+						Modifier
+					</a>
+
                 </td>
+
             </tr>
 
         </tbody>
@@ -34,30 +52,44 @@
 
 <script type="text/babel">
 
+	// services
     import { roomService } from 'services';
 
     export default {
 
         data() {
             return {
-                rooms: []
+
+				// contain the listing of rooms returned by the server
+				// @type {Array}
+                'rooms': []
+
             }
         },
 
-        created(){
-            this.getRooms();
-        },
+		route: {
+
+			data() {
+				return this.findRooms();
+			}
+
+		},
 
         methods: {
 
             /**
-             * get rooms listing
+             * find all registered rooms
+             *
+             * @return {Promise}
+             *
              * @author shad
              */
-            getRooms() {
-                roomService.find()
-                    .then( rooms => this.rooms = rooms )
-                    .catch( console.error )
+            findRooms() {
+
+                return roomService.find()
+                .then( rooms => ( { rooms } ) )
+                .catch( console.error )
+
             }
 
         }

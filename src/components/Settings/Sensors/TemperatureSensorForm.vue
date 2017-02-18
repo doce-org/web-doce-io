@@ -5,37 +5,61 @@
         <!-- name -->
         <div class="field">
             <label>Nom</label>
-            <input v-model="sensor.name" type="text" placeholder="Nom de la sonde">
+            <input v-model="hardware.name" type="text" placeholder="Nom de la sonde">
         </div>
 
-        <!-- sensor -->
+        <!-- id -->
         <div class="field">
-            <label>Sonde</label>
-            <div class="ui selection search dropdown">
-                <input v-model="sensor.hardware_id" type="hidden">
-                <div class="default text">Selectionner une sonde disponible</div>
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <div v-for="hardware in hardwares" class="item" data-value="{{hardware.hardware_id}}">{{hardware.hardware_id}}</div>
-                </div>
-            </div>
+            <label>ID de la sonde</label>
+            <input v-model="hardware.identifier" type="text" placeholder="ID en 24 caracteres...">
         </div>
 
-        <!-- rooms -->
+		<!-- rooms -->
         <div class="field">
             <label>Pièce</label>
             <div class="ui selection search dropdown">
-                <input v-model="sensor.room_id" type="hidden">
+                <input v-model="hardware.room_id" type="hidden">
                 <div class="default text">Appartient a la pièce...</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <div v-for="room in rooms" class="item" data-value="{{room.id}}">{{room.name}}</div>
+
+					<!-- each room -->
+                    <div v-for="room in rooms" class="item" data-value="{{room.id}}">
+						{{room.name}}
+					</div>
+
                 </div>
             </div>
         </div>
 
-        <button class="ui orange basic button" type="submit">Sauvegarder</button>
-        <a v-link="{name: 'temperatures_sensors_list'}" class="ui red basic button">Annuler</a>
+        <!-- port -->
+        <div class="field">
+            <label>Connection</label>
+            <div class="ui selection search dropdown">
+                <input v-model="hardware.port_id" type="hidden">
+                <div class="default text">Selectionner une connection disponible</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+
+					<!-- each port -->
+                    <div v-for="port in ports" class="item" data-value="{{port.id}}">
+						{{port.name}}
+					</div>
+
+                </div>
+            </div>
+        </div>
+
+		<!-- save -->
+        <button class="ui orange basic button" type="submit">
+			<i class="plus icon"></i>
+			Sauvegarder
+		</button>
+
+		<!-- cancel -->
+        <a v-link="{name: 'temperatures_sensors_list'}" class="ui red basic button">
+			Annuler
+		</a>
 
     </form>
 
@@ -43,22 +67,43 @@
 
 <script type="text/babel">
 
-    import { roomService, temperatureSensorService, newHardwareService } from 'services';
+	// services
+    import { roomService, portService, hardwareService } from 'services';
 
     export default {
 
         data() {
             return {
-                rooms: [],
-                hardwares: [],
-                sensor: {}
+
+				// contain the listing of registered rooms
+				// @type {Array}
+                'rooms': [],
+
+				// contain the listing of registered serial ports
+				// @type {Array}
+                'ports': [],
+
+				// contain the hardware object
+				// @type {Object}
+                'hardware': {
+					type: 'temperature'
+				}
+
             }
         },
 
-        created() {
-            this.getRoomsListing();
-            this.getAvailableHardwareListing();
-        },
+		route: {
+
+			data() {
+				return Promise.all( [
+					this.findRoomsListing(),
+					this.findPortsListing()
+				] )
+				.then( ( [ rooms, ports ] ) => ( { rooms, ports } ) )
+				.catch( console.error );
+			}
+
+		},
 
         ready() {
             $( '.ui.dropdown', this.$el ).dropdown();
@@ -67,33 +112,44 @@
         methods: {
 
             /**
-             * get all available hardware for the TEMP type
+             * find available rooms
+             *
+             * @return {Promise}
+             *
              * @author shad
              */
-            getAvailableHardwareListing() {
-                newHardwareService.find( { query: { type: 'TEMP' } } )
-                    .then( hardwares => this.hardwares = hardwares )
-                    .catch( console.error );
+            findRoomsListing() {
+
+                return roomService.find()
+                .catch( console.error );
+
             },
 
-            /**
-             * get available rooms listing
-             * @author shad
-             */
-            getRoomsListing() {
-                roomService.find()
-                    .then( rooms => this.rooms = rooms )
-                    .catch( console.error )
-            },
+			/**
+			 * find available ports
+			 *
+			 * @return {Promise}
+			 *
+			 * @author shad
+			 */
+			findPortsListing() {
+
+				return portService.find()
+				.catch( console.error );
+
+			},
 
             /**
              * create or update a sensor
+             *
              * @author shad
              */
             save() {
-                temperatureSensorService.create( this.sensor )
-                    .then( () => this.$router.go( { name: 'temperatures_sensors_list' } ) )
-                    .catch( console.error )
+
+                hardwareService.create( this.hardware )
+                .then( () => this.$router.go( { name: 'temperatures_sensors_list' } ) )
+                .catch( console.error );
+
             }
 
         }

@@ -14,4 +14,4 @@ fi
 
 docker run -d -p 8080:8080 --name ${CONTAINER_NAME} -e "NODE_ENV=development" \
     -v $(cd ../ && pwd):/app \
-    node:6 /app/scripts/dev_entrypoint.sh
+    node:7 /app/scripts/dev_entrypoint.sh
