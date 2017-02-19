@@ -32,21 +32,40 @@
 	import graphs from 'metrics-graphics';
 	import moment from 'moment';
 	import _pick from 'lodash/pick';
+	import _filter from 'lodash/filter';
+	import _uniq from 'lodash/uniq';
+	import _map from 'lodash/map';
 	// services
-	import { temperatureSensorRecordService } from 'services';
+	import { hardwareTemperatureView } from 'services';
 
 	export default {
 
 		data() {
 			return {
-				datas: false
+
+				// contain the records listing
+				// @type {Array}
+				'records': false,
+
+				// contain the start date specified
+				// @type {Date}
+				'date_start': false,
+
+				// contain the end date specified
+				// @type {Date}
+				'date_end': false
+
 			}
 		},
 
 		route: {
 
 			data() {
-				this.getSensorData();
+				// set default date to the currently last 24 hours
+				this.date_end = moment().toDate();
+				this.date_start = moment().subtract( 24, 'hours' ).toDate();
+
+				return this.getSensorData();
 			}
 
 		},
@@ -58,11 +77,14 @@
 		watch: {
 
 			/**
-			 * redo the chart each time the
-			 * records data changes
+			 * redo the chart each time the records data changes
+			 *
+			 * @author shad
 			 */
-			'filtered_records'() {
-				this.makeTempChart();
+			'sorted_by_hardwares'() {
+
+				this.updateChart();
+
 			}
 
 		},
@@ -70,35 +92,51 @@
 		computed: {
 
 			/**
-			 * prepare sensors listing
+			 * filter a listing of unique hardwares names available
+			 *
+			 * @return {Array}
+			 *
+			 * @author shad
 			 */
-			filtered_sensors() {
-				const sensors = [];
-				if( this.datas ) {
-					this.datas.sensors.forEach( sensor => {
-						sensors.push( _pick( sensor, [ 'name' ] ) );
-					} );
-				}
-				return sensors;
+			hardwares_names() {
+
+				return _uniq( _map( this.records, 'name' ) );
+
 			},
 
 			/**
 			 * prepare records listing
+			 *
+			 * @return {Array}
+			 *
+			 * @author shad
 			 */
-			filtered_records() {
-				let records = [];
-				if( this.datas ) {
-					Object.keys( this.datas.records ).forEach( key => {
-						const records_list = this.datas.records[ key ];
-						// pick only the wanted data
-						records_list.forEach( record =>
-								records.push( _pick( record, [ 'created_at', 'temperature' ] ) ) );
-						// convert to date
-						records.forEach( ( record, idx ) =>
-								records[ idx ].created_at = new Date( records[ idx ].created_at ) );
+			sorted_by_hardwares() {
+
+				let sorted_by_hardwares = [];
+
+				if( this.records ) {
+
+					this.hardwares_names.forEach( hardware_name => {
+
+						// filter to get only the temperatures linked to the hardware selected
+						const temperatures = _filter( this.records, { name: hardware_name } );
+
+						// convert to dates
+						for( let d = 0; d < temperatures.length; d++ ) {
+
+							temperatures[ d ][ 'sensor_created_at' ] = new Date( temperatures[ d ][ 'sensor_created_at' ] ) ;
+
+						}
+
+						sorted_by_hardwares.push( temperatures );
+
 					} );
+
 				}
-				return records;
+
+				return sorted_by_hardwares.length > 0 && sorted_by_hardwares;
+
 			}
 
 		},
@@ -107,51 +145,118 @@
 
 			/**
 			 * get the temperature sensors records
+			 *
 			 * @returns {Promise}
+			 *
 			 * @author shad
 			 */
 			getSensorData() {
-				const date_end = moment();
-				const date_start = moment().subtract( 24, 'hours' );
-				temperatureSensorRecordService.find( { query: {
-					created_at: { $gte: date_start, $lte: date_end },
-					$sort: { created_at: -1 },
-					withSensor: true
-				} } )
-						.then( datas => {
-							this.datas = datas;
-						} )//( { datas: datas.length > 0 && datas } ) )
-						.catch( console.error );
+
+				const query = { query: {
+
+					// sensor record has to be between the range of
+					// specified dates
+					'sensor_created_at': {
+						$gte: this.date_start,
+						$lte: this.date_end
+					},
+
+					// sort so we only get the last ones
+					$sort: { 'sensor_created_at': -1 }
+
+				} };
+
+				return hardwareTemperatureView.find( query )
+				.then( records => this.records = records )
+				.catch( console.error );
 			},
 
 			/**
 			 * make an empty chart when no records available
+			 * also used before data is loaded
+			 *
+			 * @author shad
 			 */
 			makeEmptyChart() {
-				graphs.data_graphic({
+
+				graphs.data_graphic( {
+
+					// title
 					title: "Donnees Manquantes",
+
+					// chart type for missing data (with a placeholder image)
 					chart_type: 'missing-data',
+
+					// text to show when missing data
 					missing_text: 'Aucune donnee disponible. Revenez plus tard.',
+
+					// DOM element target
 					target: '#temperature-chart',
+
+					// use full available width
 					full_width: true,
+
+					// height
 					height: 400
-				});
+
+				} );
+
 			},
 
 			/**
-			 * make a chart with the given records
+			 * update the chart with the given records
+			 *
+			 * @author shad
 			 */
-			makeTempChart() {
-				graphs.data_graphic({
-					title: 'Temperature',
-					data: this.filtered_records,
+			updateChart() {
+
+				graphs.data_graphic( {
+
+					// title
+					title: 'Température',
+
+					// current data
+					data: this.sorted_by_hardwares,
+
+					// height
 					height: 400,
+
+					// use full available width
 					full_width: true,
+
+					// DOM element target
 					target: '#temperature-chart',
-					x_accessor: 'created_at',
-					y_accessor: 'temperature',
-					area: false
-				})
+
+					// time span start
+					min_x: this.date_start,
+
+					// time span end
+					max_x: this.date_end,
+
+					// data prop to use on the x axis (from this.sorted_by_hardwares)
+					x_accessor: 'sensor_created_at',
+
+					// data prop to use on the y axis (from this.sorted_by_hardwares)
+					y_accessor: 'sensor_temperature',
+
+					// add names to each lines
+					legend: this.hardwares_names,
+
+					// don't cut per area
+					area: false,
+
+					// on line mouse over, returned a french formatted date
+					x_mouseover( d ) {
+						return `${moment( d.sensor_created_at ).format( 'DD MMM YYYY HH:mm' )} - `;
+					},
+
+					// on line mouse over, return a unit concat to current value
+					y_mouseover( d ) {
+						return `${d.sensor_temperature} °C`;
+					}
+
+				} );
+
 			}
 
 		}
@@ -162,12 +267,14 @@
 
 <style lang="scss">
 
+	// temperature module styling
 	#temperature {
 		height: 100vh;
+
 		& .column {
-			 overflow-y: auto;
-			 overflow-x: hidden;
-		 }
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
 	}
 
 </style>

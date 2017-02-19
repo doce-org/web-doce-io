@@ -12,6 +12,9 @@ export const feathers_socket = feathers()
     .configure( socketio( socket ) )
     .configure( hooks() );
 
+// ========================================================
+// SERVICES
+// ========================================================
 // ports
 export const portService = feathers_socket.service( '/ports' );
 export const portListService = feathers_socket.service( '/ports/list' );
@@ -31,3 +34,9 @@ export const waterGaugeRecordService = feathers_socket.service( '/waters/gauges/
 
 // others
 export const logService = feathers_socket.service( '/logs' );
+
+// ========================================================
+// VIEWS
+// ========================================================
+// hardware
+export const hardwareTemperatureView = feathers_socket.service( '/views/hardwares/temperatures' );
