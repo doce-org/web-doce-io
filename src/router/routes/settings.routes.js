@@ -10,10 +10,11 @@ import PortForm from 'components/Settings/Ports/PortForm.vue';
 import RoomsList from 'components/Settings/Rooms/RoomsList.vue';
 import RoomForm from 'components/Settings/Rooms/RoomForm.vue';
 
-import TemperatureSensorsList from 'components/Settings/Sensors/TemperatureSensorsList.vue';
-import TemperatureSensorForm from 'components/Settings/Sensors/TemperatureSensorForm.vue';
-import PowerGaugesList from 'components/Settings/Gauges/PowerGaugesList.vue';
-import PowerGaugeForm from 'components/Settings/Gauges/PowerGaugeForm.vue';
+import SensorsList from 'components/Settings/Sensors/SensorsList.vue';
+import SensorForm from 'components/Settings/Sensors/SensorForm.vue';
+
+import GaugesList from 'components/Settings/Gauges/GaugesList.vue';
+import GaugeForm from 'components/Settings/Gauges/GaugeForm.vue';
 
 export default {
 
@@ -31,11 +32,13 @@ export default {
             '/ports/add': { name: 'port_add', component: PortForm },
 
 			// sensors
-            '/temperatures/sensors': { name: 'temperatures_sensors_list', component: TemperatureSensorsList },
-            '/temperatures/sensors/add': { name: 'temperatures_sensor_form', component: TemperatureSensorForm },
-            '/powers/gauges': { name: 'powers_gauges_list', component: PowerGaugesList },
-            '/powers/gauges/add': { name: 'power_gauge_form', component: PowerGaugeForm }
-			
+            '/sensors': { name: 'sensors_list', component: SensorsList },
+            '/sensors/add': { name: 'sensor_form', component: SensorForm },
+
+			// gauges
+            '/powers/gauges': { name: 'gauges_list', component: GaugesList },
+            '/powers/gauges/add': { name: 'gauge_form', component: GaugeForm }
+
         }
     }
 

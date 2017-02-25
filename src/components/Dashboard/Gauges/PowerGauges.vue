@@ -2,7 +2,7 @@
 
     <div>
 
-        <h4 class="ui disabled center aligned header">Température</h4>
+        <h4 class="ui disabled center aligned header">Énergie</h4>
 
         <table class="ui very basic table">
             <tbody>
@@ -14,7 +14,7 @@
 
                     <!-- record -->
                     <td class="right aligned">
-                        <temperature-sensor-record :hardware_id="hardware.id"></temperature-sensor-record>
+                        <power-gauge-record :hardware_id="hardware.id"></power-gauge-record>
                     </td>
 
                 </tr>
@@ -31,7 +31,7 @@
     // services
     import { hardwareService } from 'services';
     // components
-    import TemperatureSensorRecord from './TemperatureSensorRecord.vue';
+    import PowerGaugeRecord from './PowerGaugeRecord.vue';
 
     export default {
 
@@ -45,14 +45,14 @@
 
         components: {
 
-			TemperatureSensorRecord
+			PowerGaugeRecord
 
 		},
 
         data() {
             return {
 
-				// contain the listing of hardware sensors
+				// contain the listing of hardware energy gauge
 				// linked to the current room id
 				// @type {Array}
                 'hardwares': []
@@ -61,17 +61,17 @@
         },
 
         created() {
-            this.findHardwareTemperatureSensors();
+            this.findHardwarePowerGauges();
         },
 
         methods: {
 
             /**
-             * get listing of available temperature for a specified room
-             * 
+             * get listing of available power for a specified room
+             *
              * @author shad
              */
-            findHardwareTemperatureSensors() {
+            findHardwarePowerGauges() {
 
 				const query = { query: {
 
@@ -79,7 +79,7 @@
 					'room_id': this.room_id,
 
 					// of type 'temperature'
-					type: 'temperature'
+					type: 'energy'
 
 				} };
 

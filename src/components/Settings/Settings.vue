@@ -18,13 +18,13 @@
 		</a>
 
 		<!-- temperatures hardwares -->
-        <a v-link="{name: 'temperatures_sensors_list'}" class="ui item">
-			Sondes Températures
+        <a v-link="{name: 'sensors_list'}" class="ui item">
+			Sondes
 		</a>
 
 		<!-- power hardware -->
-        <a v-link="{name: 'powers_gauges_list'}" class="ui item disabled">
-			Jauges Energie
+        <a v-link="{name: 'gauges_list'}" class="ui item">
+			Jauges
 		</a>
 
     </nav>

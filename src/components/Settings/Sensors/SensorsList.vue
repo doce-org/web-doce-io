@@ -6,7 +6,7 @@
 
 			<h2 class="ui blue light header">
 				<i class="circle icon"></i>
-				Listes des Sondes de Temperatures
+				Listes des Sondes
 			</h2>
 
 		</div>
@@ -17,15 +17,29 @@
 			        <thead>
 			            <tr>
 			                <th>ID</th>
+			                <th>Type</th>
 			                <th>Nom</th>
 							<th>Connection</th>
 							<th>Piece</th>
 			                <th class="collapsing">
 
-								<!-- add a temperature sensor -->
-			                    <a v-link="{name: 'temperatures_sensor_form'}" class="ui green basic button">
-									Ajouter une sonde
-								</a>
+								<div class="ui floating dropdown labeled basic green icon button">
+									<i class="plus icon"></i>
+									<span class="text">Ajouter une sonde</span>
+									<div class="menu">
+
+										<!-- add a temperature sensor -->
+										<div v-link="{name: 'sensor_form', query: {type: 'temperature'}}" class="item">
+											Temperature
+										</div>
+
+										<!-- add a humidity sensor -->
+										<div v-link="{name: 'sensor_form', query: {type: 'humidity'}}" class="item">
+											Humidite
+										</div>
+
+									</div>
+								</div>
 
 			                </th>
 			            </tr>
@@ -37,6 +51,9 @@
 
 							<!-- identifier -->
 							<td>{{hardware.identifier}}</td>
+
+							<!-- type -->
+							<td>{{hardware.type}}</td>
 
 							<!-- name -->
 			                <td>{{hardware.name}}</td>
@@ -68,6 +85,7 @@
 
 <script type="text/babel">
 
+	// services
     import { hardwareService } from 'services';
 
     export default {
@@ -75,7 +93,7 @@
         data() {
             return {
 
-				// contain the listing of temperature hardware registered
+				// contain the listing of sensors hardware registered
 				// @type {Array}
                 'hardwares': []
 
@@ -85,23 +103,37 @@
 		route: {
 
 			data() {
-				return this.findTemperatureHardwareListing();
+				return this.findSensorsHardwareListing();
 			}
 
+		},
+
+		ready() {
+			$( '.dropdown', this.$el ).dropdown();
 		},
 
         methods: {
 
             /**
-             * find temperature hardware listing
+             * find sensors hardware listing
              *
              * @return {Promise}
              *
              * @author shad
              */
-            findTemperatureHardwareListing() {
+            findSensorsHardwareListing() {
 
-                return hardwareService.find( { query: { type: 'temperature' } } )
+				const query = { query: {
+
+					// can either be a temperature or humidity sensor
+					$or: [
+						{ type: 'temperature' },
+						{ type: 'humidity' }
+					]
+
+				} };
+
+                return hardwareService.find( query )
                 .then( hardwares => ( { hardwares } ) )
                 .catch( console.error );
 

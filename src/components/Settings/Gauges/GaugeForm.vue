@@ -7,19 +7,27 @@
 			<!-- edit mode -->
 			<h2 v-if="port_id" class="ui orange light header">
 				<i class="write icon"></i>
-				Modifier la sonde de temperature
+				Modifier la jauge
 			</h2>
 
 			<!-- create mode -->
 			<h2 v-else class="ui green light header">
 				<i class="plus icon"></i>
-				Enregistrer une nouvelle sonde de temperature
+				Enregistrer une nouvelle jauge
 			</h2>
 
 		</div>
 
 		<div class="sixteen wide column">
 			<form v-on:submit.prevent="save" class="ui form">
+
+				<!-- sensor type -->
+				<div class="fields">
+					<div class="field disabled">
+						<label>Type</label>
+						<input v-bind:value="hardware.type" type="text" readonly>
+					</div>
+				</div>
 
 				<div class="fields">
 
@@ -87,7 +95,7 @@
 				</button>
 
 				<!-- cancel -->
-		        <a v-link="{name: 'temperatures_sensors_list'}" class="ui red basic button">
+		        <a v-link="{name: 'gauges_list'}" class="ui red basic button">
 					Annuler
 				</a>
 
@@ -122,9 +130,7 @@
 
 				// contain the hardware object
 				// @type {Object}
-                'hardware': {
-					type: 'temperature'
-				}
+                'hardware': {}
 
             }
         },
@@ -132,6 +138,8 @@
 		route: {
 
 			data() {
+				this.$set( 'hardware.type', this.$route.query[ 'type' ] );
+
 				return Promise.all( [
 					this.findRoomsListing(),
 					this.findPortsListing()
@@ -184,7 +192,7 @@
             save() {
 
                 hardwareService.create( this.hardware )
-                .then( () => this.$router.go( { name: 'temperatures_sensors_list' } ) )
+                .then( () => this.$router.go( { name: 'gauges_list' } ) )
                 .catch( console.error );
 
             }
