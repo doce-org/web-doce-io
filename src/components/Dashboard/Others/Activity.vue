@@ -10,7 +10,8 @@
 			<div class="ui list">
 
 				<!-- each of the last 10 logs -->
-				<div v-for="log in last_logs" class="item">
+				<div v-for="log in last_logs" v-bind="{'orange': log.type === 'warning', 'red': log.type === 'error'}"
+						class="item">
 					<i class="angle right icon"></i>
 					{{log.message}}
 				</div>
@@ -121,6 +122,20 @@
 	// special column style
     .column {
         background: #e6eaf4;
+
+		.ui.list {
+
+			.item {
+
+				&.orange{
+					color: #e67e22;
+				}
+
+				&.red{
+					color: #e74c3c;
+				}
+			}
+		}
     }
 
 </style>
