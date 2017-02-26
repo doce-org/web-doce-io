@@ -7,13 +7,13 @@
 			<!-- edit mode -->
 			<h2 v-if="port_id" class="ui orange light header">
 				<i class="write icon"></i>
-				Modifier la jauge
+				Modifier le compteur
 			</h2>
 
 			<!-- create mode -->
 			<h2 v-else class="ui green light header">
 				<i class="plus icon"></i>
-				Enregistrer une nouvelle jauge
+				Enregistrer un nouveau compteur
 			</h2>
 
 		</div>
@@ -95,7 +95,7 @@
 				</button>
 
 				<!-- cancel -->
-		        <a v-link="{name: 'gauges_list'}" class="ui red basic button">
+		        <a v-link="{name: 'meters_list'}" class="ui red basic button">
 					Annuler
 				</a>
 
@@ -185,14 +185,14 @@
 			},
 
             /**
-             * create or update a sensor
+             * create or update a meter
              *
              * @author shad
              */
             save() {
 
                 hardwareService.create( this.hardware )
-                .then( () => this.$router.go( { name: 'gauges_list' } ) )
+                .then( () => this.$router.go( { name: 'meters_list' } ) )
                 .catch( console.error );
 
             }

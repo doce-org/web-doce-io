@@ -29,8 +29,8 @@ export const hardwareService = feathers_socket.service( '/hardwares' );
 // sensors
 export const temperatureSensorRecordService = feathers_socket.service( '/temperatures/sensors/records' );
 export const humiditySensorRecordService = feathers_socket.service( '/humidities/sensors/records' );
-export const powerGaugeRecordService = feathers_socket.service( '/powers/gauges/records' );
-export const waterGaugeRecordService = feathers_socket.service( '/waters/gauges/records' );
+export const powerMeterRecordService = feathers_socket.service( '/powers/meters/records' );
+export const waterMeterRecordService = feathers_socket.service( '/waters/meters/records' );
 
 // others
 export const logService = feathers_socket.service( '/logs' );

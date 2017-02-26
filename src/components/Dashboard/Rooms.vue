@@ -18,7 +18,7 @@
         <div class="four wide column">
 
             <!-- power -->
-            <power-gauges :room_id="room.id"></power-gauges>
+            <power-meters :room_id="room.id"></power-meters>
 
         </div>
 
@@ -43,7 +43,7 @@
     import { roomService } from 'services';
     // components
     import TemperaturesSensors from './Sensors/TemperaturesSensors.vue';
-    import PowerGauges from './Gauges/PowerGauges.vue';
+    import PowerMeters from './Meters/PowerMeters.vue';
     import Automation from './Controls/Automation.vue';
 
     export default {
@@ -51,7 +51,7 @@
         components: {
 
 			TemperaturesSensors,
-			PowerGauges,
+			PowerMeters,
 			Automation
 
 		},

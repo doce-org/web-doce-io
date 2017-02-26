@@ -23,8 +23,8 @@
 		</a>
 
 		<!-- power hardware -->
-        <a v-link="{name: 'gauges_list'}" class="ui item">
-			Jauges
+        <a v-link="{name: 'meters_list'}" class="ui item">
+			Compteurs
 		</a>
 
     </nav>

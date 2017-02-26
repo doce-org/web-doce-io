@@ -6,7 +6,7 @@
 
 			<h2 class="ui blue light header">
 				<i class="circle icon"></i>
-				Listes des Jauges
+				Listes des Compteurs
 			</h2>
 
 		</div>
@@ -29,12 +29,12 @@
 									<div class="menu">
 
 										<!-- add a power gauge -->
-										<div v-link="{name: 'gauge_form', query: {type: 'energy'}}" class="item">
+										<div v-link="{name: 'meter_form', query: {type: 'energy'}}" class="item">
 											Puissance
 										</div>
 
 										<!-- add a water gauge -->
-										<div v-link="{name: 'gauge_form', query: {type: 'water'}}" class="item">
+										<div v-link="{name: 'meter_form', query: {type: 'water'}}" class="item">
 											Eau
 										</div>
 
@@ -93,7 +93,7 @@
         data() {
             return {
 
-				// contain the listing of gauges hardware registered
+				// contain the listing of meters hardware registered
 				// @type {Array}
                 'hardwares': []
 
@@ -115,7 +115,7 @@
         methods: {
 
             /**
-             * find gauges hardware listing
+             * find meters hardware listing
              *
              * @return {Promise}
              *
@@ -125,7 +125,7 @@
 
 				const query = { query: {
 
-					// can either be an energy or water gauge
+					// can either be an energy or water meter
 					$or: [
 						{ type: 'energy' },
 						{ type: 'water' }

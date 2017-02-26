@@ -13,8 +13,8 @@ import RoomForm from 'components/Settings/Rooms/RoomForm.vue';
 import SensorsList from 'components/Settings/Sensors/SensorsList.vue';
 import SensorForm from 'components/Settings/Sensors/SensorForm.vue';
 
-import GaugesList from 'components/Settings/Gauges/GaugesList.vue';
-import GaugeForm from 'components/Settings/Gauges/GaugeForm.vue';
+import MetersList from 'components/Settings/Meters/MetersList.vue';
+import MeterForm from 'components/Settings/Meters/MeterForm.vue';
 
 export default {
 
@@ -36,8 +36,8 @@ export default {
             '/sensors/add': { name: 'sensor_form', component: SensorForm },
 
 			// gauges
-            '/powers/gauges': { name: 'gauges_list', component: GaugesList },
-            '/powers/gauges/add': { name: 'gauge_form', component: GaugeForm }
+            '/powers/gauges': { name: 'meters_list', component: MetersList },
+            '/powers/gauges/add': { name: 'meter_form', component: MeterForm }
 
         }
     }

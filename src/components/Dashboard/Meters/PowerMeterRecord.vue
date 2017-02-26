@@ -10,7 +10,7 @@
 <script type="text/babel">
 
     // services
-    import { powerGaugeRecordService } from 'services';
+    import { powerMeterRecordService } from 'services';
 
     export default {
 
@@ -59,7 +59,7 @@
 
                 } };
 
-                powerGaugeRecordService.find( query )
+                powerMeterRecordService.find( query )
                 .then( record => this.record = record[ 0 ] || {} )
                 .catch( console.error );
 
@@ -76,7 +76,7 @@
              */
             updateLastPowerRecord() {
 
-                powerGaugeRecordService.on( 'created', record => {
+                powerMeterRecordService.on( 'created', record => {
 
 					// make sure it's the same hardware id we're receiving data from
                     if ( this.record.hardware_id === record.hardware_id ) {

@@ -14,7 +14,7 @@
 
                     <!-- record -->
                     <td class="right aligned">
-                        <power-gauge-record :hardware_id="hardware.id"></power-gauge-record>
+                        <power-meter-record :hardware_id="hardware.id"></power-meter-record>
                     </td>
 
                 </tr>
@@ -31,7 +31,7 @@
     // services
     import { hardwareService } from 'services';
     // components
-    import PowerGaugeRecord from './PowerGaugeRecord.vue';
+    import PowerMeterRecord from './PowerMeterRecord.vue';
 
     export default {
 
@@ -45,7 +45,7 @@
 
         components: {
 
-			PowerGaugeRecord
+			PowerMeterRecord
 
 		},
 
@@ -61,7 +61,7 @@
         },
 
         created() {
-            this.findHardwarePowerGauges();
+            this.findHardwarePowerMeters();
         },
 
         methods: {
@@ -71,14 +71,14 @@
              *
              * @author shad
              */
-            findHardwarePowerGauges() {
+            findHardwarePowerMeters() {
 
 				const query = { query: {
 
 					// linked to the current room id
 					'room_id': this.room_id,
 
-					// of type 'temperature'
+					// of type 'energy'
 					type: 'energy'
 
 				} };
