@@ -2,32 +2,46 @@
 
     <div v-for="room in rooms" class="ui padded grid">
 
-        <div class="three wide column">
+        <div class="sixteen wide column">
             <h3 class="ui disabled header">{{room.name}}</h3>
 			<!-- TODO add back room icon / image -->
             <!-- <img class="ui small centered image" :src="room.room_icon.image" alt="room icon"> -->
         </div>
 
+		<!-- temperatures -->
         <div class="four wide column">
 
-            <!-- temperatures -->
             <temperatures-sensors :room_id="room.id"></temperatures-sensors>
 
         </div>
 
+		<!-- humidities -->
         <div class="four wide column">
 
-            <!-- power -->
+            <humidities-sensors :room_id="room.id"></humidities-sensors>
+
+        </div>
+
+		<!-- power -->
+        <div class="four wide column">
+
             <power-meters :room_id="room.id"></power-meters>
 
         </div>
 
-        <div class="five wide column">
+		<!-- water -->
+        <div class="four wide column">
 
-            <!-- automation -->
-            <automation></automation>
+            <water-meters :room_id="room.id"></water-meters>
 
         </div>
+
+		<!-- automation -->
+        <!-- <div class="sixteen wide column">
+
+            <automation></automation>
+
+        </div> -->
 
         <div class="sixteen wide column">
             <div class="ui divider"></div>
@@ -43,7 +57,9 @@
     import { roomService } from 'services';
     // components
     import TemperaturesSensors from './Sensors/TemperaturesSensors.vue';
+    import HumiditiesSensors from './Sensors/HumiditiesSensors.vue';
     import PowerMeters from './Meters/PowerMeters.vue';
+    import WaterMeters from './Meters/WaterMeters.vue';
     import Automation from './Controls/Automation.vue';
 
     export default {
@@ -51,7 +67,9 @@
         components: {
 
 			TemperaturesSensors,
+			HumiditiesSensors,
 			PowerMeters,
+			WaterMeters,
 			Automation
 
 		},
