@@ -14,7 +14,7 @@
 			</nav>
 			<div class="ui divider"></div>
 
-			<div id="temperature-chart"></div>
+			<canvas id="temperature-chart"></canvas>
 
 		</section>
 
@@ -29,7 +29,6 @@
 <script type="text/babel">
 
 	// lib
-	import graphs from 'metrics-graphics';
 	import moment from 'moment';
 	import _pick from 'lodash/pick';
 	import _filter from 'lodash/filter';
@@ -71,7 +70,7 @@
 		},
 
 		ready() {
-			this.makeEmptyChart();
+			// this.makeEmptyChart();
 		},
 
 		watch: {
@@ -119,17 +118,25 @@
 
 					this.hardwares_names.forEach( hardware_name => {
 
+						let graph_labels = [];
+						let graph_temperatures = [];
+
 						// filter to get only the temperatures linked to the hardware selected
 						const temperatures = _filter( this.records, { name: hardware_name } );
 
 						// convert to dates
 						for( let d = 0; d < temperatures.length; d++ ) {
 
-							temperatures[ d ][ 'sensor_created_at' ] = new Date( temperatures[ d ][ 'sensor_created_at' ] ) ;
+							graph_labels.push( temperatures[ d ][ 'sensor_created_at' ] );
+							graph_temperatures.push( +temperatures[ d ][ 'sensor_temperature' ] );
 
 						}
 
-						sorted_by_hardwares.push( temperatures );
+						sorted_by_hardwares.push( {
+							name: hardware_name,
+							labels: graph_labels,
+							values: graph_temperatures
+						} );
 
 					} );
 
@@ -169,37 +176,6 @@
 				return hardwareTemperatureView.find( query )
 				.then( records => this.records = records )
 				.catch( console.error );
-			},
-
-			/**
-			 * make an empty chart when no records available
-			 * also used before data is loaded
-			 *
-			 * @author shad
-			 */
-			makeEmptyChart() {
-
-				graphs.data_graphic( {
-
-					// title
-					title: "Donnees Manquantes",
-
-					// chart type for missing data (with a placeholder image)
-					chart_type: 'missing-data',
-
-					// text to show when missing data
-					missing_text: 'Aucune donnee disponible. Revenez plus tard.',
-
-					// DOM element target
-					target: '#temperature-chart',
-
-					// use full available width
-					full_width: true,
-
-					// height
-					height: 400
-
-				} );
 
 			},
 
@@ -210,52 +186,7 @@
 			 */
 			updateChart() {
 
-				graphs.data_graphic( {
 
-					// title
-					title: 'Température',
-
-					// current data
-					data: this.sorted_by_hardwares,
-
-					// height
-					height: 400,
-
-					// use full available width
-					full_width: true,
-
-					// DOM element target
-					target: '#temperature-chart',
-
-					// time span start
-					min_x: this.date_start,
-
-					// time span end
-					max_x: this.date_end,
-
-					// data prop to use on the x axis (from this.sorted_by_hardwares)
-					x_accessor: 'sensor_created_at',
-
-					// data prop to use on the y axis (from this.sorted_by_hardwares)
-					y_accessor: 'sensor_temperature',
-
-					// add names to each lines
-					legend: this.hardwares_names,
-
-					// don't cut per area
-					area: false,
-
-					// on line mouse over, returned a french formatted date
-					x_mouseover( d ) {
-						return `${moment( d.sensor_created_at ).format( 'DD MMM YYYY HH:mm' )} - `;
-					},
-
-					// on line mouse over, return a unit concat to current value
-					y_mouseover( d ) {
-						return `${d.sensor_temperature} °C`;
-					}
-
-				} );
 
 			}
 

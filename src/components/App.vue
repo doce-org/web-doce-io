@@ -33,8 +33,6 @@
 
 </script>
 
-<style src="../../node_modules/metrics-graphics/dist/metricsgraphics.css"></style>
-
 <style lang="scss">
 
 	#app {

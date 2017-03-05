@@ -2,7 +2,9 @@
 
     <div>
 
-        <h4 class="ui disabled center aligned header">Température</h4>
+        <h4 class="ui disabled center aligned header">
+			Température
+		</h4>
 
         <table class="ui very basic table">
             <tbody>
@@ -68,7 +70,7 @@
 
             /**
              * get listing of available temperature for a specified room
-             * 
+             *
              * @author shad
              */
             findHardwareTemperatureSensors() {
