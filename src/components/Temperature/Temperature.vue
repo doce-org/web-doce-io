@@ -1,6 +1,6 @@
 <template>
 
-	<div id="temperature" class="ui equal height padded grid">
+	<div id="humidity" class="ui equal height padded grid">
 
 		<!-- summary -->
 		<section class="thirteen wide center aligned column">
@@ -14,7 +14,7 @@
 			</nav>
 			<div class="ui divider"></div>
 
-			<canvas id="temperature-chart"></canvas>
+			<canvas id="humidity-chart"></canvas>
 
 		</section>
 
@@ -30,12 +30,13 @@
 
 	// lib
 	import moment from 'moment';
+	import Chart from 'chart.js';
 	import _pick from 'lodash/pick';
 	import _filter from 'lodash/filter';
 	import _uniq from 'lodash/uniq';
 	import _map from 'lodash/map';
 	// services
-	import { hardwareTemperatureView } from 'services';
+	import { hardwareHumidityView } from 'services';
 
 	export default {
 
@@ -61,8 +62,8 @@
 
 			data() {
 				// set default date to the currently last 24 hours
-				this.date_end = moment().toDate();
-				this.date_start = moment().subtract( 24, 'hours' ).toDate();
+				this.date_end = moment().endOf( 'day' ).toDate();
+				this.date_start = moment().startOf( 'day' ).toDate();
 
 				return this.getSensorData();
 			}
@@ -119,23 +120,26 @@
 					this.hardwares_names.forEach( hardware_name => {
 
 						let graph_labels = [];
+						let graph_humidities = [];
 						let graph_temperatures = [];
 
-						// filter to get only the temperatures linked to the hardware selected
-						const temperatures = _filter( this.records, { name: hardware_name } );
+						// filter to get only the humidities linked to the hardware selected
+						const humidities = _filter( this.records, { name: hardware_name } );
 
 						// convert to dates
-						for( let d = 0; d < temperatures.length; d++ ) {
+						for( let d = 0; d < humidities.length; d++ ) {
 
-							graph_labels.push( temperatures[ d ][ 'sensor_created_at' ] );
-							graph_temperatures.push( +temperatures[ d ][ 'sensor_temperature' ] );
+							graph_labels.push( humidities[ d ][ 'sensor_created_at' ] );
+							graph_humidities.push( +humidities[ d ][ 'sensor_humidity' ] );
+							graph_temperatures.push( +humidities[ d ][ 'sensor_temperature' ] );
 
 						}
 
 						sorted_by_hardwares.push( {
 							name: hardware_name,
 							labels: graph_labels,
-							values: graph_temperatures
+							humidities: graph_humidities,
+							temperatures: graph_temperatures
 						} );
 
 					} );
@@ -151,7 +155,7 @@
 		methods: {
 
 			/**
-			 * get the temperature sensors records
+			 * get the humidity sensors records
 			 *
 			 * @returns {Promise}
 			 *
@@ -169,11 +173,11 @@
 					},
 
 					// sort so we only get the last ones
-					$sort: { 'sensor_created_at': -1 }
+					$sort: { 'sensor_created_at': 1 }
 
 				} };
 
-				return hardwareTemperatureView.find( query )
+				return hardwareHumidityView.find( query )
 				.then( records => this.records = records )
 				.catch( console.error );
 
@@ -186,7 +190,84 @@
 			 */
 			updateChart() {
 
+				const ctx = $( '#humidity-chart' );
+				new Chart( ctx, {
 
+					type: 'line',
+
+					data: {
+
+						labels: this.sorted_by_hardwares[ 0 ].labels,
+
+						datasets: [
+							{
+								label: `${this.sorted_by_hardwares[ 0 ].name}-Temperatures`,
+								yAxisID: 'y-axis-0',
+								borderColor: '#e74c3c',
+								borderWidth: 1,
+								fill: false,
+								data: this.sorted_by_hardwares[ 0 ].temperatures
+							},
+							{
+								label: `${this.sorted_by_hardwares[ 0 ].name}-Humidites`,
+								yAxisID: 'y-axis-1',
+								borderColor: '#3498db',
+								borderWidth: 1,
+								fill: false,
+								data: this.sorted_by_hardwares[ 0 ].humidities
+							}
+						]
+
+					},
+
+					options: {
+						scales: {
+							xAxes: [
+								{
+									type: 'time',
+									time: {
+										format: false,
+										unit: false,
+										displayFormats: {
+											'millisecond': 'HH:mm:ss',
+											'second': 'HH:mm:ss',
+											'minute': 'HH:mm',
+											'hour': 'HH:mm'
+										},
+										min: this.date_start,
+										max: this.date_end,
+										tooltipFormat: 'HH:mm'
+									}
+								}
+							],
+							yAxes: [
+								{
+									position: 'left',
+									id: 'y-axis-0',
+									ticks: {
+										min: 0,
+										max: 45
+									},
+									gridLines: {
+										display: false
+									}
+								},
+								{
+									position: 'right',
+									id: 'y-axis-1',
+									ticks: {
+										min: 0,
+										max: 100
+									},
+									gridLines: {
+										display: false
+									}
+								}
+							]
+						}
+					}
+
+				} );
 
 			}
 
@@ -198,8 +279,8 @@
 
 <style lang="scss">
 
-	// temperature module styling
-	#temperature {
+	// humidity module styling
+	#humidity {
 		height: 100vh;
 
 		& .column {

@@ -40,3 +40,4 @@ export const logService = feathers_socket.service( '/logs' );
 // ========================================================
 // hardware
 export const hardwareTemperatureView = feathers_socket.service( '/views/hardwares/temperatures' );
+export const hardwareHumidityView = feathers_socket.service( '/views/hardwares/humidities' );
