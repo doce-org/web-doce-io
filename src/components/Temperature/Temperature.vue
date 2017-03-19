@@ -197,73 +197,152 @@
 
 					data: {
 
+						// hardware labels
 						labels: this.sorted_by_hardwares[ 0 ].labels,
 
 						datasets: [
 							{
+
+								// single hardware label (temperature)
 								label: `${this.sorted_by_hardwares[ 0 ].name}-Temperatures`,
+
+								// y axis ID (multiple axis)
 								yAxisID: 'y-axis-0',
+
+								// line stroke color
 								borderColor: '#e74c3c',
+
+								// line stroke width
 								borderWidth: 1,
+
+								// prevent fill for better readability
 								fill: false,
+
+								// temperature array of values
 								data: this.sorted_by_hardwares[ 0 ].temperatures
+
 							},
 							{
+
+								// single hardware label (humidity)
 								label: `${this.sorted_by_hardwares[ 0 ].name}-Humidites`,
+
+								// y axis ID (multiple axis)
 								yAxisID: 'y-axis-1',
+
+								// line stroke color
 								borderColor: '#3498db',
+
+								// line stroke width
 								borderWidth: 1,
+
+								// prevent fill for better readability
 								fill: false,
+
+								// humidity array of values
 								data: this.sorted_by_hardwares[ 0 ].humidities
+
 							}
 						]
 
 					},
 
 					options: {
+
 						scales: {
+
+							// time axis
 							xAxes: [
 								{
+
+									// specify type 'time'
 									type: 'time',
+
+									// time options
 									time: {
+
+										// prevent formatting
 										format: false,
+
+										// prevent a specific unit
 										unit: false,
+
+										// moment format for diverse given data
 										displayFormats: {
-											'millisecond': 'HH:mm:ss',
-											'second': 'HH:mm:ss',
-											'minute': 'HH:mm',
 											'hour': 'HH:mm'
 										},
+
+										// min date
 										min: this.date_start,
+
+										// max date
 										max: this.date_end,
+
+										// moment format on tooltip
 										tooltipFormat: 'HH:mm'
+
 									}
 								}
 							],
+
+							// double humidity and temperature Y axis
 							yAxes: [
+
 								{
+									// left axis (temperature)
 									position: 'left',
+
+									// id corresponding
 									id: 'y-axis-0',
+
 									ticks: {
+
+										// 0 as min value
 										min: 0,
+
+										// 45 as max value
 										max: 45
+
 									},
+
 									gridLines: {
+
+										// don't show the grid lines
 										display: false
+
 									}
+
 								},
+
 								{
+
+									// right axis (humidity)
 									position: 'right',
+
+									// id corresponding
 									id: 'y-axis-1',
+
 									ticks: {
+
+										// 0 as min value
 										min: 0,
+
+										// 100 as max value
 										max: 100
+
 									},
+
 									gridLines: {
+
+										// don't show the grid lines
 										display: false
+										
 									}
+
 								}
+
 							]
+
 						}
 					}
 
