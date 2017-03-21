@@ -32,7 +32,7 @@
     <div class="ui one column padded grid">
         <div class="column">
 
-            <router-view></router-view>
+            <router-view transition="fly-right" transition-mode="out-in"></router-view>
 
         </div>
     </div>

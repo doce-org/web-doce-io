@@ -15,14 +15,14 @@
         </a>
 
 		<!-- temperatures -->
-        <a v-link="{name: 'temperatures', exact: true}" class="item">
-            <i class="icon fire"></i>
-            Températures
+        <a v-link="{name: 'history', exact: true}" class="item">
+            <i class="icon bar chart"></i>
+            Historique
         </a>
 
 		<!-- analyzing -->
         <a href="#" class="item disabled">
-            <i class="icon bar chart"></i>
+            <i class="icon pie chart"></i>
             Analyse
         </a>
 
@@ -56,9 +56,10 @@
 
 <style lang="scss" scoped>
 
+	// special side menu styling
 	.menu {
 		margin-bottom: 0;
-		
+
 		.active {
 			border-left: 4px solid #3498db;
 		}

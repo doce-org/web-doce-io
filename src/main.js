@@ -4,6 +4,10 @@ import Vue from 'vue';
 
 import './router';
 
+// transitions
+import transitions from './transitions';
+Vue.use( transitions );
+
 // mixins
 import mixins from './mixins/global.mixins';
 Vue.mixin( mixins );

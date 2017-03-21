@@ -36,13 +36,6 @@
 
         </div>
 
-		<!-- automation -->
-        <!-- <div class="sixteen wide column">
-
-            <automation></automation>
-
-        </div> -->
-
         <div class="sixteen wide column">
             <div class="ui divider"></div>
         </div>
@@ -60,7 +53,6 @@
     import HumiditiesSensors from './Sensors/HumiditiesSensors.vue';
     import PowerMeters from './Meters/PowerMeters.vue';
     import WaterMeters from './Meters/WaterMeters.vue';
-    import Automation from './Controls/Automation.vue';
 
     export default {
 
@@ -69,8 +61,7 @@
 			TemperaturesSensors,
 			HumiditiesSensors,
 			PowerMeters,
-			WaterMeters,
-			Automation
+			WaterMeters
 
 		},
 

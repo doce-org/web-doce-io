@@ -1,26 +1,18 @@
 <template>
 
-	<div id="humidity" class="ui equal height padded grid">
+	<div class="ui segment">
 
-		<!-- summary -->
-		<section class="thirteen wide center aligned column">
-			<nav class="ui secondary menu">
-				<div class="header item">Récapitulatif</div>
-				<div class="right menu">
-					<a class="ui item disabled">Jour</a>
-					<a class="ui item disabled">Mois</a>
-					<a class="ui item disabled">Annee</a>
-				</div>
-			</nav>
-			<div class="ui divider"></div>
+		<nav class="ui secondary menu">
+			<div class="header item">Comparaison Humidites / Temperatures</div>
+			<div class="right menu">
+				<a @click="switchMode('day')" v-bind:class="{'active': this.current_mode === 'day'}" class="ui item">Jour</a>
+				<a @click="switchMode('month')" v-bind:class="{'active': this.current_mode === 'month'}" class="ui item">Mois</a>
+				<a @click="switchMode('year')" v-bind:class="{'active': this.current_mode === 'year'}" class="ui item">Annee</a>
+			</div>
+		</nav>
+		<div class="ui divider"></div>
 
-			<canvas id="humidity-chart"></canvas>
-
-		</section>
-
-		<section class="three wide stretched column" style="background: #eff2f8;">
-			<div class="ui equal height grid"></div>
-		</section>
+		<canvas id="humidity-chart"></canvas>
 
 	</div>
 
@@ -53,24 +45,23 @@
 
 				// contain the end date specified
 				// @type {Date}
-				'date_end': false
+				'date_end': false,
+
+				// contain the current graph mode
+				// @type {String}
+				'current_mode': 'day'
 
 			}
-		},
-
-		route: {
-
-			data() {
-				// set default date to the currently last 24 hours
-				this.date_end = moment().endOf( 'day' ).toDate();
-				this.date_start = moment().startOf( 'day' ).toDate();
-
-				return this.getSensorData();
-			}
-
 		},
 
 		ready() {
+			// set default date to the currently last 24 hours
+			this.date_end = moment().endOf( 'day' ).toDate();
+			this.date_start = moment().startOf( 'day' ).toDate();
+
+			this.findSensorData();
+
+			// TODO handle empty data chart
 			// this.makeEmptyChart();
 		},
 
@@ -155,13 +146,11 @@
 		methods: {
 
 			/**
-			 * get the humidity sensors records
-			 *
-			 * @returns {Promise}
+			 * find the humidity sensors records
 			 *
 			 * @author shad
 			 */
-			getSensorData() {
+			findSensorData() {
 
 				const query = { query: {
 
@@ -177,9 +166,36 @@
 
 				} };
 
-				return hardwareHumidityView.find( query )
+				hardwareHumidityView.find( query )
 				.then( records => this.records = records )
 				.catch( console.error );
+
+			},
+
+			/**
+			 * switch the current date range mode between:
+			 * 'day', 'month' & 'year'
+			 *
+			 * @param  {String} mode
+			 *
+			 * @author shad
+			 */
+			switchMode( mode ) {
+
+				// prevent switching to same mode
+				if( this.current_mode === mode ) {
+					return;
+				}
+
+				// prepare new date ranges
+				this.date_start = moment().startOf( mode ).toDate();
+				this.date_end = moment().endOf( mode ).toDate();
+
+				// switch menu mode
+				this.current_mode = mode;
+
+				// find the newly requested sensor data
+				this.findSensorData();
 
 			},
 
@@ -336,7 +352,7 @@
 
 										// don't show the grid lines
 										display: false
-										
+
 									}
 
 								}
@@ -355,17 +371,3 @@
 	}
 
 </script>
-
-<style lang="scss">
-
-	// humidity module styling
-	#humidity {
-		height: 100vh;
-
-		& .column {
-			overflow-y: auto;
-			overflow-x: hidden;
-		}
-	}
-
-</style>
