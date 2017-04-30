@@ -60,7 +60,7 @@
 
                 waterMeterRecordService.find( query )
                 .then( record => this.record = record[ 0 ] || {} )
-                .catch( console.error );
+                .catch( this.handlingErrors );
 
             },
 

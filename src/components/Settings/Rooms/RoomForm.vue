@@ -1,8 +1,8 @@
 <template>
 
-	<div class="ui padded grid">
+	<div class="ui one column padded grid">
 
-		<div class="sixteen wide column">
+		<div class="column">
 
 			<h2 v-if="room_id" class="ui orange light header">
 				<i class="write icon"></i>
@@ -16,7 +16,7 @@
 
 		</div>
 
-		<div class="sixteen wide column">
+		<div class="column">
 			<form v-on:submit.prevent="save" class="ui form">
 
 				<div class="fields">
@@ -40,7 +40,7 @@
 				<!-- create mode -->
 		        <button v-else class="ui green basic button" type="submit">
 					<i class="plus icon"></i>
-					Sauvegarder
+					Creer
 				</button>
 
 				<!-- cancel -->
@@ -87,7 +87,7 @@
 
                 roomService.create( this.room )
                 .then( this.$router.go( { name: 'rooms_list' } ) )
-                .catch( console.error );
+                .catch( this.handlingErrors );
 
             }
 

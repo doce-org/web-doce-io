@@ -1,8 +1,8 @@
 <template>
 
-	<div class="ui padded grid">
+	<div class="ui one column padded grid">
 
-		<div class="sixteen wide column">
+		<div class="column">
 
 			<h2 class="ui blue light header">
 				<i class="circle icon"></i>
@@ -11,56 +11,57 @@
 
 		</div>
 
-		<div class="sixteen wide column">
-			<div class="ui segment">
-				<table class="ui very basic selectable table">
+		<div class="column">
+				
+			<table class="ui selectable table">
 
-					<thead>
-						<tr>
-							<th>Nom</th>
-							<th>Image</th>
-							<th class="collapsing">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Image</th>
+						<th class="collapsing">
 
-								<!-- add a room -->
-								<a v-link="{name: 'room_add'}" class="ui green basic button">
-									Ajouter une pièce
-								</a>
+							<!-- add a room -->
+							<a v-link="{name: 'room_add'}" class="ui green basic fluid button">
+								Ajouter une pièce
+							</a>
 
-							</th>
-						</tr>
-					</thead>
+						</th>
+					</tr>
+				</thead>
 
-					<tbody>
+				<tbody>
 
-						<tr v-for="room in rooms">
+					<!-- for each room -->
+					<tr v-for="room in rooms">
 
-							<!-- name -->
-							<td>{{room.name}}</td>
+						<!-- name -->
+						<td>{{room.name}}</td>
 
-							<!-- icon / image -->
-							<td>
-								<!-- <img class="ui tiny image" v-bind:src="room.room_icon.image" alt="room icon"> -->
-							</td>
+						<!-- icon / image -->
+						<td>
+							<!-- <img class="ui tiny image" v-bind:src="room.room_icon.image" alt="room icon"> -->
+						</td>
 
-							<td class="single line">
+						<td class="single line">
 
-								<!-- informations -->
-								<a v-link="" class="ui blue basic button disabled">
-									Informations
-								</a>
+							<!-- room informations -->
+							<a v-link="" class="ui blue basic button disabled">
+								Informations
+							</a>
 
-								<!-- edit -->
-								<a v-link="" class="ui orange basic button disabled">
-									Modifier
-								</a>
+							<!-- room edit -->
+							<a v-link="" class="ui orange basic button disabled">
+								Modifier
+							</a>
 
-							</td>
+						</td>
 
-						</tr>
+					</tr>
 
-					</tbody>
-				</table>
-			</div>
+				</tbody>
+				
+			</table>
 
 		</div>
 
@@ -107,7 +108,7 @@
 
                 return roomService.find()
                 .then( rooms => ( { rooms } ) )
-                .catch( console.error )
+                .catch( this.handlingErrors )
 
             }
 

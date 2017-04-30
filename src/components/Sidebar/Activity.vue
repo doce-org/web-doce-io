@@ -89,7 +89,7 @@
 
 				logService.find( query )
 				.then( logs => this.logs = logs )
-				.catch( console.error );
+				.catch( this.handlingErrors );
 
 			},
 

@@ -13,7 +13,7 @@ export default {
 		 */
 		handlingErrors( err ) {
 
-			console.error( err );
+			this.handlingErrors( err );
 
 			// TODO handle specific errors
 			// if ( err.code === 401 ) {

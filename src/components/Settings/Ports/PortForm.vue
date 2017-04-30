@@ -1,8 +1,8 @@
 <template>
 
-	<div class="ui padded grid">
+	<div class="ui one column padded grid">
 
-		<div class="sixteen wide column">
+		<div class="column">
 
 			<!-- edit mode -->
 			<h2 v-if="port_id" class="ui orange light header">
@@ -18,7 +18,7 @@
 
 		</div>
 
-		<div class="sixteen wide column">
+		<div class="column">
 			<form v-on:submit.prevent="save" class="ui form">
 
 				<div class="ui grid">
@@ -57,6 +57,7 @@
 
 							<!-- each found port -->
 							<table class="ui table">
+
 								<thead>
 									<tr>
 										<th>
@@ -71,7 +72,10 @@
 										<th>Numero de Serie</th>
 									</tr>
 								</thead>
+
 								<tbody>
+
+									<!-- each available port -->
 									<tr v-for="port in ports">
 
 										<td>
@@ -97,7 +101,9 @@
 										</td>
 
 									</tr>
+
 								</tbody>
+
 							</table>
 
 						</div>
@@ -117,7 +123,7 @@
 				<!-- create mode -->
 				<button type="submit" class="ui green basic button">
 					<i class="plus icon"></i>
-					Sauvegarder
+					Enregistrer
 				</button>
 
 				<!-- cancel -->

@@ -3,7 +3,7 @@
 import Settings from 'components/Settings/Settings.vue';
 
 // ports
-import Ports from 'components/Settings/Ports/Ports.vue';
+import PortsList from 'components/Settings/Ports/PortsList.vue';
 import PortForm from 'components/Settings/Ports/PortForm.vue';
 
 // rooms
@@ -28,7 +28,7 @@ export default {
             '/rooms/add': { name: 'room_add', component: RoomForm },
 
 			// ports
-            '/ports': { name: 'ports_list', component: Ports },
+            '/ports': { name: 'ports_list', component: PortsList },
             '/ports/add': { name: 'port_add', component: PortForm },
 
 			// sensors

@@ -168,7 +168,7 @@
 
 				hardwareHumidityView.find( query )
 				.then( records => this.records = records )
-				.catch( console.error );
+				.catch( this.handlingErrors );
 
 			},
 

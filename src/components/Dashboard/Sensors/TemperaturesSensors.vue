@@ -87,7 +87,7 @@
 
                	hardwareService.find( query )
             	.then( hardwares => this.hardwares = hardwares )
-                .catch( console.error );
+                .catch( this.handlingErrors );
 
             }
 

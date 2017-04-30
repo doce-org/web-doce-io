@@ -1,41 +1,45 @@
 <template>
 
-    <nav class="ui large inverted blue menu">
+	<div>
 
-		<!-- general options -->
-        <a v-link="" class="ui item disabled">
-			Général
-		</a>
+		<nav class="ui large inverted blue menu">
 
-		<!-- rooms -->
-		<a v-link="{name: 'rooms_list'}" class="ui item">
-			Pièces
-		</a>
+			<!-- general options -->
+			<a v-link="" class="ui item disabled">
+				Général
+			</a>
 
-		<!-- ports -->
-        <a v-link="{name: 'ports_list'}" class="ui item">
-			Ports
-		</a>
+			<!-- rooms -->
+			<a v-link="{name: 'rooms_list'}" class="ui item">
+				Pièces
+			</a>
 
-		<!-- temperatures hardwares -->
-        <a v-link="{name: 'sensors_list'}" class="ui item">
-			Sondes
-		</a>
+			<!-- ports -->
+			<a v-link="{name: 'ports_list'}" class="ui item">
+				Ports
+			</a>
 
-		<!-- power hardware -->
-        <a v-link="{name: 'meters_list'}" class="ui item">
-			Compteurs
-		</a>
+			<!-- temperatures hardwares -->
+			<a v-link="{name: 'sensors_list'}" class="ui item">
+				Sondes
+			</a>
 
-    </nav>
+			<!-- power hardware -->
+			<a v-link="{name: 'meters_list'}" class="ui item">
+				Compteurs
+			</a>
 
-    <div class="ui one column padded grid">
-        <div class="column">
+		</nav>
 
-            <router-view transition="fly-right" transition-mode="out-in"></router-view>
+		<div class="ui one column padded grid">
+			<div class="column">
 
-        </div>
-    </div>
+				<router-view transition="fly-right" transition-mode="out-in"></router-view>
+
+			</div>
+		</div>
+
+	</div>
 
 </template>
 

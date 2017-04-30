@@ -1,8 +1,8 @@
 <template>
 
-	<div class="ui padded grid">
+	<div class="ui one column padded grid">
 
-		<div class="sixteen wide column">
+		<div class="column">
 
 			<!-- edit mode -->
 			<h2 v-if="port_id" class="ui orange light header">
@@ -18,10 +18,10 @@
 
 		</div>
 
-		<div class="sixteen wide column">
+		<div class="column">
 			<form v-on:submit.prevent="save" class="ui form">
 
-				<!-- sensor type -->
+				<!-- sensor type (AUTO) -->
 				<div class="fields">
 					<div class="field disabled">
 						<label>Type</label>
@@ -91,7 +91,7 @@
 				<!-- create mode -->
 		        <button v-else class="ui green basic button" type="submit">
 					<i class="plus icon"></i>
-					Sauvegarder
+					Creer
 				</button>
 
 				<!-- cancel -->
@@ -145,7 +145,7 @@
 					this.findPortsListing()
 				] )
 				.then( ( [ rooms, ports ] ) => ( { rooms, ports } ) )
-				.catch( console.error );
+				.catch( this.handlingErrors );
 			}
 
 		},
@@ -166,7 +166,7 @@
             findRoomsListing() {
 
                 return roomService.find()
-                .catch( console.error );
+                .catch( this.handlingErrors );
 
             },
 
@@ -180,7 +180,7 @@
 			findPortsListing() {
 
 				return portService.find()
-				.catch( console.error );
+				.catch( this.handlingErrors );
 
 			},
 
@@ -193,7 +193,7 @@
 
                 hardwareService.create( this.hardware )
                 .then( () => this.$router.go( { name: 'meters_list' } ) )
-                .catch( console.error );
+                .catch( this.handlingErrors );
 
             }
 

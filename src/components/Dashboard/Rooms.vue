@@ -90,7 +90,7 @@
 
                 roomService.find()
                     .then( rooms => this.rooms = rooms )
-                    .catch( console.error );
+                    .catch( this.handlingErrors );
 
             }
 
