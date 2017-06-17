@@ -2,6 +2,6 @@
 
 cd /app/dist
 
-npm install
+npm install --unsafe-perm
 
-npm run dev
+npm run start

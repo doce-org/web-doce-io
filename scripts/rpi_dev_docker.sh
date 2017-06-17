@@ -14,4 +14,4 @@ fi
 
 docker run -d -p 8080:8080 --name ${CONTAINER_NAME} -e "NODE_ENV=development" \
     -v $(cd ../ && pwd):/app \
-    hypriot/rpi-node /app/scripts/dev_entrypoint.sh
+    hypriot/rpi-node /app/scripts/rpi_dev_entrypoint.sh
