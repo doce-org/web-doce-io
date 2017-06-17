@@ -1,0 +1,8 @@
+{
+ "name": "web.doce.io",
+ "version": "0.1.0",
+ "description": "Web App for D.O.C.E",
+ "scripts": {
+   "postinstall": "npm install express && npm install express-enforces-ssl && npm install helmet"
+ }
+}
