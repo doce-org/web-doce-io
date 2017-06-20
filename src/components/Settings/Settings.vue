@@ -14,19 +14,9 @@
 				Pièces
 			</a>
 
-			<!-- ports -->
-			<a v-link="{name: 'ports_list'}" class="ui item">
-				Ports
-			</a>
-
 			<!-- temperatures hardwares -->
-			<a v-link="{name: 'sensors_list'}" class="ui item">
-				Sondes
-			</a>
-
-			<!-- power hardware -->
-			<a v-link="{name: 'meters_list'}" class="ui item">
-				Compteurs
+			<a v-link="{name: 'hardwares_list'}" class="ui item">
+				Materiels
 			</a>
 
 		</nav>

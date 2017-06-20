@@ -2,19 +2,12 @@
 
 import Settings from 'components/Settings/Settings.vue';
 
-// ports
-import PortsList from 'components/Settings/Ports/PortsList.vue';
-import PortForm from 'components/Settings/Ports/PortForm.vue';
-
 // rooms
 import RoomsList from 'components/Settings/Rooms/RoomsList.vue';
 import RoomForm from 'components/Settings/Rooms/RoomForm.vue';
 
-import SensorsList from 'components/Settings/Sensors/SensorsList.vue';
-import SensorForm from 'components/Settings/Sensors/SensorForm.vue';
-
-import MetersList from 'components/Settings/Meters/MetersList.vue';
-import MeterForm from 'components/Settings/Meters/MeterForm.vue';
+import HardwaresList from 'components/Settings/Hardwares/HardwaresList.vue';
+import HardwareForm from 'components/Settings/Hardwares/HardwareForm.vue';
 
 export default {
 
@@ -27,17 +20,9 @@ export default {
             '/rooms': { name: 'rooms_list', component: RoomsList },
             '/rooms/add': { name: 'room_add', component: RoomForm },
 
-			// ports
-            '/ports': { name: 'ports_list', component: PortsList },
-            '/ports/add': { name: 'port_add', component: PortForm },
-
-			// sensors
-            '/sensors': { name: 'sensors_list', component: SensorsList },
-            '/sensors/add': { name: 'sensor_form', component: SensorForm },
-
-			// gauges
-            '/powers/gauges': { name: 'meters_list', component: MetersList },
-            '/powers/gauges/add': { name: 'meter_form', component: MeterForm }
+			// hardwares
+            '/hardwares': { name: 'hardwares_list', component: HardwaresList },
+            '/hardwares/add': { name: 'hardware_form', component: HardwareForm }
 
         }
     }

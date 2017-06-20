@@ -6,7 +6,7 @@
 	
 			<h2 class="ui blue light header">
 					<i class="circle icon"></i>
-					Listes des Sondes
+					Listes des materiels
 				</h2>
 	
 		</div>
@@ -20,7 +20,6 @@
 						<th>ID</th>
 						<th>Type</th>
 						<th>Nom</th>
-						<th>Connection</th>
 						<th>Piece</th>
 						<th class="collapsing">
 	
@@ -30,13 +29,23 @@
 								<div class="menu">
 	
 									<!-- add a temperature sensor -->
-									<div v-link="{name: 'sensor_form', query: {type: 'temperature'}}" class="item">
+									<div v-link="{name: 'hardware_form', query: {type: 'temperature'}}" class="item">
 										Temperature
 									</div>
 	
 									<!-- add a humidity sensor -->
-									<div v-link="{name: 'sensor_form', query: {type: 'humidity'}}" class="item">
+									<div v-link="{name: 'hardware_form', query: {type: 'humidity'}}" class="item">
 										Humidite
+									</div>
+
+									<!-- add a power gauge -->
+									<div v-link="{name: 'hardware_form', query: {type: 'energy'}}" class="item">
+										Puissance
+									</div>
+	
+									<!-- add a water gauge -->
+									<div v-link="{name: 'hardware_form', query: {type: 'water'}}" class="item">
+										Eau
 									</div>
 	
 								</div>
@@ -59,9 +68,6 @@
 	
 						<!-- name -->
 						<td>{{hardware.name}}</td>
-	
-						<!-- port name -->
-						<td></td>
 	
 						<!-- room_name -->
 						<td></td>
@@ -108,7 +114,7 @@
 		route: {
 
 			data() {
-				return this.findSensorsHardwareListing();
+				return this.findHardwaresListing();
 			}
 
 		},
@@ -120,27 +126,15 @@
 		methods: {
 
 			/**
-			 * find sensors hardware listing
+			 * find hardwares listing
 			 *
 			 * @return {Promise}
 			 *
 			 * @author shad
 			 */
-			findSensorsHardwareListing() {
+			findHardwaresListing() {
 
-				const query = {
-					query: {
-
-						// can either be a temperature or humidity sensor
-						$or: [
-							{ type: 'temperature' },
-							{ type: 'humidity' }
-						]
-
-					}
-				};
-
-				return hardwareService.find( query )
+				return hardwareService.find( {} )
 				.then( hardwares => ( { hardwares } ) )
 				.catch( this.handlingErrors );
 

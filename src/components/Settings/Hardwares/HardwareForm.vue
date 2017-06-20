@@ -7,13 +7,13 @@
 			<!-- edit mode -->
 			<h2 v-if="port_id" class="ui orange light header">
 				<i class="write icon"></i>
-				Modifier la sonde
+				Modifier le materiel
 			</h2>
 
 			<!-- create mode -->
 			<h2 v-else class="ui green light header">
 				<i class="plus icon"></i>
-				Enregistrer une nouvelle sonde
+				Enregistrer un nouveau materiel
 			</h2>
 
 		</div>
@@ -63,24 +63,6 @@
 					</div>
 				</div>
 
-				<!-- port -->
-				<div class="field required">
-					<label>Connection</label>
-					<div class="ui selection search dropdown">
-						<input v-model="hardware.port_id" type="hidden">
-						<div class="default text">Selectionner une connection disponible</div>
-						<i class="dropdown icon"></i>
-						<div class="menu">
-
-							<!-- each port -->
-							<div v-for="port in ports" class="item" data-value="{{port.id}}">
-								{{port.name}}
-							</div>
-
-						</div>
-					</div>
-				</div>
-
 				<div class="ui divider"></div>
 
 				<!-- edit mode -->
@@ -96,7 +78,7 @@
 				</button>
 
 				<!-- cancel -->
-		        <a v-link="{name: 'sensors_list'}" class="ui red basic button">
+		        <a v-link="{name: 'hardwares_list'}" class="ui red basic button">
 					Annuler
 				</a>
 
@@ -110,7 +92,7 @@
 <script type="text/babel">
 
 	// services
-    import { roomService, portService, hardwareService } from 'services';
+    import { roomService, hardwareService } from 'services';
 
     export default {
 
@@ -120,10 +102,6 @@
 				// contain the listing of registered rooms
 				// @type {Array}
                 'rooms': [],
-
-				// contain the listing of registered serial ports
-				// @type {Array}
-                'ports': [],
 
 				// contain the hardware id
 				// @type {Integer}
@@ -142,10 +120,9 @@
 				this.$set( 'hardware.type', this.$route.query[ 'type' ] );
 
 				return Promise.all( [
-					this.findRoomsListing(),
-					this.findPortsListing()
+					this.findRoomsListing()
 				] )
-				.then( ( [ rooms, ports ] ) => ( { rooms, ports } ) )
+				.then( rooms => ( { rooms } ) )
 				.catch( this.handlingErrors );
 			}
 
@@ -170,20 +147,6 @@
                 .catch( this.handlingErrors );
 
             },
-
-			/**
-			 * find available ports
-			 *
-			 * @return {Promise}
-			 *
-			 * @author shad
-			 */
-			findPortsListing() {
-
-				return portService.find()
-				.catch( this.handlingErrors );
-
-			},
 
             /**
              * create or update a sensor
