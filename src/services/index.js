@@ -16,26 +16,19 @@ export const feathers_socket = feathers()
 // SERVICES
 // ========================================================
 // ports
-export const connectionService = feathers_socket.service( '/connections' );
+export const serialService = feathers_socket.service( '/serial' );
 
 // rooms
 export const roomService = feathers_socket.service( '/rooms' );
 
-// hardware
-export const hardwareService = feathers_socket.service( '/hardwares' );
-
-// sensors
-export const temperatureSensorRecordService = feathers_socket.service( '/temperatures/sensors/records' );
-export const humiditySensorRecordService = feathers_socket.service( '/humidities/sensors/records' );
-export const powerMeterRecordService = feathers_socket.service( '/powers/meters/records' );
-export const waterMeterRecordService = feathers_socket.service( '/waters/meters/records' );
+// transmitters
+export const transmitterService = feathers_socket.service( '/transmitters' );
+export const transmitterTemperatureRecordService = feathers_socket.service( '/transmitters/temperatures/records' );
+export const transmitterTemperatureAvgService = feathers_socket.service( '/transmitters/temperatures/averages' );
+export const transmitterHumidityRecordService = feathers_socket.service( '/transmitters/humidities/records' );
+export const transmitterHumdidityAvgService = feathers_socket.service( '/transmitters/humidities/averages' );
+export const transmitterPowerRecordService = feathers_socket.service( '/transmitters/powers/records' );
+export const transmitterWaterRecordService = feathers_socket.service( '/transmitters/waters/records' );
 
 // others
 export const logService = feathers_socket.service( '/logs' );
-
-// ========================================================
-// VIEWS
-// ========================================================
-// hardware
-export const hardwareTemperatureView = feathers_socket.service( '/views/hardwares/temperatures' );
-export const hardwareHumidityView = feathers_socket.service( '/views/hardwares/humidities' );

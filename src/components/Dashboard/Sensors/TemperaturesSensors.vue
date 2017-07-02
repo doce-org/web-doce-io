@@ -9,14 +9,14 @@
         <table class="ui very basic table">
             <tbody>
 
-                <tr v-for="hardware in hardwares">
+                <tr v-for="transmitter in transmitters">
 
                     <!-- name -->
-                    <td>{{hardware.name | uppercase}}</td>
+                    <td>{{transmitter.name | uppercase}}</td>
 
                     <!-- record -->
                     <td class="right aligned">
-                        <temperature-sensor-record :hardware_id="hardware.id"></temperature-sensor-record>
+                        <temperature-sensor-record :transmitter_id="transmitter.id"></temperature-sensor-record>
                     </td>
 
                 </tr>
@@ -31,7 +31,7 @@
 <script type="text/babel">
 
     // services
-    import { hardwareService } from 'services';
+    import { transmitterService } from 'services';
     // components
     import TemperatureSensorRecord from './TemperatureSensorRecord.vue';
 
@@ -54,16 +54,16 @@
         data() {
             return {
 
-				// contain the listing of hardware sensors
+				// contain the listing of transmitter sensors
 				// linked to the current room id
 				// @type {Array}
-                'hardwares': []
+                'transmitters': []
 
             }
         },
 
         created() {
-            this.findHardwareTemperatureSensors();
+            this.findTransmitterTemperatureSensors();
         },
 
         methods: {
@@ -73,7 +73,7 @@
              *
              * @author shad
              */
-            findHardwareTemperatureSensors() {
+            findTransmitterTemperatureSensors() {
 
 				const query = { query: {
 
@@ -85,8 +85,8 @@
 
 				} };
 
-               	hardwareService.find( query )
-            	.then( hardwares => this.hardwares = hardwares )
+               	transmitterService.find( query )
+            	.then( transmitters => this.transmitters = transmitters )
                 .catch( this.handlingErrors );
 
             }

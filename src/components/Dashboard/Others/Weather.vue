@@ -51,36 +51,42 @@
         computed: {
 
             /**
-             * @summary get day
+             * get the current day
              *
              * @returns {String}
              *
              * @author shad
              */
             getDay(){
+
                 return moment( this.datetime ).format( 'dddd' );
+
             },
 
             /**
-             * @summary get date and month
+             * get current day and month
              *
              * @returns {String}
              *
              * @author shad
              */
             getDate() {
+
                 return moment( this.datetime ).format( 'DD MMM' );
+
             },
 
             /**
-             * @summary get time
+             * get the current time
              *
              * @returns {String}
              *
              * @author shad
              */
             getTime() {
+
                 return moment( this.datetime ).format( 'HH:mm' );
+                
             }
 
         }

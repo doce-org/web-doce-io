@@ -4,19 +4,9 @@
 
 		<nav class="ui large inverted blue menu">
 
-			<!-- general options -->
-			<a v-link="" class="ui item disabled">
-				Général
-			</a>
-
-			<!-- rooms -->
-			<a v-link="{name: 'rooms_list'}" class="ui item">
-				Pièces
-			</a>
-
-			<!-- temperatures hardwares -->
-			<a v-link="{name: 'hardwares_list'}" class="ui item">
-				Materiels
+			<a v-link="{name: 'setup'}" class="item">
+				<i class="settings icon"></i>
+				Mode Initialisation
 			</a>
 
 		</nav>

@@ -10,8 +10,7 @@
 			<div class="ui list">
 
 				<!-- each of the last 10 logs -->
-				<div v-for="log in last_logs" v-bind="{'orange': log.type === 'warning', 'red': log.type === 'error'}"
-						class="item">
+				<div v-for="log in logs" v-bind="{'orange': log.type === 'warning', 'red': log.type === 'error'}" class="item">
 					<i class="angle right icon"></i>
 					{{log.message}}
 				</div>
@@ -47,25 +46,6 @@
 		created() {
 			this.findLastLogs();
 			this.onNewLogCreated();
-		},
-
-		computed: {
-
-			/**
-			 * return the last 10 logs
-			 *
-			 * @return {Array}
-			 *
-			 * @author shad
-			 */
-			last_logs() {
-
-				const logs = _orderBy( this.logs, 'id', 'desc' );
-
-				return _take( logs, 10 );
-
-			}
-
 		},
 
 		methods: {
@@ -107,6 +87,12 @@
 
 					this.logs.push( log );
 
+					// remove the first element if we have more
+					// than 10 logs already on the client
+					if ( this.logs.length > 10 ) {
+						this.logs.shift();
+					}
+
 				} );
 
 			}
@@ -127,10 +113,12 @@
 
 			.item {
 
+				// warning log
 				&.orange{
 					color: #e67e22;
 				}
 
+				// error log
 				&.red{
 					color: #e74c3c;
 				}

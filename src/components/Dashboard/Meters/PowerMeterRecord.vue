@@ -10,15 +10,15 @@
 <script type="text/babel">
 
     // services
-    import { powerMeterRecordService } from 'services';
+    import { transmitterPowerRecordService } from 'services';
 
     export default {
 
         props: [
 
-			// contain the hardware id
+			// contain the transmitter id
 			// @type {Integer}
-			'hardware_id'
+			'transmitter_id'
 
 		],
 
@@ -48,8 +48,8 @@
 
 				const query = { query: {
 
-					// linked to current hardware id
-                    hardware_id: this.hardware_id,
+					// linked to current transmitter id
+                    transmitter_id: this.transmitter_id,
 
 					// limit to one
                     $limit: 1,
@@ -59,7 +59,7 @@
 
                 } };
 
-                powerMeterRecordService.find( query )
+                transmitterPowerRecordService.find( query )
                 .then( record => this.record = record[ 0 ] || {} )
                 .catch( this.handlingErrors );
 
@@ -76,10 +76,10 @@
              */
             updateLastPowerRecord() {
 
-                powerMeterRecordService.on( 'created', record => {
+                transmitterPowerRecordService.on( 'created', record => {
 
-					// make sure it's the same hardware id we're receiving data from
-                    if ( this.record.hardware_id === record.hardware_id ) {
+					// make sure it's the same transmitter id we're receiving data from
+                    if ( this.record.transmitter_id === record.transmitter_id ) {
 
                         this.record = record;
 

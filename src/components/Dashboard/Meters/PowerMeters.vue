@@ -7,14 +7,14 @@
         <table class="ui very basic table">
             <tbody>
 
-                <tr v-for="hardware in hardwares">
+                <tr v-for="transmitter in transmitters">
 
                     <!-- name -->
-                    <td>{{hardware.name | uppercase}}</td>
+                    <td>{{transmitter.name | uppercase}}</td>
 
                     <!-- record -->
                     <td class="right aligned">
-                        <power-meter-record :hardware_id="hardware.id"></power-meter-record>
+                        <power-meter-record :transmitter_id="transmitter.id"></power-meter-record>
                     </td>
 
                 </tr>
@@ -29,7 +29,7 @@
 <script type="text/babel">
 
     // services
-    import { hardwareService } from 'services';
+    import { transmitterService } from 'services';
     // components
     import PowerMeterRecord from './PowerMeterRecord.vue';
 
@@ -52,16 +52,16 @@
         data() {
             return {
 
-				// contain the listing of hardware energy gauge
+				// contain the listing of transmitter energy gauge
 				// linked to the current room id
 				// @type {Array}
-                'hardwares': []
+                'transmitters': []
 
             }
         },
 
         created() {
-            this.findHardwarePowerMeters();
+            this.findTransmitterPowerMeters();
         },
 
         methods: {
@@ -71,7 +71,7 @@
              *
              * @author shad
              */
-            findHardwarePowerMeters() {
+            findTransmitterPowerMeters() {
 
 				const query = { query: {
 
@@ -83,8 +83,8 @@
 
 				} };
 
-               	hardwareService.find( query )
-            	.then( hardwares => this.hardwares = hardwares )
+               	transmitterService.find( query )
+            	.then( transmitters => this.transmitters = transmitters )
                 .catch( this.handlingErrors );
 
             }

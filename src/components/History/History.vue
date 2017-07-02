@@ -9,7 +9,7 @@
 
 				<!-- humidity - temperature comparison graph -->
 				<div class="eight wide column">
-					<humidity-temperature-comparison-graph></humidity-temperature-comparison-graph>
+					<!--<humidity-temperature-comparison-graph></humidity-temperature-comparison-graph>-->
 				</div>
 
 			</div>
@@ -23,13 +23,13 @@
 <script>
 
 	// components
-	import HumidityTemperatureComparisonGraph from './Humidity/HumidityTemperatureComparisonGraph.vue';
+	// import HumidityTemperatureComparisonGraph from './Humidity/HumidityTemperatureComparisonGraph.vue';
 
     export default {
 
 		components: {
 
-			HumidityTemperatureComparisonGraph
+			// HumidityTemperatureComparisonGraph
 
 		}
 
