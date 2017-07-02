@@ -1,13 +1,21 @@
 'use strict';
 
 import Setup from 'components/Setup/Setup.vue';
+import Menu from 'components/Setup/Menu.vue';
 
 export default {
 
     '/setup': { 
-        name: 'setup', 
         component: Setup,
-        subRoutes: {} 
+        subRoutes: {
+
+            // menu
+            '/': { name: 'setup', component: Menu },
+
+            // rooms
+            
+
+        } 
     }
 
 }

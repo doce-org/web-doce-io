@@ -9,16 +9,8 @@
             </button>
         </div>
 
-        <div class="center aligned column">
-
-            <a class="ui basic blue button">
-                Gestion des Pieces
-            </a>
-
-            <a class="ui basic blue button">
-                Gestion des Transmetteurs
-            </a>
-
+        <div class="center aligned middle aligned column">
+            <router-view transition="fade" transition-mode="out-in"></router-view>
         </div>
 
     </section>
@@ -32,4 +24,13 @@
     }
 
 </script>
+
+<style lang="scss" scoped>
+
+    .center.aligned.column {
+        width: 450px;
+    }
+
+</style>
+
 
