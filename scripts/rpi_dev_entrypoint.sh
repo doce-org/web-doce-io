@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cd /app/dist
+cd /app
 
-npm install --unsafe-perm
+npm install
 
-npm run start
+npm run dev

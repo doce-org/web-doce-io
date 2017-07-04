@@ -7,22 +7,22 @@
                 <tr>
                     <th>Nom</th>
                     <th>
-                        <button v-link="{name: 'setup_room_create'}" class="ui basic green button">Ajouter une piece</button>                        
+                        <button v-link="{name: 'setup_transmitter_create'}" class="ui basic green button">Ajouter un transmetteur</button>                        
                     </th>
                 </tr>
             </thead>
             <tbody>
 
-                <!-- each room -->
-                <tr v-for="room in rooms">
+                <!-- each transmitter -->
+                <tr v-for="transmitter in transmitters">
 
                     <!-- name -->
-                    <td>{{room.name}}</td>
+                    <td>{{transmitter.name}}</td>
 
                     <!-- controls -->
                     <td>
 
-                        <button class="ui basic orange button">Editer</button>
+                        <button class="ui basic red button">Supprimer</button>
 
                     </td>
 
@@ -39,35 +39,35 @@
 <script>
 
     // services
-    import { roomService } from 'services';
+    import { transmitterService } from 'services';
 
     export default {
 
         data() {
             return {
 
-                // contain the listing of available rooms
+                // contain the listing of available transmitters
                 // @type {Array}
-                'rooms': false
+                'transmitters': false
 
             }
         },
 
         created() {
-            this.findRooms();
+            this.findTransmitters();
         },
 
         methods: {
 
             /**
-             * find the listing of available (created) rooms
+             * find the listing of available (registered) transmitters
              * 
              * @author shad
              */ 
-            findRooms() {
+            findTransmitters() {
 
-                roomService.find()
-                .then( rooms => this.rooms = rooms )
+                transmitterService.find()
+                .then( transmitters => this.transmitters = transmitters )
                 .catch( this.handlingErrors );
 
             }

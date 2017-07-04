@@ -32,3 +32,8 @@ export const transmitterWaterRecordService = feathers_socket.service( '/transmit
 
 // others
 export const logService = feathers_socket.service( '/logs' );
+
+// ========================================================
+// SETUP
+// ========================================================
+export const transmitterSetupService = feathers_socket.service( '/setup/transmitters' );
