@@ -79,7 +79,7 @@
 					'room_id': this.room_id,
 
 					// of type 'temperature'
-					type: 'humidity'
+					type: 'HUMIDITY'
 
 				} };
 

@@ -4,6 +4,10 @@ import Vue from 'vue';
 
 import './router';
 
+// filters
+import filters from './filters';
+Vue.use( filters );
+
 // transitions
 import transitions from './transitions';
 Vue.use( transitions );

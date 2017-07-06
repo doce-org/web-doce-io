@@ -10,9 +10,16 @@
 			<div class="ui list">
 
 				<!-- each of the last 10 logs -->
-				<div v-for="log in logs" v-bind="{'orange': log.type === 'warning', 'red': log.type === 'error'}" class="item">
-					<i class="angle right icon"></i>
-					{{log.message}}
+				<div v-for="log in reversed_logs" class="item">
+					<i v-bind:class="{
+							'blue': log.type === 'info',
+							'orange': log.type === 'warning', 
+							'red': log.type === 'error'
+						}" class="circle icon"></i>
+					<div class="content">
+						<div class="header">{{log.message}}</div>
+						<div class="description">{{log.created_at | momentFormat false 'DD MMM HH:mm'}}</div>
+					</div>
 				</div>
 
 			</div>
@@ -28,6 +35,7 @@
 	// lib
 	import _orderBy from 'lodash/orderBy';
 	import _take from 'lodash/take';
+	import moment from 'moment';
 	// services
 	import { logService } from 'services';
 
@@ -46,6 +54,23 @@
 		created() {
 			this.findLastLogs();
 			this.onNewLogCreated();
+		},
+
+		computed: {
+			
+			/**
+			 * reverse logs ordering
+			 *
+			 * @return {Array}
+			 *
+			 * @author shad
+			 */
+			reversed_logs() {
+
+				return this.logs && this.logs.reverse();
+
+			}
+
 		},
 
 		methods: {
@@ -89,9 +114,7 @@
 
 					// remove the first element if we have more
 					// than 10 logs already on the client
-					if ( this.logs.length > 10 ) {
-						this.logs.shift();
-					}
+					if ( this.logs.length > 10 )  this.logs.shift();
 
 				} );
 
@@ -112,15 +135,15 @@
 		.ui.list {
 
 			.item {
+				font-size: .9em;
 
-				// warning log
-				&.orange{
-					color: #e67e22;
-				}
+				.content {
 
-				// error log
-				&.red{
-					color: #e74c3c;
+					// force log message to break
+					// when too long word overflows
+					.header {
+						word-break: break-word;
+					}
 				}
 			}
 		}
