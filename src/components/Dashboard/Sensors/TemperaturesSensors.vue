@@ -80,8 +80,8 @@
 					// linked to the current room id
 					'room_id': this.room_id,
 
-					// of type 'temperature'
-					type: 'temperature'
+					// of type 'TEMPERATURE'
+					type: 'TEMPERATURE'
 
 				} };
 

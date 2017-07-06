@@ -1,8 +1,7 @@
 <template>
 
     <div>
-		{{record.power || '...'}}
-		{{record.energy || '...'}}
+		{{record.power || '...'}} W
 	</div>
 
 </template>

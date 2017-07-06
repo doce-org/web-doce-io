@@ -78,8 +78,8 @@
 					// linked to the current room id
 					'room_id': this.room_id,
 
-					// of type 'water'
-					type: 'water'
+					// of type 'WATER'
+					type: 'WATER'
 
 				} };
 
