@@ -10,7 +10,7 @@
 			<div class="ui list">
 
 				<!-- each of the last 10 logs -->
-				<div v-for="log in reversed_logs" class="item">
+				<div v-for="log in reversed_logs" track-by="$index" class="item">
 					<i v-bind:class="{
 							'blue': log.type === 'info',
 							'orange': log.type === 'warning', 
@@ -18,7 +18,7 @@
 						}" class="circle icon"></i>
 					<div class="content">
 						<div class="header">{{log.message}}</div>
-						<div class="description">{{log.created_at | momentFormat false 'DD MMM HH:mm'}}</div>
+						<div class="description">{{log.created_at | momentFormat false 'DD MMM HH:mm.ss'}}</div>
 					</div>
 				</div>
 
@@ -67,7 +67,7 @@
 			 */
 			reversed_logs() {
 
-				return this.logs && this.logs.reverse();
+				return this.logs && _orderBy( this.logs, 'created_at', 'desc' );
 
 			}
 

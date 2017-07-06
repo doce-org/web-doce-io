@@ -1,44 +1,8 @@
 <template>
 
-    <div v-for="room in rooms" class="ui padded grid">
+    <div v-for="room in rooms" class="ui padded two column grid">
 
-        <div class="sixteen wide column">
-            <h3 class="ui disabled header">{{room.name}}</h3>
-			<!-- TODO add back room icon / image -->
-            <!-- <img class="ui small centered image" :src="room.room_icon.image" alt="room icon"> -->
-        </div>
-
-		<!-- temperatures -->
-        <div class="four wide column">
-
-            <temperatures-sensors :room_id="room.id"></temperatures-sensors>
-
-        </div>
-
-		<!-- humidities -->
-        <div class="four wide column">
-
-            <humidities-sensors :room_id="room.id"></humidities-sensors>
-
-        </div>
-
-		<!-- power -->
-        <div class="four wide column">
-
-            <power-meters :room_id="room.id"></power-meters>
-
-        </div>
-
-		<!-- water -->
-        <div class="four wide column">
-
-            <water-meters :room_id="room.id"></water-meters>
-
-        </div>
-
-        <div class="sixteen wide column">
-            <div class="ui divider"></div>
-        </div>
+        <room :room="room"></room>
 
     </div>
 
@@ -49,19 +13,13 @@
     // services
     import { roomService } from 'services';
     // components
-    import TemperaturesSensors from './Sensors/TemperaturesSensors.vue';
-    import HumiditiesSensors from './Sensors/HumiditiesSensors.vue';
-    import PowerMeters from './Meters/PowerMeters.vue';
-    import WaterMeters from './Meters/WaterMeters.vue';
+    import Room from './Room.vue';
 
     export default {
 
         components: {
 
-			TemperaturesSensors,
-			HumiditiesSensors,
-			PowerMeters,
-			WaterMeters
+            Room
 
 		},
 
@@ -102,9 +60,6 @@
 
 <style lang="scss" scoped>
 
-	// room header
-    .disabled.header {
-        text-transform: uppercase;
-    }
+	
 
 </style>
