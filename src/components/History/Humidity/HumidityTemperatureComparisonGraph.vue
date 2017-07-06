@@ -27,8 +27,10 @@
 	import _filter from 'lodash/filter';
 	import _uniq from 'lodash/uniq';
 	import _map from 'lodash/map';
+	import _max from 'lodash/max';
+	import _min from 'lodash/min';
 	// services
-	import { hardwareHumidityView } from 'services';
+	import { transmitterHumidityAvgDetailedView } from 'services';
 
 	export default {
 
@@ -72,7 +74,7 @@
 			 *
 			 * @author shad
 			 */
-			'sorted_by_hardwares'() {
+			'sorted_by_transmitters'() {
 
 				this.updateChart();
 
@@ -83,15 +85,15 @@
 		computed: {
 
 			/**
-			 * filter a listing of unique hardwares names available
+			 * filter a listing of unique transmitters names available
 			 *
 			 * @return {Array}
 			 *
 			 * @author shad
 			 */
-			hardwares_names() {
+			transmitters_names() {
 
-				return _uniq( _map( this.records, 'name' ) );
+				return _uniq( _map( this.records, 'transmitter_name' ) );
 
 			},
 
@@ -102,32 +104,32 @@
 			 *
 			 * @author shad
 			 */
-			sorted_by_hardwares() {
+			sorted_by_transmitters() {
 
-				let sorted_by_hardwares = [];
+				let sorted_by_transmitters = [];
 
 				if( this.records ) {
 
-					this.hardwares_names.forEach( hardware_name => {
+					this.transmitters_names.forEach( transmitter_name => {
 
 						let graph_labels = [];
 						let graph_humidities = [];
 						let graph_temperatures = [];
 
-						// filter to get only the humidities linked to the hardware selected
-						const humidities = _filter( this.records, { name: hardware_name } );
+						// filter to get only the humidities linked to the transmitter selected
+						const humidities = _filter( this.records, { transmitter_name } );
 
 						// convert to dates
 						for( let d = 0; d < humidities.length; d++ ) {
 
-							graph_labels.push( humidities[ d ][ 'sensor_created_at' ] );
-							graph_humidities.push( +humidities[ d ][ 'sensor_humidity' ] );
-							graph_temperatures.push( +humidities[ d ][ 'sensor_temperature' ] );
+							graph_labels.push( humidities[ d ][ 'created_at' ] );
+							graph_humidities.push( +humidities[ d ][ 'avg_humidity' ] );
+							graph_temperatures.push( +humidities[ d ][ 'avg_temperature' ] );
 
 						}
 
-						sorted_by_hardwares.push( {
-							name: hardware_name,
+						sorted_by_transmitters.push( {
+							name: transmitter_name,
 							labels: graph_labels,
 							humidities: graph_humidities,
 							temperatures: graph_temperatures
@@ -137,7 +139,7 @@
 
 				}
 
-				return sorted_by_hardwares.length > 0 && sorted_by_hardwares;
+				return sorted_by_transmitters.length > 0 && sorted_by_transmitters;
 
 			}
 
@@ -154,19 +156,23 @@
 
 				const query = { query: {
 
+					// only get the data on the user specified mode
+					// ex: 'day'
+					'type': this.current_mode,
+
 					// sensor record has to be between the range of
 					// specified dates
-					'sensor_created_at': {
+					'created_at': {
 						$gte: this.date_start,
 						$lte: this.date_end
 					},
 
 					// sort so we only get the last ones
-					$sort: { 'sensor_created_at': 1 }
+					$sort: { 'created_at': 1 }
 
 				} };
 
-				hardwareHumidityView.find( query )
+				transmitterHumidityAvgDetailedView.find( query )
 				.then( records => this.records = records )
 				.catch( this.handlingErrors );
 
@@ -213,14 +219,14 @@
 
 					data: {
 
-						// hardware labels
-						labels: this.sorted_by_hardwares[ 0 ].labels,
+						// transmitter labels
+						labels: this.sorted_by_transmitters[ 0 ].labels,
 
 						datasets: [
 							{
 
-								// single hardware label (temperature)
-								label: `${this.sorted_by_hardwares[ 0 ].name}-Temperatures`,
+								// single transmitter label (temperature)
+								label: `${this.sorted_by_transmitters[ 0 ].name}-Temperatures`,
 
 								// y axis ID (multiple axis)
 								yAxisID: 'y-axis-0',
@@ -235,13 +241,13 @@
 								fill: false,
 
 								// temperature array of values
-								data: this.sorted_by_hardwares[ 0 ].temperatures
+								data: this.sorted_by_transmitters[ 0 ].temperatures
 
 							},
 							{
 
-								// single hardware label (humidity)
-								label: `${this.sorted_by_hardwares[ 0 ].name}-Humidites`,
+								// single transmitter label (humidity)
+								label: `${this.sorted_by_transmitters[ 0 ].name}-Humidites`,
 
 								// y axis ID (multiple axis)
 								yAxisID: 'y-axis-1',
@@ -256,7 +262,7 @@
 								fill: false,
 
 								// humidity array of values
-								data: this.sorted_by_hardwares[ 0 ].humidities
+								data: this.sorted_by_transmitters[ 0 ].humidities
 
 							}
 						]
@@ -314,10 +320,10 @@
 									ticks: {
 
 										// 0 as min value
-										min: 0,
+										min: _min( this.sorted_by_transmitters[ 0 ].temperatures ) - 1,
 
 										// 45 as max value
-										max: 45
+										max: _max( this.sorted_by_transmitters[ 0 ].temperatures ) + 1
 
 									},
 
@@ -341,10 +347,10 @@
 									ticks: {
 
 										// 0 as min value
-										min: 0,
+										min: _min( this.sorted_by_transmitters[ 0 ].humidities ) - 1,
 
 										// 100 as max value
-										max: 100
+										max: _max( this.sorted_by_transmitters[ 0 ].humidities ) + 1
 
 									},
 

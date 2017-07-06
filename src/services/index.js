@@ -37,3 +37,10 @@ export const logService = feathers_socket.service( '/logs' );
 // SETUP
 // ========================================================
 export const transmitterSetupService = feathers_socket.service( '/setup/transmitters' );
+
+// ========================================================
+// VIEWS
+// ========================================================
+// transmitters
+export const transmitterTemperatureAvgDetailedView = feathers_socket.service( '/views/transmitters/temperatures/avg/detailed' );
+export const transmitterHumidityAvgDetailedView = feathers_socket.service( '/views/transmitters/humidities/avg/detailed' );
