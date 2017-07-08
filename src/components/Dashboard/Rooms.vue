@@ -1,6 +1,6 @@
 <template>
 
-    <div v-for="room in rooms" class="ui padded two column grid">
+    <div v-for="room in rooms" class="ui two column grid">
 
         <room :room="room"></room>
 

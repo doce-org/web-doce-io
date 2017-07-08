@@ -11,14 +11,6 @@
 
         <!-- summary -->
         <section class="thirteen wide center aligned column">
-            <nav class="ui secondary menu">
-                <div class="right menu">
-                    <a class="ui active item">Instantanée</a>
-                    <a class="ui item disabled">Heure</a>
-                    <a class="ui item disabled">Jour</a>
-                    <a class="ui item disabled">Mois</a>
-                </div>
-            </nav>
 
             <!-- rooms -->
             <rooms></rooms>

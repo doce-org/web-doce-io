@@ -6,8 +6,7 @@
 			<div class="header item">Comparaison Humidites / Temperatures</div>
 			<div class="right menu">
 				<a @click="switchMode('day')" v-bind:class="{'active': this.current_mode === 'day'}" class="ui item">Jour</a>
-				<a @click="switchMode('month')" v-bind:class="{'active': this.current_mode === 'month'}" class="ui item">Mois</a>
-				<a @click="switchMode('year')" v-bind:class="{'active': this.current_mode === 'year'}" class="ui item">Annee</a>
+				<a @click="switchMode('week')" v-bind:class="{'active': this.current_mode === 'week'}" class="ui item">Semaine</a>
 			</div>
 		</nav>
 		<div class="ui divider"></div>
