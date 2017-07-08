@@ -12,6 +12,7 @@
 				<!-- each of the last 10 logs -->
 				<div v-for="log in reversed_logs" track-by="$index" class="item">
 					<i v-bind:class="{
+							'black': log.type === 'debug',
 							'blue': log.type === 'info',
 							'orange': log.type === 'warning', 
 							'red': log.type === 'error'
