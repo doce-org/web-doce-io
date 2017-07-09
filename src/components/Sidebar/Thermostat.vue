@@ -3,7 +3,7 @@
     <div class="sixteen wide column">
 
         <div class="ui basic segment">
-            <h4 class="ui grey header">Thermostat</h4>
+            <h5 class="ui disabled header">THERMOSTAT</h5>
         </div>
 
     </div>

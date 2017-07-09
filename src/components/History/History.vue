@@ -1,19 +1,10 @@
 <template>
 
-    <div id="history" class="ui padded one column grid">
+    <div id="history" class="ui padded grid">
 
-		<div class="column">
-			<h2 class="ui dividing header">Historique</h2>
-
-			<div class="ui grid">
-
-				<!-- humidity - temperature comparison graph -->
-				<div class="sixteen wide column">
-					<humidity-temperature-comparison-graph></humidity-temperature-comparison-graph>
-				</div>
-
-			</div>
-
+		<!-- humidity - temperature comparison graph -->
+		<div class="eight wide column">
+			<humidity-temperature-comparison-graph></humidity-temperature-comparison-graph>
 		</div>
 
     </div>

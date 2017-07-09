@@ -1,6 +1,6 @@
 <template>
 
-	<div class="ui segment">
+	<div>
 
 		<nav class="ui secondary menu">
 			<div class="header item">Comparaison Humidites / Temperatures</div>
@@ -225,7 +225,7 @@
 							{
 
 								// single transmitter label (temperature)
-								label: `${this.sorted_by_transmitters[ 0 ].name}-Temperatures`,
+								label: `"${this.sorted_by_transmitters[ 0 ].name}" (Temperatures)`,
 
 								// y axis ID (multiple axis)
 								yAxisID: 'y-axis-0',
@@ -233,8 +233,23 @@
 								// line stroke color
 								borderColor: '#e74c3c',
 
+								// line background color
+								backgroundColor: '#e74c3c',
+
 								// line stroke width
-								borderWidth: 1,
+								borderWidth: 2,
+
+								// point background color
+								pointBackgroundColor: "#e74c2c",
+
+								// point not shown unless hovered
+								pointRadius: 0,
+
+								// point border width
+      							pointBorderWidth: 0,
+
+								// straight lines
+								lineTension: 0,
 
 								// prevent fill for better readability
 								fill: false,
@@ -246,7 +261,7 @@
 							{
 
 								// single transmitter label (humidity)
-								label: `${this.sorted_by_transmitters[ 0 ].name}-Humidites`,
+								label: `"${this.sorted_by_transmitters[ 0 ].name}"(Humidites)`,
 
 								// y axis ID (multiple axis)
 								yAxisID: 'y-axis-1',
@@ -254,8 +269,23 @@
 								// line stroke color
 								borderColor: '#3498db',
 
+								// line background color
+								backgroundColor: '#3498db',
+
 								// line stroke width
-								borderWidth: 1,
+								borderWidth: 2,
+
+								// point background color
+								pointBackgroundColor: "#3498db",
+
+								// point not shown unless hovered
+								pointRadius: 0,
+
+								// point border width
+      							pointBorderWidth: 0,
+
+								// straight lines
+								lineTension: 0,
 
 								// prevent fill for better readability
 								fill: false,
@@ -376,3 +406,13 @@
 	}
 
 </script>
+
+<style lang="scss" scoped>
+
+	// some nav selector style
+	.ui.secondary.menu {
+		margin-top: 0;
+	}
+
+</style>
+

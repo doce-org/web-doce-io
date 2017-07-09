@@ -1,13 +1,19 @@
 <template>
 
-	<div class="ui equal height grid">
+	<div class="ui grid">
 
-		<!-- thermostat -->
-		<thermostat></thermostat>
+		<!-- serial / server connexion -->
+		<connexion></connexion>
 
-		<!-- activities -->
-		<activity></activity>
+		<div class="ui equal height grid">
 
+			<!-- thermostat -->
+			<thermostat></thermostat>
+
+			<!-- activities -->
+			<activity></activity>
+
+		</div>
 	</div>
 
 </template>
@@ -15,6 +21,7 @@
 <script>
 
 	// components
+	import Connexion from './Connexion.vue';
 	import Thermostat from './Thermostat.vue';
 	import Activity from './Activity.vue';
 
@@ -22,6 +29,7 @@
 
 		components: {
 
+			Connexion,
 			Thermostat,
 			Activity
 
@@ -34,8 +42,14 @@
 <style lang="scss" scoped>
 
 	// make sure the controls sidebar take all the room
-	.ui.grid {
+	.ui.grid:not( .equal.height ) {
 		height: 100vh;
+	}
+
+	.ui.equal.height.grid {
+		height: calc( 100vh - 40px );
+		margin-top: 0;
+		overflow: auto;
 	}
 
 </style>

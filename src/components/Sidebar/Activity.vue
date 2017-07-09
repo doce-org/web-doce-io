@@ -3,63 +3,37 @@
     <div class="sixteen wide column">
 
         <div class="ui basic segment">
-            <h4 class="ui grey header">Activités Récentes</h4>
+            <h5 class="ui disabled header">ACTIVITES</h5>
 			<div class="ui tiny basic icon buttons">
 				<div class="ui icon button"
 					v-bind:class="{'active': types.indexOf('info') !== -1}"
 					@click="updateRequestedTypes('info')"
-					data-tooltip="Informations">
+					data-tooltip="Informations"
+					data-inverted>
 					<i class="circle blue icon"></i>
 				</div>
 				<div class="ui icon button"
 					v-bind:class="{'active': types.indexOf('warning') !== -1}"
 					@click="updateRequestedTypes('warning')"
-					data-tooltip="Alertes">
+					data-tooltip="Alertes"
+					data-inverted>
 					<i class="circle orange icon"></i>
 				</div>
 				<div class="ui icon button"
 					v-bind:class="{'active': types.indexOf('error') !== -1}"
 					@click="updateRequestedTypes('error')"
-					data-tooltip="Erreurs">
+					data-tooltip="Erreurs"
+					data-inverted>
 					<i class="circle red icon"></i>
 				</div>
 				<div class="ui icon button"
 					v-bind:class="{'active': types.indexOf('debug') !== -1}"
 					@click="updateRequestedTypes('debug')"
-					data-tooltip="Debuggage">
+					data-tooltip="Debug"
+					data-inverted>
 					<i class="circle icon"></i>
 				</div>
 			</div>
-			<!--<div class="ui icon top right pointing dropdown basic button">
-				<input type="hidden" name="gender">
-				<i class="setting icon"></i>
-				<div class="menu">
-					<div v-bind:class="{'active': types.indexOf('info') !== -1}"
-						@click="updateRequestedTypes('info')" 
-						class="item" 
-						data-value="info">
-						Infos
-					</div>
-					<div v-bind:class="{'active': types.indexOf('warning') !== -1}"
-						@click="updateRequestedTypes('warning')" 
-						class="item" 
-						data-value="warning">
-						Alertes
-					</div>
-					<div v-bind:class="{'active': types.indexOf('error') !== -1}"
-						@click="updateRequestedTypes('error')" 
-						class="item" 
-						data-value="error">
-						Erreurs
-					</div>
-					<div v-bind:class="{'active': types.indexOf('debug') !== -1}"
-						@click="updateRequestedTypes('debug')" 
-						class="item" 
-						data-value="debug">
-						Debug
-					</div>
-				</div>
-			</div>-->
         </div>
 
 		<div class="ui basic segment">
@@ -114,10 +88,6 @@
 		created() {
 			this.findLastLogs();
 			this.onNewLogCreated();
-		},
-
-		ready() {
-			$( '.ui.dropdown', this.$el ).dropdown();
 		},
 
 		computed: {
@@ -229,7 +199,7 @@
 	// dropdown selector style
 	.ui.buttons {
 		position: absolute;
-		top: 0;
+		top: 5px;
 		right: 0;
 		border-radius: 0;
 		box-shadow: none;
