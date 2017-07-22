@@ -30,11 +30,6 @@
                 // @type {Boolean}
                 'serial_is_open': false,
 
-                // contain the throttled function to try
-                // to open a serial connection
-                // @type {Function}
-                'try_connexion_interval': false,
-
                 // contain the current connexion to the
                 // API server on the raspberry
                 'server_is_connected': false
@@ -46,39 +41,6 @@
             this.findCurrentSerialConnection();
             this.onSerialConnectionEvents();
             this.handleServerConnexionEvents();
-        },
-
-        watch: {
-
-            /**
-             * watch the value change to either try to open the serial connection, 
-             * or stop from trying when successfully opened
-             * 
-             * @author shad
-             */ 
-            'serial_is_open': {
-                immediate: true,
-                handler( is_open ) {
-
-                    // if the connection has been opened
-                    // cancel retrying to open it every 15 sec.
-                    if ( is_open && this.try_connexion_interval ) {
-
-                        clearInterval( this.try_connexion_interval );
-
-                    }
-
-                    else {
-
-                        // if the connection isn't open, try to open it
-                        // every 15 secondes until success
-                        this.try_connexion_interval = setInterval( this.openSerialConnection, 10000 ); //15000 );
-
-                    }
-
-                }
-            }
-
         },
 
         methods: {
@@ -116,18 +78,6 @@
                     this.serial_is_open = false;
 
                 } );
-
-            },
-
-            /**
-             * open the serial connection
-             * 
-             * @author shad
-             */ 
-            openSerialConnection() {
-
-                serialService.create( {} )
-                .catch( this.handlingErrors );
 
             },
 

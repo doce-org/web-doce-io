@@ -1,19 +1,23 @@
 <template>
-  
-    <section class="ui one column padded grid">
+
+    <div class="ui one column grid">
 
         <div class="column">
-            <button v-link="{name: 'dashboard'}" class="ui basic blue button">
-                <i class="left arrow icon"></i>
-                Quitter le mode initialisation
-            </button>
+            <div class="ui menu">
+
+                <a v-link="{name: 'dashboard'}" class="item">
+                    <i class="sign out icon"></i>
+                    Quitter le mode d'initialisation
+                </a>
+
+            </div>
         </div>
 
-        <div class="center aligned middle aligned column">
+        <div class="column body">
             <router-view transition="fade" transition-mode="out-in"></router-view>
         </div>
 
-    </section>
+    </div>
 
 </template>
 
@@ -27,10 +31,28 @@
 
 <style lang="scss" scoped>
 
-    .center.aligned.column {
-        width: 450px;
+    // special grid style
+    .ui.one.column.grid {
+
+        // menu col. style
+        & > .column:first-child {
+            padding-bottom: 0;
+
+            .ui.menu {
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+            }
+        }
+
+        // menu grid col. style
+        .column.body {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
     }
 
 </style>
+
 
 

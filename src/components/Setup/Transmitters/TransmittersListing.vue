@@ -1,38 +1,37 @@
 <template>
 
-    <div class="ui grid">
+    <table class="ui table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>
 
-        <table class="ui table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>
-                        <button v-link="{name: 'setup_transmitter_create'}" class="ui basic green button">Ajouter un transmetteur</button>                        
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+                    <button v-link="{name: 'setup_transmitter_create'}" class="ui basic green button">
+                        Ajouter un transmetteur
+                    </button>
 
-                <!-- each transmitter -->
-                <tr v-for="transmitter in transmitters">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
 
-                    <!-- name -->
-                    <td>{{transmitter.name}}</td>
+            <!-- each transmitter -->
+            <tr v-for="transmitter in transmitters">
 
-                    <!-- controls -->
-                    <td>
+                <!-- name -->
+                <td>{{transmitter.name}}</td>
 
-                        <button class="ui basic red button">Supprimer</button>
+                <!-- controls -->
+                <td>
 
-                    </td>
+                    <button class="ui basic red button">Supprimer</button>
 
-                </tr>
+                </td>
 
-            </tbody>
-        </table>
+            </tr>
 
-    </div>
-  
+        </tbody>
+    </table>
 
 </template>
 

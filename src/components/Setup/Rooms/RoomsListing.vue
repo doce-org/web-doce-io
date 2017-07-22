@@ -1,37 +1,35 @@
 <template>
 
-    <div class="ui grid">
+    <table class="ui table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>
 
-        <table class="ui table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>
-                        <button v-link="{name: 'setup_room_create'}" class="ui basic green button">Ajouter une piece</button>                        
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+                    <button v-link="{name: 'setup_room_create'}" class="ui basic green button">
+                        Ajouter une piece
+                    </button>  
 
-                <!-- each room -->
-                <tr v-for="room in rooms">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
 
-                    <!-- name -->
-                    <td>{{room.name}}</td>
+            <!-- each room -->
+            <tr v-for="room in rooms">
 
-                    <!-- controls -->
-                    <td>
+                <!-- name -->
+                <td>{{room.name}}</td>
 
-                        <button class="ui basic orange button">Editer</button>
+                <!-- controls -->
+                <td>
+                    <button class="ui basic orange button disabled">Editer</button>
+                </td>
 
-                    </td>
+            </tr>
 
-                </tr>
-
-            </tbody>
-        </table>
-
-    </div>
+        </tbody>
+     </table>
   
 
 </template>

@@ -17,7 +17,7 @@ export const router = new VueRouter( {
 } );
 
 // setting up all routes using the main app component
-const routes = Object.assign( {}, dashboardRoutes, historyRoutes, settingsRoutes );
+const routes = Object.assign( {}, dashboardRoutes, historyRoutes, settingsRoutes, setupRoutes );
 router.map( {
 
     '/': {
