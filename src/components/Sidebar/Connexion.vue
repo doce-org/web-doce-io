@@ -1,15 +1,25 @@
 <template>
   
-    <div class="ui two item menu">
+    <div id="connexion" class="column is-narrow is-paddingless">
 
-        <!-- current serial connexion status -->
-        <div class="ui icon item">
-            <i v-bind:class="{'green': serial_is_open, 'red': !serial_is_open}" class="plug icon"></i>
-        </div>
+        <div class="columns is-gapless">
 
-        <!-- current server connexion status -->
-        <div class="ui icon item">
-            <i v-bind:class="{'green': server_is_connected, 'red': !server_is_connected}" class="server icon"></i>
+            <div class="column">
+                <span class="icon">
+					<i v-bind:class="{'green': serial_is_open, 'red': !serial_is_open}" class="fa fa-plug"></i>
+				</span> 
+            </div>
+            <div class="column">
+                <span class="icon">
+					<i v-bind:class="{'green': server_is_connected, 'red': !server_is_connected}" class="fa fa-server"></i>
+				</span> 
+            </div>
+            <div class="column">
+                <span class="icon">
+					<i class="fa fa-bars"></i>
+				</span> 
+            </div>
+
         </div>
 
     </div>
@@ -105,20 +115,33 @@
 <style lang="scss" scoped>
 
     // special menu styles
-    .ui.menu {
-        height: 40px;
-        background: #EFF2F8;
-        margin: 0;
+    #connexion {
+        height: 45px;
         border-left: none;
         border-right: none;
         border-top: none;
-        border-bottom: 1px solid rgba( 34, 36, 38, .10 );
-        border-radius: 0;
-        box-shadow: none;
+        border-bottom: 1px solid #313c4d;
 
-        .item {
-            padding-top: 0;
-            padding-bottom: 0;
+        .column {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            &:not(:last-child) {
+                border-right: 1px solid #313c4d;
+            }
+
+            .icon > i {
+                color: white;
+
+                &.green {
+                    color: #91DC5A;
+                }
+
+                &.red {
+                    color: red;
+                }
+            }
         }
     }
 

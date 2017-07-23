@@ -2,26 +2,13 @@
 
     <section id="app">
 
-		<!-- main navigation menu -->
-        <navigation></navigation>
+		<div class="columns is-gapless">
 
-        <div id="body">
+			<router-view></router-view>
 
-			<div class="ui equal height padded grid">
+			<sidebar></sidebar>
 
-				<!-- main app body -->
-				<div id="main" class="thirteen wide column">
-					<router-view transition="fade" transition-mode="out-in"></router-view>
-				</div>
-
-				<!-- recurrent sidebar controls -->
-				<div class="three wide column">
-					<sidebar></sidebar>
-				</div>
-
-			</div>
-
-        </div>
+		</div>
 
     </section>
 
@@ -30,16 +17,12 @@
 <script>
 
 	// components
-    import Navigation from './Nav.vue';
     import Sidebar from './Sidebar/Sidebar.vue';
-	// services
-	import { logService } from 'services';
 
     export default {
 
         components: {
 
-			Navigation,
 			Sidebar
 
 		}
@@ -48,28 +31,29 @@
 
 </script>
 
+<style lang="sass">
+
+	// special styles for bulma 
+
+	// Import the initial variables
+	@import "../../node_modules/bulma/sass/utilities/initial-variables";
+
+	// use quicksand font
+	$family-primary: 'Quicksand', sans-serif;
+
+	@import "../../node_modules/bulma/bulma.sass";
+
+</style>
+
 <style lang="scss">
+
+	body {
+		overflow: hidden;
+	}
 
 	// base app styling
 	#app {
-		height: 100%;
-
-		#body {
-			height: 100%;
-			background: #fafafa !important;
-			margin-left: 131px;
-
-			// prevent the column padding
-			#main {
-				padding: 0;
-			}
-		}
-	}
-
-
-	// special header style
-	.light {
-		font-weight: 300 !important;
+		height: 100vh;
 	}
 
 </style>

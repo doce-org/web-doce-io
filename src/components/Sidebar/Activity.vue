@@ -1,60 +1,84 @@
 <template>
 
-    <div class="sixteen wide column">
+    <div id="activities" class="column">
 
-        <div class="ui basic segment">
-            <h5 class="ui disabled header">ACTIVITES</h5>
-			<div class="ui tiny basic icon buttons">
-				<div class="ui icon button"
-					v-bind:class="{'active': types.indexOf('info') !== -1}"
-					@click="updateRequestedTypes('info')"
-					data-tooltip="Informations"
-					data-inverted>
-					<i class="circle blue icon"></i>
-				</div>
-				<div class="ui icon button"
-					v-bind:class="{'active': types.indexOf('warning') !== -1}"
-					@click="updateRequestedTypes('warning')"
-					data-tooltip="Alertes"
-					data-inverted>
-					<i class="circle orange icon"></i>
-				</div>
-				<div class="ui icon button"
-					v-bind:class="{'active': types.indexOf('error') !== -1}"
-					@click="updateRequestedTypes('error')"
-					data-tooltip="Erreurs"
-					data-inverted>
-					<i class="circle red icon"></i>
-				</div>
-				<div class="ui icon button"
-					v-bind:class="{'active': types.indexOf('debug') !== -1}"
-					@click="updateRequestedTypes('debug')"
-					data-tooltip="Debug"
-					data-inverted>
-					<i class="circle icon"></i>
+		<div class="level">
+
+			<div class="level-left">
+				<div class="field has-addons">
+
+					<!-- info logs -->
+					<p class="control">
+						<a v-bind:class="{'active': types.indexOf('info') !== -1}"
+						   @click="updateRequestedTypes('info')"
+						   class="button blue is-small">
+							<span class="icon is-small">
+								<i class="fa fa-circle"></i>
+							</span> 
+						</a>
+					</p>
+
+					<!-- warning logs -->
+					<p class="control">
+						<a v-bind:class="{'active': types.indexOf('warning') !== -1}"
+						   @click="updateRequestedTypes('warning')" 
+						   class="button orange is-small">
+							<span class="icon is-small">
+								<i class="fa fa-circle"></i>
+							</span> 
+						</a>
+					</p>
+
+					<!-- error logs -->
+					<p class="control">
+						<a v-bind:class="{'active': types.indexOf('error') !== -1}"
+						   @click="updateRequestedTypes('error')"
+						   class="button red is-small">
+							<span class="icon is-small">
+								<i class="fa fa-circle"></i>
+							</span> 
+						</a>
+					</p>
+
+					<!-- debug logs -->
+					<p class="control">
+						<a v-bind:class="{'active': types.indexOf('debug') !== -1}"
+						   @click="updateRequestedTypes('debug')"
+						   class="button white is-small">
+							<span class="icon is-small">
+								<i class="fa fa-circle"></i>
+							</span> 
+						</a>
+					</p>
+
 				</div>
 			</div>
-        </div>
 
-		<div class="ui basic segment">
-			<div class="ui list">
-
-				<!-- each of the last 10 logs -->
-				<div v-for="log in reversed_logs" track-by="$index" class="item">
-					<i v-bind:class="{
-							'black': log.type === 'debug',
-							'blue': log.type === 'info',
-							'orange': log.type === 'warning', 
-							'red': log.type === 'error'
-						}" class="circle icon"></i>
-					<div class="content">
-						<div class="header">{{log.message}}</div>
-						<div class="description">{{log.created_at | momentFormat false 'DD MMM HH:mm.ss'}}</div>
-					</div>
-				</div>
-
+			<div class="level-right">
+				<h6 class="title is-6 has-text-right">ACTIVITES</h6>
 			</div>
-		</div>	
+
+		</div>
+
+		<!-- each log -->
+		<div v-for="log in reversed_logs" track-by="$index" class="columns">
+
+			<div class="column is-narrow">
+				<span v-bind:class="{
+						'white': log.type === 'debug',
+						'blue': log.type === 'info',
+						'orange': log.type === 'warning', 
+						'red': log.type === 'error'
+					}" class="icon is-small">
+					<i class="fa fa-circle"></i>
+				</span> 
+			</div>
+			<div class="column">
+				<p class="content">{{log.message}}</p>
+				<p class="content">{{log.created_at | momentFormat false 'DD MMM HH:mm.ss'}}</p>
+			</div>
+
+		</div>
 
     </div>
 
@@ -64,8 +88,6 @@
 
 	// lib
 	import _orderBy from 'lodash/orderBy';
-	import _take from 'lodash/take';
-	import moment from 'moment';
 	// services
 	import { logService } from 'services';
 
@@ -74,7 +96,7 @@
 		data() {
 			return {
 
-				// contain the listing of the last 10 logs
+				// contain the listing of the last 5 logs
 				// @type {Array}
 				'logs': [],
 
@@ -123,10 +145,10 @@
 						$in: this.types
 					},
 
-					// limit to the last 10 logs
-					$limit: 10,
+					// limit to the last 5 logs
+					$limit: 5,
 
-					// get the last 10
+					// get the last 5
 					$sort: { created_at: -1 }
 
 				} };
@@ -179,8 +201,8 @@
 						this.logs.push( log );
 
 						// remove the first element if we have more
-						// than 10 logs already on the client
-						if ( this.logs.length > 10 )  this.logs.shift();
+						// than 5 logs already on the client
+						if ( this.logs.length > 5 ) this.logs.shift();
 
 					}
 
@@ -194,40 +216,71 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-	// dropdown selector style
-	.ui.buttons {
-		position: absolute;
-		top: 5px;
-		right: 0;
-		border-radius: 0;
-		box-shadow: none;
-	}
+	#activities {
+		border-top: 1px solid #313c4d;
 
-	// special column style
-    .column {
-        background: #e6eaf4;
-
-		.ui.basic.segment {
-			margin: 0;
+		h6 {
+			color: white;
+			font-weight: 400;
 		}
 
-		.ui.list {
+		.button {
+			border-radius: 0;
+			border-left: 1px solid #3c485a;
+			border-top: 1px solid #3c485a;
+			border-bottom: 1px solid #3c485a;
+			background: transparent;
 
-			.item {
-				font-size: .9em;
+			&:last-child {
+				border-right: 1px solid #3c485a;
+			}
 
-				.content {
+			&.active {
+				background: #2f3949;
+			}
 
-					// force log message to break
-					// when too long word overflows
-					.header {
-						word-break: break-word;
+		}
+
+		.button, .icon {
+
+			&.blue {
+				color: #0098ff;
+			}
+
+			&.orange {
+				color: #fc0;
+			}
+
+			&.red {
+				color: red;
+			}
+
+			&.white {
+				color: white;
+			}
+
+		}
+
+		.columns {
+			margin-bottom: .3em;
+
+			p {
+
+				&.content {
+					color: white;
+					font-size: .7em;
+					margin-bottom: 0;
+					word-break: break-word;
+
+					&:last-child {
+						font-size: .6em;
+						color: #dedede;
 					}
 				}
 			}
 		}
-    }
+	}
 
 </style>

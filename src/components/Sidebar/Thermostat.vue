@@ -1,12 +1,10 @@
 <template>
 
-    <div class="sixteen wide column">
+    <div id="thermostat" class="column">
 
-        <div class="ui basic segment">
-            <h5 class="ui disabled header">THERMOSTAT</h5>
-        </div>
+        <h6 class="title is-6 has-text-right is-inverted">THERMOSTAT</h6>
 
-        <form v-on:submit.prevent="send" class="ui form">
+        <!-- <form v-on:submit.prevent="send" class="ui form">
 
             <div class="fields">
 
@@ -19,7 +17,7 @@
 
             <button type="submit" class="ui basic blue button">Envoyer</button>
 
-        </form>
+        </form> -->
 
     </div>
 
@@ -44,8 +42,6 @@
 
             send() {
 
-                console.log( 'ouep' );
-
                 serialService.create( { command: 'send', value: this.command.value } )
                 .catch( this.handlingErrors );
 
@@ -57,11 +53,14 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-	// column style
-	.column {
-		background: #eff2f8;
+    #thermostat {
+
+		h6 {
+			color: white;
+            font-weight: 400;
+		}
 	}
 
 </style>

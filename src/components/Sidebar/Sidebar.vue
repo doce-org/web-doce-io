@@ -1,19 +1,17 @@
 <template>
 
-	<div class="ui grid">
+	<div class="column is-narrow">
 
-		<!-- serial / server connexion -->
-		<connexion></connexion>
+		<div class="columns is-marginless">
 
-		<div class="ui equal height grid">
+			<connexion></connexion>
 
-			<!-- thermostat -->
 			<thermostat></thermostat>
 
-			<!-- activities -->
 			<activity></activity>
 
 		</div>
+
 	</div>
 
 </template>
@@ -42,14 +40,14 @@
 <style lang="scss" scoped>
 
 	// make sure the controls sidebar take all the room
-	.ui.grid:not( .equal.height ) {
-		height: 100vh;
-	}
+	.column {
+		width: 300px;
+		background: #252d3a;
 
-	.ui.equal.height.grid {
-		height: calc( 100vh - 40px );
-		margin-top: 0;
-		overflow: auto;
+		.columns {
+			height: 100vh;
+			flex-direction: column;
+		}
 	}
 
 </style>
