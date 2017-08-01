@@ -1,6 +1,6 @@
 <template>
   
-    <div id="dashboard-temperature-component" class="tile is-child">
+    <div id="dashboard-humidity-component" class="tile is-child">
 
         <div class="columns is-vcentered is-marginless has-text-centered">
 
@@ -10,7 +10,7 @@
                 </span>
             </div>
             <div class="column">
-                <h6 class="title is-6">Temperature</h6>
+                <h6 class="title is-6">Humidite</h6>
             </div>
             <div class="column is-narrow">
                 <span class="icon">
@@ -25,21 +25,21 @@
             <div class="block">
 
                 <div class="block">
-                    <p class="title has-text-centered is-1">{{average_temperature || '...'}} °C</p>
-                    <p class="subtitle has-text-centered is-3">Temp. Moyenne</p>
+                    <p class="title has-text-centered is-1">{{average_humidity || '...'}}</p>
+                    <p class="subtitle has-text-centered is-3">Hum. Moyenne</p>
                 </div>
 
                 <div class="level">
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Basse</p>
-                            <p class="title">{{lowest_temperature || '...'}} °C</p>
+                            <p class="title">{{lowest_humidity || '...'}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Haute</p>
-                            <p class="title">{{highest_temperature || '...'}} °C</p>
+                            <p class="title">{{highest_humidity || '...'}}</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
             return {
 
 				// contain the listing of transmitter sensors
-                // of temperatures type
+                // of humidity type
 				// @type {Array}
                 'transmitters': []
 
@@ -70,27 +70,27 @@
         },
 
         created() {
-            this.findLastTemperaturesRecords();
+            this.findLastHumiditiesRecords();
         },
 
         computed : {
 
             /**
-             * calculate the average temperature amongs all 
+             * calculate the average humidity amongs all 
              * currently available transmitters
              * 
              * @return {String}
              * 
              * @author shad
              */
-            average_temperature() {
+            average_humidity() {
 
                 if ( this.transmitters.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => transmitter.last_record.temperature );
+                    // extract humidities from each transmitters
+                    const humidities = this.transmitters.map( transmitter => transmitter.last_record.humidity );
 
-                    return ( temperatures.reduce( ( cur, val ) => cur + val, 0 ) / temperatures.length ).toFixed( 2 );
+                    return ( humidities.reduce( ( cur, val ) => cur + val, 0 ) / humidities.length ).toFixed( 2 );
 
                 }
 
@@ -99,21 +99,21 @@
             },
 
             /**
-             * find the lowest temperature in available transmitters
+             * find the lowest humidity in available transmitters
              * 
              * @return {Number}
              * 
              * @author shad
              */
-            lowest_temperature() {
+            lowest_humidity() {
 
                 if ( this.transmitters.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => transmitter.last_record.temperature );
+                    // extract humidities from each transmitters
+                    const humidities = this.transmitters.map( transmitter => transmitter.last_record.humidity );
 
-                    // return lowest temperature
-                    return Math.min.apply( null, temperatures );
+                    // return lowest humidity
+                    return Math.min.apply( null, humidities );
 
                 }
 
@@ -122,21 +122,21 @@
             },
 
             /**
-             * find the highest temperature in available transmitters
+             * find the highest humidity in available transmitters
              * 
              * @return {Number}
              * 
              * @author shad
              */
-            highest_temperature() {
+            highest_humidity() {
 
                 if ( this.transmitters.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => transmitter.last_record.temperature );
+                    // extract humidities from each transmitters
+                    const humidities = this.transmitters.map( transmitter => transmitter.last_record.humidity );
 
-                    // return max. temperature
-                    return Math.max.apply( null, temperatures );
+                    // return max. humidity
+                    return Math.max.apply( null, humidities );
 
                 }
 
@@ -149,18 +149,17 @@
         methods: {
 
             /**
-             * get listing of available temperature
+             * get listing of available humidity
              *
              * @author shad
              */
-            findLastTemperaturesRecords() {
+            findLastHumiditiesRecords() {
 
 				const query = { query: {
 
-					// of type 'TEMPERATURE'
-                    // OR 'HUMIDITY'
+					// of type 'HUMIDITY'
 					type: {
-                        $in: [ 'TEMPERATURE', 'HUMIDITY' ]
+                        $in: [ 'HUMIDITY' ]
                     }
 
 				} };
@@ -186,7 +185,7 @@
 
 <style lang="scss">
 
-    #dashboard-temperature-component {
+    #dashboard-humidity-component {
 
         .columns {
             background: white;

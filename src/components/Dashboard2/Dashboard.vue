@@ -12,10 +12,19 @@
 
                 </div>
 
+                <div class="tile">
 
-                <div class="tile is-12 is-parent">
+                    <div class="tile is-4 is-parent">
 
-                    <temperature></temperature>
+                        <temperature></temperature>
+
+                    </div>
+
+                    <div class="tile is-4 is-parent">
+
+                        <humidity></humidity>
+
+                    </div>
 
                 </div>
 
@@ -31,6 +40,7 @@
 
     // components
     import Temperature from './Temperature/Temperature.vue';
+    import Humidity from './Humidity/Humidity.vue';
     import Automation from './Automation/Automation.vue';
 
     export default {
@@ -38,7 +48,8 @@
         components: {
 
             Automation,
-            Temperature
+            Temperature,
+            Humidity
 
         }
     

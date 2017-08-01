@@ -44,3 +44,6 @@ export const transmitterSetupService = feathers_socket.service( '/setup/transmit
 // transmitters
 export const transmitterTemperatureAvgDetailedView = feathers_socket.service( '/views/transmitters/temperatures/avg/detailed' );
 export const transmitterHumidityAvgDetailedView = feathers_socket.service( '/views/transmitters/humidities/avg/detailed' );
+
+// records
+export const lastRecordPerTransmitterView = feathers_socket.service( '/views/records/last/per/transmitters' );
