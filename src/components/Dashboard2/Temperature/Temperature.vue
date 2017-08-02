@@ -25,21 +25,21 @@
             <div v-if="!details_mode" class="block">
 
                 <div class="block">
-                    <p class="title has-text-centered is-1">{{average_temperature || '...'}} °C</p>
-                    <p class="subtitle has-text-centered is-3">Temp. Moyenne</p>
+                    <div class="subtitle has-text-centered is-1">{{average_temperature || '...'}} °C</div>
+                    <p class="subtitle has-text-centered is-4">Temp. Moyenne</p>
                 </div>
 
                 <div class="level">
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Basse</p>
-                            <p class="title">{{lowest_temperature || '...'}} °C</p>
+                            <p class="subtitle">{{lowest_temperature || '...'}} °C</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Haute</p>
-                            <p class="title">{{highest_temperature || '...'}} °C</p>
+                            <p class="subtitle">{{highest_temperature || '...'}} °C</p>
                         </div>
                     </div>
                 </div>
@@ -267,9 +267,10 @@
 <style lang="scss">
 
     #dashboard-temperature-component {
+        height: 300px;
+        background: white;
 
         .columns {
-            background: white;
 
             &:first-child {
                 background: #f5f6f8;
@@ -280,7 +281,7 @@
             }
 
             &.content {
-                min-height: 300px;
+                padding: 2rem;
             }
         }
     }

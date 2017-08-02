@@ -25,21 +25,21 @@
             <div v-if="!details_mode" class="block">
 
                 <div class="block">
-                    <p class="title has-text-centered is-1">{{average_humidity || '...'}}</p>
-                    <p class="subtitle has-text-centered is-3">Hum. Moyenne</p>
+                    <div class="subtitle has-text-centered is-1">{{average_humidity || '...'}}</div>
+                    <p class="subtitle has-text-centered is-4">Hum. Moyenne</p>
                 </div>
 
                 <div class="level">
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Basse</p>
-                            <p class="title">{{lowest_humidity || '...'}}</p>
+                            <p class="subtitle">{{lowest_humidity || '...'}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Haute</p>
-                            <p class="title">{{highest_humidity || '...'}}</p>
+                            <p class="subtitle">{{highest_humidity || '...'}}</p>
                         </div>
                     </div>
                 </div>
@@ -260,9 +260,10 @@
 <style lang="scss">
 
     #dashboard-humidity-component {
+        height: 300px;
+        background: white;
 
         .columns {
-            background: white;
 
             &:first-child {
                 background: #f5f6f8;
@@ -273,7 +274,7 @@
             }
 
             &.content {
-                min-height: 300px;
+                padding: 2rem;
             }
         }
     }

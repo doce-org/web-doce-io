@@ -5,7 +5,7 @@
         <section id="weather" class="three wide column">
 
             <!-- weather -->
-            <weather></weather>
+            <!-- <weather></weather> -->
 
         </section>
 
@@ -25,14 +25,12 @@
 
     // components
     import Rooms from './Rooms.vue';
-    import Weather from './Others/Weather.vue';
 
     export default {
 
         components: {
 
-			Rooms,
-			Weather
+			Rooms
 
 		}
 

@@ -1,24 +1,31 @@
 <template>
 
-    <div>
+    <div id="dashboard-today-component" class="tile is-child">
 
         <div class="overlay">
 
-            <!-- date -->
-            <h1 class="ui inverted header date">
-                <span class="sub header">{{getDay}}</span>
-                {{getDate}}
-            </h1>
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
 
-            <!-- time -->
-            <h1 class="ui inverted right aligned header time">
-				{{getTime}}
-			</h1>
+                        <!-- date -->
+                        <div class="block">
+                            <p class="subtitle is-spaced is-6 has-text-light">{{getDay}}</p>
+                            <h1 class="title is-1 has-text-white">{{getDate}}</h1>
+                        </div>
 
-        </div>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
 
-        <div class="ui basic segment">
-            <h4 class="ui inverted header">Météo</h4>
+                        <!-- time -->
+                        <h1 class="title is-1 has-text-white">{{getTime}}</h1>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -96,19 +103,13 @@
 
 <style lang="scss" scoped>
 
-	// header style
-    h1.ui.header {
-        font-size: 2.5em;
-        margin: calc(2rem - .14285em) 0 1rem;
-    }
-
 	// add a background image from unsplash
     .overlay {
         display: inline-block;
         position: relative;
-        height: 250px;
+        height: 100%;
         width: 100%;
-        padding: 1rem;
+        padding: 2rem;
         background: url('https://source.unsplash.com/daily') center center;
         background-size: cover;
     }
@@ -125,20 +126,6 @@
         position: absolute;
         background: black;
         opacity: 0.1;
-    }
-
-	// date style
-    .date {
-        position: absolute;
-        bottom: 10px;
-        text-transform: capitalize;
-    }
-
-	// time style
-    .time {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
     }
 
 </style>

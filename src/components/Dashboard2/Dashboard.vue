@@ -16,6 +16,12 @@
 
                     <div class="tile is-4 is-parent">
 
+                        <today></today>
+
+                    </div>
+
+                    <div class="tile is-4 is-parent">
+
                         <temperature></temperature>
 
                     </div>
@@ -39,6 +45,7 @@
 <script>
 
     // components
+    import Today from './Others/Today.vue';
     import Temperature from './Temperature/Temperature.vue';
     import Humidity from './Humidity/Humidity.vue';
     import Automation from './Automation/Automation.vue';
@@ -48,6 +55,7 @@
         components: {
 
             Automation,
+            Today,
             Temperature,
             Humidity
 

@@ -35,17 +35,14 @@
 
 	// special styles for bulma 
 
-	// Import the initial variables
+	// import the initial variables
 	@import "../../node_modules/bulma/sass/utilities/initial-variables";
 
-	// use quicksand font
-	$family-primary: 'Quicksand', sans-serif;
+	$family-sans-serif: 'Quicksand', sans-serif;
 
 	@import "../../node_modules/bulma/bulma.sass";
 
 </style>
-
-<style lang="css" src="../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css"></style>
 
 <style lang="scss">
 
