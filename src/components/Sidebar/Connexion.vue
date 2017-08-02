@@ -48,9 +48,9 @@
         },
     
         created() {
+            this.handleServerConnexionEvents();
             this.findCurrentSerialConnection();
             this.onSerialConnectionEvents();
-            this.handleServerConnexionEvents();
         },
 
         methods: {
@@ -100,8 +100,18 @@
 
                 feathers_socket.io
 				.on( 'connect', () => this.server_is_connected = true )
-				.on( 'reconnect', () => this.server_is_connected = true )
-				.on( 'disconnect', () => this.server_is_connected = false );
+				.on( 'reconnect', () => {
+
+                    this.server_is_connected = true;
+                    this.findCurrentSerialConnection();
+
+                } )
+				.on( 'disconnect', () => {
+
+                    this.server_is_connected = false;
+                    this.serial_is_open = false;
+
+                } );
 
             }
 

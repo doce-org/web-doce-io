@@ -63,6 +63,7 @@
         background: #e7ebee;
         height: 100vh;
         padding: 3em !important;
+        overflow-y: auto;
     }
 
 </style>

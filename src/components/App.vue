@@ -45,9 +45,11 @@
 
 </style>
 
+<style lang="css" src="../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css"></style>
+
 <style lang="scss">
 
-	body {
+	html, body {
 		overflow: hidden;
 	}
 

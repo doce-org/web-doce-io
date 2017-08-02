@@ -88,6 +88,7 @@
 
 	// lib
 	import _orderBy from 'lodash/orderBy';
+	
 	// services
 	import { logService } from 'services';
 
@@ -220,6 +221,7 @@
 
 	#activities {
 		border-top: 1px solid #313c4d;
+		overflow-y: auto;
 
 		h6 {
 			color: white;
