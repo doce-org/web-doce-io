@@ -29,7 +29,7 @@
                     <label class="label">Pieces disponible</label>
                     <div class="control">
                         <div class="select">
-                        <select>
+                        <select v-model="transmitter.room_id">
                             <option v-for="room in rooms" v-bind:value="room.id">
                                 {{room.name}}
                             </option>
