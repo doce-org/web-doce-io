@@ -16,8 +16,8 @@
                     <label class="label">Transmetteur disponible</label>
                     <div class="control">
                         <div class="select">
-                        <select>
-                            <option v-for="transmitter in ready_registering_transmitters" data-value="{{transmitter.identifier}}">
+                        <select v-model="transmitter.identifier">
+                            <option v-for="transmitter in ready_registering_transmitters" v-bind:value="{{transmitter.identifier}}">
                                 {{transmitter.identifier}} - {{transmitter.type}}
                             </option>
                         </select>
@@ -30,7 +30,7 @@
                     <div class="control">
                         <div class="select">
                         <select>
-                            <option v-for="room in rooms" data-value="{{room.id}}">
+                            <option v-for="room in rooms" v-bind:value="{{room.id}}">
                                 {{room.name}}
                             </option>
                         </select>
