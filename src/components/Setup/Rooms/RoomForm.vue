@@ -1,19 +1,25 @@
 <template>
-  
-    <form v-on:submit.prevent="save" class="ui form">
 
-        <div class="fields">
+    <div class="columns is-gapless is-centered is-vcentered">
+        <div class="column is-4">
 
-            <div class="required field">
-                <label>Nom</label>
-                <input v-model="room.name" type="text">
-            </div>
+            <form v-on:submit.prevent="save" class="ui form">
+
+                <div class="field">
+                    <label class="label">Nom</label>
+                    <div class="control">
+                        <input v-model="room.name" class="input" type="text" placeholder="Nom de la piece...">
+                    </div>
+                </div>
+
+                <button type="submit" class="button is-success">Sauvegarder</button>
+
+            </form>
+
 
         </div>
-
-        <button type="submit" class="ui basic orange button">Sauvegarder</button>
-
-    </form>
+    </div>
+  
 
 </template>
 

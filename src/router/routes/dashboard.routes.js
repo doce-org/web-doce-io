@@ -1,6 +1,6 @@
 'use strict';
 
-import Dashboard from 'components/Dashboard2/Dashboard.vue';
+import Dashboard from 'components/Dashboard/Dashboard.vue';
 
 export default {
 

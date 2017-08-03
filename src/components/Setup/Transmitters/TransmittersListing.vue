@@ -1,37 +1,43 @@
 <template>
 
-    <table class="ui table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>
+    <div class="columns is-gapless is-centered is-vcentered">
+        <div class="column">
 
-                    <button v-link="{name: 'setup_transmitter_create'}" class="ui basic green button">
-                        Ajouter un transmetteur
-                    </button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+                            <button v-link="{name: 'setup_transmitter_create'}" class="button is-success">
+                                Ajouter un transmetteur
+                            </button>
 
-            <!-- each transmitter -->
-            <tr v-for="transmitter in transmitters">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                <!-- name -->
-                <td>{{transmitter.name}}</td>
+                    <!-- each transmitter -->
+                    <tr v-for="transmitter in transmitters">
 
-                <!-- controls -->
-                <td>
+                        <!-- name -->
+                        <td>{{transmitter.name}}</td>
 
-                    <button class="ui basic red button">Supprimer</button>
+                        <!-- controls -->
+                        <td>
 
-                </td>
+                            <button class="button is-danger" disabled>Supprimer</button>
 
-            </tr>
+                        </td>
 
-        </tbody>
-    </table>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 
 </template>
 
@@ -76,4 +82,14 @@
     }
     
 </script>
+
+<style lang="scss" scoped>
+
+    .table {
+        background: transparent;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
 

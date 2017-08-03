@@ -1,40 +1,24 @@
 <template>
 
-    <div class="ui two column equal height celled grid">
+    <div class="columns is-centered is-vcentered">
 
-        <div class="center aligned middle aligned column">
+        <div v-link="{name: 'setup_rooms_listing'}" class="column is-centered">
 
-            <h2 v-link="{name: 'setup_rooms_listing'}" class="ui icon header">
-                <i class="home icon"></i>
-                <div class="content">
-                    Gestion des Pieces
-                    <div class="sub header">Ajouter et modifier les pieces de votre logement.</div>
-                </div>
-            </h2>
+            <!-- <span class="icon has-text-centered is-large">
+                <i class="fa fa-home"></i>   
+            </span> -->
+            <h2 class="title has-text-centered">Gestion des Pieces</h2>
+            <div class="subtitle is-5 has-text-centered">Ajouter et modifier les pieces de votre logement.</div>
         
         </div>
 
-        <div class="center aligned middle aligned column">
+        <div v-link="{name: 'setup_transmitters_listing'}" class="column is-centered">
 
-            <h2 v-link="{name: 'setup_transmitters_listing'}" class="ui icon header">
-                <i class="podcast icon"></i>
-                <div class="content">
-                    Gestion des Transmetteurs
-                    <div class="sub header">Ajouter et modifier vos transmetteurs.</div>
-                </div>
-            </h2>
-
-        </div>
-
-        <div class="center aligned middle aligned column">
-
-            <h2 v-link="" class="ui icon header disabled">
-                <i class="feed icon"></i>
-                <div class="content">
-                    Gestion des Emetteurs
-                    <div class="sub header">Ajouter et modifier vos emetteurs.</div>
-                </div>
-            </h2>
+            <!-- <span class="icon has-text-centered is-large">
+                <i class="fa fa-podcast"></i>   
+            </span> -->
+            <h2 class="title has-text-centered">Gestion des Transmetteurs</h2>
+            <div class="subtitle is-5 has-text-centered">Ajouter et modifier vos transmetteurs.</div>
 
         </div>
 
@@ -52,22 +36,11 @@
 
 <style lang="scss" scoped>
 
-    // special flexbox grid height
-    .ui.equal.height.grid {
-		height: calc( 100vh - 40px );
-		margin-top: 0;
-		overflow: auto;
-        margin-bottom: 0;
-        background: #EFF2F8;
-
-        .column {
-
-            .ui.header {
-                cursor: pointer;
-            }
-        }
-	}
+    .column {
+        cursor: pointer;
+    }
 
 </style>
+
 
 

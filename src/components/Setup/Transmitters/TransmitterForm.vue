@@ -1,50 +1,49 @@
 <template>
   
-    <form v-on:submit.prevent="save" class="ui form">
+    <div class="columns is-gapless is-centered is-vcentered">
+        <div class="column is-4">
 
-        <div class="fields">
+            <form v-on:submit.prevent="save">
 
-            <div class="required field">
-                <label>Nom</label>
-                <input v-model="transmitter.name" type="text">
-            </div>
-
-        </div>
-
-        <div class="fields">
-
-            <div class="ui selection dropdown">
-                <input v-model="transmitter.identifier" type="hidden">
-                <i class="dropdown icon"></i>
-                <div class="default text">Transmetteurs Disponibles</div>
-                <div class="menu">
-                    <div v-for="transmitter in ready_registering_transmitters" class="item" data-value="{{transmitter.identifier}}">
-                        {{transmitter.identifier}}
-                        {{transmitter.type}}
+                <div class="field">
+                    <label class="label">Nom</label>
+                    <div class="control">
+                        <input v-model="transmitter.name" class="input" type="text" placeholder="Nom du transmetteur...">
                     </div>
                 </div>
-            </div>
 
-        </div>
-
-        <div class="fields">
-
-            <div class="ui selection dropdown">
-                <input v-model="transmitter.room_id" type="hidden">
-                <i class="dropdown icon"></i>
-                <div class="default text">Pieces Disponibles</div>
-                <div class="menu">
-                    <div v-for="room in rooms" class="item" data-value="{{room.id}}">
-                        {{room.name}}
+                <div class="field">
+                    <label class="label">Transmetteur disponible</label>
+                    <div class="control">
+                        <div class="select">
+                        <select>
+                            <option v-for="transmitter in ready_registering_transmitters" data-value="{{transmitter.identifier}}">
+                                {{transmitter.identifier}} - {{transmitter.type}}
+                            </option>
+                        </select>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="field">
+                    <label class="label">Pieces disponible</label>
+                    <div class="control">
+                        <div class="select">
+                        <select>
+                            <option v-for="room in rooms" data-value="{{room.id}}">
+                                {{room.name}}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="button is-success">Sauvegarder</button>
+
+            </form>
 
         </div>
-
-        <button type="submit" class="ui basic orange button">Sauvegarder</button>
-
-    </form>
+    </div>
 
 </template>
 
@@ -83,10 +82,6 @@
         created() {
             this.findTransmittersReadyForRegistering();
             this.findRooms();
-        },
-
-        ready() {
-            $( '.ui.dropdown', this.$el ).dropdown();
         },
 
         route: {

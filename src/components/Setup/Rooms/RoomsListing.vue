@@ -1,36 +1,41 @@
 <template>
 
-    <table class="ui table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>
+    <div class="columns is-gapless is-centered is-vcentered">
+        <div class="column">
 
-                    <button v-link="{name: 'setup_room_create'}" class="ui basic green button">
-                        Ajouter une piece
-                    </button>  
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+                            <button v-link="{name: 'setup_room_create'}" class="button is-success">
+                                Ajouter une piece
+                            </button>  
 
-            <!-- each room -->
-            <tr v-for="room in rooms">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                <!-- name -->
-                <td>{{room.name}}</td>
+                    <!-- each room -->
+                    <tr v-for="room in rooms">
 
-                <!-- controls -->
-                <td>
-                    <button class="ui basic orange button disabled">Editer</button>
-                </td>
+                        <!-- name -->
+                        <td>{{room.name}}</td>
 
-            </tr>
+                        <!-- controls -->
+                        <td>
+                            <button class="button is-warning" disabled>Editer</button>
+                        </td>
 
-        </tbody>
-     </table>
-  
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 
 </template>
 
@@ -75,4 +80,15 @@
     }
     
 </script>
+
+<style lang="scss" scoped>
+
+    .table {
+        background: transparent;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
+
 

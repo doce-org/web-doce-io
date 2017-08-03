@@ -1,62 +1,77 @@
 <template>
+  
+    <div class="column">
 
-    <div id="dashboard" class="ui equal height padded grid">
+        <div class="tile is-ancestor">
 
-        <section id="weather" class="three wide column">
+            <div class="tile is-vertical">
 
-            <!-- weather -->
-            <!-- <weather></weather> -->
+                <div class="tile is-12 is-parent">
 
-        </section>
+                    <automation></automation>
 
-        <!-- summary -->
-        <section class="thirteen wide center aligned column">
+                </div>
 
-            <!-- rooms -->
-            <rooms></rooms>
+                <div class="tile">
 
-        </section>
+                    <div class="tile is-4 is-parent">
+
+                        <today></today>
+
+                    </div>
+
+                    <div class="tile is-4 is-parent">
+
+                        <temperature></temperature>
+
+                    </div>
+
+                    <div class="tile is-4 is-parent">
+
+                        <humidity></humidity>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </template>
 
-<script type="text/babel">
+<script>
 
     // components
-    import Rooms from './Rooms.vue';
+    import Today from './Others/Today.vue';
+    import Temperature from './Temperature/Temperature.vue';
+    import Humidity from './Humidity/Humidity.vue';
+    import Automation from './Automation/Automation.vue';
 
     export default {
 
         components: {
 
-			Rooms
+            Automation,
+            Today,
+            Temperature,
+            Humidity
 
-		}
-
+        }
+    
     }
-
+    
 </script>
 
 <style lang="scss" scoped>
 
-	// dashboard full height
-    #dashboard {
+    .column {
         height: 100vh;
-
-		// weather panel style
-		#weather {
-			padding: 0;
-			background: #3498db;
-		}
-
-		// permit scolling inside each column directly
-		.column {
-			overflow-y: auto;
-			overflow-x: hidden;
-		}
+        padding: 3em !important;
+        overflow-y: auto;
     }
 
-
-
 </style>
+

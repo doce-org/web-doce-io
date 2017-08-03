@@ -18,7 +18,7 @@ export const router = new VueRouter( {
 } );
 
 // setting up all routes using the main app component
-const routes = Object.assign( {}, dashboardRoutes, dashboardRoutes, historyRoutes, settingsRoutes, setupRoutes );
+const routes = Object.assign( {}, dashboardRoutes, historyRoutes, settingsRoutes, setupRoutes );
 router.map( {
 
     '/': {
@@ -28,9 +28,6 @@ router.map( {
     }
 
 } );
-
-// setting up the setup component
-router.map( setupRoutes );
 
 const Base = Vue.extend();
 router.start( Base, '#base' );

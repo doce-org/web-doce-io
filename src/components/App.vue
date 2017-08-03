@@ -53,6 +53,7 @@
 	// base app styling
 	#app {
 		height: 100vh;
+		background: #e7ebee;
 	}
 
 </style>
