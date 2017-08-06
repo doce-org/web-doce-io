@@ -3,6 +3,8 @@
     <div class="columns is-gapless is-centered is-vcentered">
         <div class="column is-4">
 
+            <h4 class="subtitle is-4">Creation / Edition d'un transmetteur.</h4>
+
             <form v-on:submit.prevent="save">
 
                 <div class="field">
@@ -38,7 +40,8 @@
                     </div>
                 </div>
 
-                <button type="submit" class="button is-success">Sauvegarder</button>
+                <button type="submit" class="button is-outlined is-success">Sauvegarder</button>
+                <button v-link="{name: 'setup_transmitters_listing'}" type="button" class="button is-outlined is-danger">Annuler</button>
 
             </form>
 

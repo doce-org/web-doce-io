@@ -25,7 +25,7 @@
             <div v-if="!details_mode" class="block">
 
                 <div class="block">
-                    <div class="subtitle has-text-centered is-1">{{average_humidity || '...'}}</div>
+                    <div class="subtitle has-text-centered is-1">{{average_humidity || '...'}} %</div>
                     <p class="subtitle has-text-centered is-4">Hum. Moyenne</p>
                 </div>
 
@@ -33,13 +33,13 @@
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Basse</p>
-                            <p class="subtitle">{{lowest_humidity || '...'}}</p>
+                            <p class="subtitle">{{lowest_humidity || '...'}} %</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Haute</p>
-                            <p class="subtitle">{{highest_humidity || '...'}}</p>
+                            <p class="subtitle">{{highest_humidity || '...'}} %</p>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                             <td>{{transmitter.name}}</td>
 
                             <!-- humidity value -->
-                            <td>{{transmitter.last_record.humidity}}</td>
+                            <td>{{transmitter.last_record.humidity}} %</td>
 
                             <!-- when -->
                             <td>{{transmitter.last_record.created_at | timeFromNow}}</td>

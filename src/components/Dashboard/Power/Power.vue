@@ -1,6 +1,6 @@
 <template>
   
-    <div id="dashboard-temperature-component" class="tile is-child">
+    <div id="dashboard-power-component" class="tile is-child">
 
         <div class="columns is-vcentered is-marginless has-text-centered">
 
@@ -10,7 +10,7 @@
                 </span>
             </div>
             <div class="column">
-                <h6 class="title is-6">Temperature</h6>
+                <h6 class="title is-6">Energie</h6>
             </div>
             <div class="column is-narrow">
                 <span class="icon">
@@ -25,21 +25,21 @@
             <div v-if="!details_mode" class="block">
 
                 <div class="block">
-                    <div class="subtitle has-text-centered is-1">{{average_temperature || '...'}} °C</div>
-                    <p class="subtitle has-text-centered is-4">Temp. Moyenne</p>
+                    <div class="subtitle has-text-centered is-1">{{average_power || '...'}}</div>
+                    <p class="subtitle has-text-centered is-4">Puissance Moyenne</p>
                 </div>
 
                 <div class="level">
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Basse</p>
-                            <p class="subtitle">{{lowest_temperature || '...'}} °C</p>
+                            <p class="subtitle">{{lowest_power || '...'}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Haute</p>
-                            <p class="subtitle">{{highest_temperature || '...'}} °C</p>
+                            <p class="subtitle">{{highest_power || '...'}}</p>
                         </div>
                     </div>
                 </div>
@@ -57,8 +57,8 @@
                             <!-- name -->
                             <td>{{transmitter.name}}</td>
 
-                            <!-- temperature value -->
-                            <td>{{transmitter.last_record.temperature}} °C</td>
+                            <!-- power value -->
+                            <td>{{transmitter.last_record.power}}</td>
 
                             <!-- when -->
                             <td>{{transmitter.last_record.created_at | timeFromNow}}</td>
@@ -81,8 +81,7 @@
     // lib
     import _findIndex from 'lodash/findIndex';
     // services
-    import { lastRecordPerTransmitterView, transmitterTemperatureRecordService, 
-        transmitterHumidityRecordService } from 'services';
+    import { lastRecordPerTransmitterView, transmitterPowerRecordService } from 'services';
 
     export default {
 
@@ -102,14 +101,14 @@
         },
 
         created() {
-            this.findLastTemperaturesRecords();
+            this.findLastPowersRecords();
             this.keepInSync();
         },
 
         computed : {
 
             /**
-             * calculate the average temperature amongs all 
+             * calculate the average power amongs all 
              * currently available transmitters
              * 
              * @return {String}
@@ -120,33 +119,10 @@
 
                 if ( this.transmitters.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
+                    // extract powers from each transmitters
+                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
 
-                    return ( temperatures.reduce( ( cur, val ) => cur + val, 0 ) / temperatures.length ).toFixed( 2 );
-
-                }
-
-                return;
-
-            },
-
-            /**
-             * find the lowest temperature in available transmitters
-             * 
-             * @return {Number}
-             * 
-             * @author shad
-             */
-            lowest_temperature() {
-
-                if ( this.transmitters.length > 0 ) {
-
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
-
-                    // return lowest temperature
-                    return Math.min.apply( null, temperatures );
+                    return ( powers.reduce( ( cur, val ) => cur + val, 0 ) / powers.length ).toFixed( 2 );
 
                 }
 
@@ -155,21 +131,44 @@
             },
 
             /**
-             * find the highest temperature in available transmitters
+             * find the lowest power in available transmitters
              * 
              * @return {Number}
              * 
              * @author shad
              */
-            highest_temperature() {
+            lowest_power() {
 
                 if ( this.transmitters.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
+                    // extract powers from each transmitters
+                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.power );
 
-                    // return max. temperature
-                    return Math.max.apply( null, temperatures );
+                    // return lowest power
+                    return Math.min.apply( null, powers );
+
+                }
+
+                return;
+
+            },
+
+            /**
+             * find the highest power in available transmitters
+             * 
+             * @return {Number}
+             * 
+             * @author shad
+             */
+            highest_power() {
+
+                if ( this.transmitters.length > 0 ) {
+
+                    // extract powers from each transmitters
+                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.power );
+
+                    // return max. power
+                    return Math.max.apply( null, powers );
 
                 }
 
@@ -182,18 +181,17 @@
         methods: {
 
             /**
-             * get listing of available temperature
+             * get listing of available power
              *
              * @author shad
              */
-            findLastTemperaturesRecords() {
+            findLastPowersRecords() {
 
 				const query = { query: {
 
-					// of type 'TEMPERATURE'
-                    // OR 'HUMIDITY'
+					// of type 'POWER'
 					type: {
-                        $in: [ 'TEMPERATURE', 'HUMIDITY' ]
+                        $in: [ 'POWER' ]
                     }
 
 				} };
@@ -212,7 +210,7 @@
             /**
              * keep last data up-to-date with the server on
              * temperature record creation, which can come from
-             * both the 'TEMPERATURE' or 'HUMIDITY' transmitters
+             * the 'POWER' transmitters
              */
             keepInSync() {
 
@@ -232,17 +230,14 @@
 
                     else {
 
-                        this.findLastTemperaturesRecords();
+                        this.findLastPowersRecords();
 
                     }
 
                 };
 
                 // sync with 'TEMPERATURE' transmitters
-                transmitterTemperatureRecordService.on( 'created', updateTransmitter );
-
-                // sync with 'HUMIDITY' transmitters
-                transmitterHumidityRecordService.on( 'created', updateTransmitter );
+                transmitterPowerRecordService.on( 'created', updateTransmitter );
 
             },
 
@@ -265,7 +260,7 @@
 
 <style lang="scss">
 
-    #dashboard-temperature-component {
+    #dashboard-power-component {
         height: 300px;
         background: white;
 

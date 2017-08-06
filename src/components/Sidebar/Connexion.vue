@@ -14,13 +14,15 @@
 					<i v-bind:class="{'green': server_is_connected, 'red': !server_is_connected}" class="fa fa-server"></i>
 				</span> 
             </div>
-            <div class="column">
+            <div v-on:click="showMenu" class="column">
                 <span class="icon">
 					<i class="fa fa-bars"></i>
 				</span> 
             </div>
 
         </div>
+
+        <menu v-if="menu_is_visible" @closing="showMenu"></menu>
 
     </div>
 
@@ -30,8 +32,16 @@
 
     // services
     import { feathers_socket, serialService } from 'services';
+    // components
+    import Menu from '../Menu.vue';
 
     export default {
+
+        components: {
+
+            Menu
+
+        },
 
         data() {
             return {
@@ -42,7 +52,11 @@
 
                 // contain the current connexion to the
                 // API server on the raspberry
-                'server_is_connected': false
+                'server_is_connected': false,
+
+                // contain bool. to know if showing menu
+				// @type {Boolean}
+				'menu_is_visible': false
 
             }
         },
@@ -113,7 +127,18 @@
 
                 } );
 
-            }
+            },
+
+            /**
+			 * alternate menu visibility
+			 *
+			 * @author shad
+			 */
+			showMenu() {
+
+				this.menu_is_visible = !this.menu_is_visible;
+
+			}
 
         }
 
@@ -151,6 +176,10 @@
                 &.red {
                     color: red;
                 }
+            }
+
+            &:last-child {
+                cursor: pointer;
             }
         }
     }
