@@ -115,7 +115,7 @@
              * 
              * @author shad
              */
-            average_temperature() {
+            average_power() {
 
                 if ( this.transmitters.length > 0 ) {
 
