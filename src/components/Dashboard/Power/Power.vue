@@ -25,7 +25,7 @@
             <div v-if="!details_mode" class="block">
 
                 <div class="block">
-                    <div class="subtitle has-text-centered is-1">{{average_power || '...'}}</div>
+                    <div class="subtitle has-text-centered is-1">{{average_power || '...'}} W</div>
                     <p class="subtitle has-text-centered is-4">Puissance Moyenne</p>
                 </div>
 
@@ -33,13 +33,13 @@
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Basse</p>
-                            <p class="subtitle">{{lowest_power || '...'}}</p>
+                            <p class="subtitle">{{lowest_power || '...'}} W</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
                             <p class="heading">Haute</p>
-                            <p class="subtitle">{{highest_power || '...'}}</p>
+                            <p class="subtitle">{{highest_power || '...'}} W</p>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 if ( this.transmitters.length > 0 ) {
 
                     // extract powers from each transmitters
-                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
+                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.power );
 
                     return ( powers.reduce( ( cur, val ) => cur + val, 0 ) / powers.length ).toFixed( 2 );
 
@@ -236,7 +236,7 @@
 
                 };
 
-                // sync with 'TEMPERATURE' transmitters
+                // sync with 'POWER' transmitters
                 transmitterPowerRecordService.on( 'created', updateTransmitter );
 
             },
