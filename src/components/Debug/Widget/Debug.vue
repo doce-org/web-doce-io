@@ -84,7 +84,11 @@
         data() {
             return {
 
-                'command': {}
+                'command': {
+
+                    command: 'send'
+
+                }
 
             }
         },
