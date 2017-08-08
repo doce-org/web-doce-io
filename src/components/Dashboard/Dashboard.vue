@@ -31,11 +31,21 @@
                         <humidity></humidity>
 
                     </div>
-                    </div>
+
+                </div>
+
+                <div class="tile">
+
 
                     <div class="tile is-4 is-parent">
 
                         <power></power>
+
+                    </div>
+
+                    <div class="tile is-4 is-parent">
+
+                        <debug></debug>
 
                     </div>
 
@@ -57,6 +67,7 @@
     import Humidity from './Humidity/Humidity.vue';
     import Power from './Power/Power.vue';
     import Automation from './Automation/Automation.vue';
+    import Debug from 'components/Debug/Widget/Debug.vue';
 
     export default {
 
@@ -66,7 +77,8 @@
             Today,
             Temperature,
             Humidity,
-            Power
+            Power,
+            Debug
 
         }
     

@@ -5,57 +5,67 @@
 		<div class="level">
 
 			<div class="level-left">
-				<div class="field has-addons">
 
-					<!-- info logs -->
-					<p class="control">
-						<a v-bind:class="{'active': types.indexOf('info') !== -1}"
-						   @click="updateRequestedTypes('info')"
-						   class="button blue is-small">
-							<span class="icon is-small">
-								<i class="fa fa-circle"></i>
-							</span> 
-						</a>
-					</p>
+				<!-- <div class="level-item">
+					<div class="icon is-small white">
+						<i class="fa fa-code"></i>
+					</div>
+				</div> -->
 
-					<!-- warning logs -->
-					<p class="control">
-						<a v-bind:class="{'active': types.indexOf('warning') !== -1}"
-						   @click="updateRequestedTypes('warning')" 
-						   class="button orange is-small">
-							<span class="icon is-small">
-								<i class="fa fa-circle"></i>
-							</span> 
-						</a>
-					</p>
+				<div class="level-item">
+					<div class="field has-addons">
 
-					<!-- error logs -->
-					<p class="control">
-						<a v-bind:class="{'active': types.indexOf('error') !== -1}"
-						   @click="updateRequestedTypes('error')"
-						   class="button red is-small">
-							<span class="icon is-small">
-								<i class="fa fa-circle"></i>
-							</span> 
-						</a>
-					</p>
+						<!-- info logs -->
+						<p class="control">
+							<a v-bind:class="{'active': types.indexOf('info') !== -1}"
+							@click="updateRequestedTypes('info')"
+							class="button blue is-small">
+								<span class="icon is-small">
+									<i class="fa fa-circle"></i>
+								</span> 
+							</a>
+						</p>
 
-					<!-- debug logs -->
-					<p class="control">
-						<a v-bind:class="{'active': types.indexOf('debug') !== -1}"
-						   @click="updateRequestedTypes('debug')"
-						   class="button white is-small">
-							<span class="icon is-small">
-								<i class="fa fa-circle"></i>
-							</span> 
-						</a>
-					</p>
+						<!-- warning logs -->
+						<p class="control">
+							<a v-bind:class="{'active': types.indexOf('warning') !== -1}"
+							@click="updateRequestedTypes('warning')" 
+							class="button orange is-small">
+								<span class="icon is-small">
+									<i class="fa fa-circle"></i>
+								</span> 
+							</a>
+						</p>
 
+						<!-- error logs -->
+						<p class="control">
+							<a v-bind:class="{'active': types.indexOf('error') !== -1}"
+							@click="updateRequestedTypes('error')"
+							class="button red is-small">
+								<span class="icon is-small">
+									<i class="fa fa-circle"></i>
+								</span> 
+							</a>
+						</p>
+
+						<!-- debug logs -->
+						<p class="control">
+							<a v-bind:class="{'active': types.indexOf('debug') !== -1}"
+							@click="updateRequestedTypes('debug')"
+							class="button white is-small">
+								<span class="icon is-small">
+									<i class="fa fa-circle"></i>
+								</span> 
+							</a>
+						</p>
+
+					</div>
 				</div>
+
 			</div>
 
 			<div class="level-right">
-				<h6 class="title is-6 has-text-right">ACTIVITES</h6>
+				<h6 v-link="{name: 'logs'}" class="title is-6 has-text-right">ACTIVITES</h6>
 			</div>
 
 		</div>
@@ -223,9 +233,10 @@
 		border-top: 1px solid #313c4d;
 		overflow-y: auto;
 
-		h6 {
+		.title {
 			color: white;
 			font-weight: 400;
+			cursor: pointer;
 		}
 
 		.button {

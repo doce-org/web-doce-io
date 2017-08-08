@@ -10,6 +10,7 @@ import dashboardRoutes from './routes/dashboard.routes';
 import historyRoutes from './routes/history.routes';
 import settingsRoutes from './routes/settings.routes';
 import setupRoutes from './routes/setup.routes';
+import debugRoutes from './routes/debug.routes';
 
 Vue.use( VueRouter );
 
@@ -18,7 +19,7 @@ export const router = new VueRouter( {
 } );
 
 // setting up all routes using the main app component
-const routes = Object.assign( {}, dashboardRoutes, historyRoutes, settingsRoutes, setupRoutes );
+const routes = Object.assign( {}, dashboardRoutes, historyRoutes, settingsRoutes, setupRoutes, debugRoutes );
 router.map( {
 
     '/': {

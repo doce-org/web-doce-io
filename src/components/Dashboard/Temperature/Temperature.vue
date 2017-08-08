@@ -253,6 +253,9 @@
                     // build the new avg temp. chart
                     this.$nextTick( this.buildAvgChart );
 
+                    // update in 30 minutes
+                    setTimeout( this.findAvgTemperatures, 1000 * 60 * 30 );
+
                 } )
                 .catch( this.handlingErrors );
 
@@ -325,8 +328,8 @@
 
                         datasets: [ {
                             data: this.temperatures_avg_last_6_hours.map( avg => avg.avg_temperature ),
-                            backgroundColor: [ '#fadcd9' ],
-                            borderColor: [ '#e74c3c' ]
+                            backgroundColor: [ '#fceceb' ],
+                            borderColor: [ '#fadcd9' ]
                         } ]
 
                     },
@@ -382,8 +385,10 @@
     #dashboard-temperature-component {
         height: 300px;
         background: white;
+        position: relative;
 
         .columns {
+            position: relative;
 
             &:first-child {
                 background: #f5f6f8;
@@ -395,6 +400,22 @@
 
             &.content {
                 padding: 2rem;
+
+                .table {
+                    background: transparent;
+                }
+            }
+
+            &:not(last-child) {
+                z-index: 100
+            }
+
+            &:last-child {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: 0;
+                width: 100%;
             }
         }
     }
