@@ -72,6 +72,14 @@
 
         </div>
 
+        <div class="columns is-marginless">
+            <div class="column is-paddingless">
+
+                <canvas class="temperature chart" height="100"></canvas>
+
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -80,9 +88,11 @@
 
     // lib
     import _findIndex from 'lodash/findIndex';
+    import moment from 'moment';
+    import chartJs from 'chart.js';
     // services
     import { lastRecordPerTransmitterView, transmitterTemperatureRecordService, 
-        transmitterHumidityRecordService } from 'services';
+        transmitterHumidityRecordService, recordTemperatureAvgLast24HoursView } from 'services';
 
     export default {
 
@@ -94,6 +104,10 @@
 				// @type {Array}
                 'transmitters': [],
 
+                // contain the last 6 hours of avg temp. per 30 minutes batch
+                // @type {Array}
+                'temperatures_avg_last_6_hours': [],
+
                 // details mode activation
                 // @type {Boolean}
                 'details_mode': false
@@ -103,6 +117,7 @@
 
         created() {
             this.findLastTemperaturesRecords();
+            this.findAvgTemperatures();
             this.keepInSync();
         },
 
@@ -210,6 +225,40 @@
             },
 
             /**
+             * get a listing per 30 minutes batch of the last
+             * 6 hours temperatures averages data
+             * 
+             * @author shad
+             */
+            findAvgTemperatures() {
+
+                // obtain time 6 hours ago
+                const last_6_hours = moment().subtract( 6, 'hours' ).toDate();
+
+                const query = { query: {
+
+                    // get only the last 6 hours
+                    current_interval_time: {
+                        $gte: last_6_hours
+                    }
+
+                } };
+
+                recordTemperatureAvgLast24HoursView.find( query )
+                .then( records_avg => {
+
+                    // set the average temps.
+                    this.temperatures_avg_last_6_hours = records_avg;
+
+                    // build the new avg temp. chart
+                    this.$nextTick( this.buildAvgChart );
+
+                } )
+                .catch( this.handlingErrors );
+
+            },
+
+            /**
              * keep last data up-to-date with the server on
              * temperature record creation, which can come from
              * both the 'TEMPERATURE' or 'HUMIDITY' transmitters
@@ -254,6 +303,71 @@
             alternateView() {
 
                 this.details_mode = !this.details_mode;
+
+            },
+
+            /**
+             * build the average temperature chart
+             * 
+             * @author shad
+             */
+            buildAvgChart() {
+
+                const ctx = $( '.temperature.chart', this.$el )[ 0 ].getContext( '2d' );
+
+                new chartJs( ctx, {
+
+                    type: 'line',
+
+                    data: {
+
+                        labels: this.temperatures_avg_last_6_hours.map( avg => avg.current_interval_time ),
+
+                        datasets: [ {
+                            data: this.temperatures_avg_last_6_hours.map( avg => avg.avg_temperature ),
+                            backgroundColor: [ '#fadcd9' ],
+                            borderColor: [ '#e74c3c' ]
+                        } ]
+
+                    },
+
+                    options: {
+
+                        legend: {
+
+                            display: false
+
+                        },
+
+                        tooltips: {
+
+                            enabled: false
+
+                        },
+
+                        scales: {
+
+                            xAxes: [ {
+
+                                gridLines: { display: false, drawBorder: false, tickMarkLength: 0 },
+                                scaleLabel: { display: false },
+                                ticks: { display: false }
+
+                            } ],
+
+                            yAxes: [ {
+
+                                gridLines: { display: false, drawBorder: false, tickMarkLength: 0 },
+                                scaleLabel: { display: false },
+                                ticks: { display: false }
+
+                            } ],
+
+                        }
+
+                    }
+
+                } );
 
             }
 

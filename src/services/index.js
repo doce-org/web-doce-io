@@ -47,3 +47,5 @@ export const transmitterHumidityAvgDetailedView = feathers_socket.service( '/vie
 
 // records
 export const lastRecordPerTransmitterView = feathers_socket.service( '/views/records/last/per/transmitters' );
+export const recordTemperatureAvgLast24HoursView = feathers_socket.service( '/views/records/temperatures/avg/last/24/hours' );
+export const recordHumidityAvgLast24HoursView = feathers_socket.service( '/views/records/humidities/avg/last/24/hours' );

@@ -71,6 +71,14 @@
 
         </div>
 
+        <div class="columns is-marginless">
+            <div class="column is-paddingless">
+
+                <canvas class="humidity chart" height="100"></canvas>
+
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -79,8 +87,10 @@
 
     // lib
     import _findIndex from 'lodash/findIndex';
+    import moment from 'moment';
+    import chartJs from 'chart.js';
     // services
-    import { lastRecordPerTransmitterView, transmitterHumidityRecordService } from 'services';
+    import { lastRecordPerTransmitterView, transmitterHumidityRecordService, recordHumidityAvgLast24HoursView } from 'services';
 
     export default {
 
@@ -92,6 +102,10 @@
 				// @type {Array}
                 'transmitters': [],
 
+                // contain the last 6 hours of avg hum. per 30 minutes batch
+                // @type {Array}
+                'humidities_avg_last_6_hours': [],
+
                 // details mode activation
                 // @type {Boolean}
                 'details_mode': false
@@ -101,6 +115,7 @@
 
         created() {
             this.findLastHumiditiesRecords();
+            this.findAvgHumidities();
             this.keepInSync();
         },
 
@@ -207,6 +222,40 @@
             },
 
             /**
+             * get a listing per 30 minutes batch of the last
+             * 6 hours humidities averages data
+             * 
+             * @author shad
+             */
+            findAvgHumidities() {
+
+                // obtain time 6 hours ago
+                const last_6_hours = moment().subtract( 6, 'hours' ).toDate();
+
+                const query = { query: {
+
+                    // get only the last 6 hours
+                    current_interval_time: {
+                        $gte: last_6_hours
+                    }
+
+                } };
+
+                recordHumidityAvgLast24HoursView.find( query )
+                .then( records_avg => {
+
+                    // set the average temps.
+                    this.humidities_avg_last_6_hours = records_avg;
+
+                    // build the new avg temp. chart
+                    this.$nextTick( this.buildAvgChart );
+
+                } )
+                .catch( this.handlingErrors );
+
+            },
+
+            /**
              * keep last data up-to-date with the server on
              * temperature record creation, which can come from
              * 'HUMIDITY' transmitters only
@@ -248,6 +297,71 @@
             alternateView() {
 
                 this.details_mode = !this.details_mode;
+
+            },
+
+            /**
+             * build the average humidities chart
+             * 
+             * @author shad
+             */
+            buildAvgChart() {
+
+                const ctx = $( '.humidity.chart', this.$el )[ 0 ].getContext( '2d' );
+
+                new chartJs( ctx, {
+
+                    type: 'line',
+
+                    data: {
+
+                        labels: this.humidities_avg_last_6_hours.map( avg => avg.current_interval_time ),
+
+                        datasets: [ {
+                            data: this.humidities_avg_last_6_hours.map( avg => avg.avg_humidity ),
+                            backgroundColor: [ '#dbedf9' ],
+                            borderColor: [ '#3498db' ]
+                        } ]
+
+                    },
+
+                    options: {
+
+                        legend: {
+
+                            display: false
+
+                        },
+
+                        tooltips: {
+
+                            enabled: false
+
+                        },
+
+                        scales: {
+
+                            xAxes: [ {
+
+                                gridLines: { display: false, drawBorder: false, tickMarkLength: 0 },
+                                scaleLabel: { display: false },
+                                ticks: { display: false }
+
+                            } ],
+
+                            yAxes: [ {
+
+                                gridLines: { display: false, drawBorder: false, tickMarkLength: 0 },
+                                scaleLabel: { display: false },
+                                ticks: { display: false }
+
+                            } ],
+
+                        }
+
+                    }
+
+                } );
 
             }
 
