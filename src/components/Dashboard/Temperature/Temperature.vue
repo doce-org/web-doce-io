@@ -110,7 +110,11 @@
 
                 // details mode activation
                 // @type {Boolean}
-                'details_mode': false
+                'details_mode': false,
+
+                // contain the current canvas object
+                // @type {Object}
+                'canvas': false
 
             }
         },
@@ -318,7 +322,10 @@
 
                 const ctx = $( '.temperature.chart', this.$el )[ 0 ].getContext( '2d' );
 
-                new chartJs( ctx, {
+                // destroy previous canvas if exist
+                if ( this.canvas ) this.canvas.destroy();
+
+                this.canvas = new chartJs( ctx, {
 
                     type: 'line',
 
