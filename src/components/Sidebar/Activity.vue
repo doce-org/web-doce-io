@@ -165,7 +165,7 @@
 				} };
 
 				logService.find( query )
-				.then( logs => this.logs = logs )
+				.then( logs => this.logs = logs.data )
 				.catch( this.handlingErrors );
 
 			},
