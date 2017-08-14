@@ -6,12 +6,12 @@ import Menu from 'components/Setup/Menu.vue';
 import RoomsListing from 'components/Setup/Rooms/RoomsListing.vue';
 import RoomForm from 'components/Setup/Rooms/RoomForm.vue';
 // transmitters
-import TransmittersListing from 'components/Setup/Transmitters/TransmittersListing.vue';
-import TransmitterForm from 'components/Setup/Transmitters/TransmitterForm.vue';
+import HardwaresListing from 'components/Setup/Hardwares/HardwaresListing.vue';
+import HardwareForm from 'components/Setup/Hardwares/HardwareForm.vue';
 
 export default {
 
-    '/setup': { 
+    '/setup': {
         component: Setup,
         subRoutes: {
 
@@ -23,10 +23,10 @@ export default {
             '/rooms/create': { name: 'setup_room_create', component: RoomForm },
 
             // transmitters
-            '/transmitters': { name: 'setup_transmitters_listing', component: TransmittersListing },
-            '/transmitters/create': { name: 'setup_transmitter_create', component: TransmitterForm }
+            '/transmitters': { name: 'setup_hardwares_listing', component: HardwaresListing },
+            '/transmitters/create': { name: 'setup_hardware_create', component: HardwareForm }
 
-        } 
+        }
     }
 
 }

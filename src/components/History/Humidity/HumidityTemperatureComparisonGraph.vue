@@ -29,7 +29,7 @@
 	import _max from 'lodash/max';
 	import _min from 'lodash/min';
 	// services
-	import { transmitterHumidityAvgDetailedView } from 'services';
+	import { hardwareHumidityAvgDetailedView } from 'services';
 
 	export default {
 
@@ -171,7 +171,7 @@
 
 				} };
 
-				transmitterHumidityAvgDetailedView.find( query )
+				hardwareHumidityAvgDetailedView.find( query )
 				.then( records => this.records = records )
 				.catch( this.handlingErrors );
 

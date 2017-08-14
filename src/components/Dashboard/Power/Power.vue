@@ -1,5 +1,5 @@
 <template>
-  
+
     <div id="dashboard-power-component" class="tile is-child">
 
         <div class="columns is-vcentered is-marginless has-text-centered">
@@ -51,17 +51,17 @@
                 <table class="table">
                     <tbody>
 
-                        <!-- for each transmitter -->
-                        <tr v-for="transmitter in transmitters">
+                        <!-- for each hardware -->
+                        <tr v-for="hardware in hardwares">
 
                             <!-- name -->
-                            <td>{{transmitter.name}}</td>
+                            <td>{{hardware.name}}</td>
 
                             <!-- power value -->
-                            <td>{{transmitter.last_record.power}}</td>
+                            <td>{{hardware.last_record.power}}</td>
 
                             <!-- when -->
-                            <td>{{transmitter.last_record.created_at | timeFromNow}}</td>
+                            <td>{{hardware.last_record.created_at | timeFromNow}}</td>
 
                         </tr>
 
@@ -81,17 +81,17 @@
     // lib
     import _findIndex from 'lodash/findIndex';
     // services
-    import { lastRecordPerTransmitterView, transmitterPowerRecordService } from 'services';
+    import { lastRecordPerHardwareView, hardwarePowerRecordService } from 'services';
 
     export default {
 
         data() {
             return {
 
-				// contain the listing of transmitter sensors
+				// contain the listing of hardware sensors
                 // of temperatures type
 				// @type {Array}
-                'transmitters': [],
+                'hardwares': [],
 
                 // details mode activation
                 // @type {Boolean}
@@ -108,19 +108,19 @@
         computed : {
 
             /**
-             * calculate the average power amongs all 
-             * currently available transmitters
-             * 
+             * calculate the average power amongs all
+             * currently available hardwares
+             *
              * @return {String}
-             * 
+             *
              * @author shad
              */
             average_power() {
 
-                if ( this.transmitters.length > 0 ) {
+                if ( this.hardwares.length > 0 ) {
 
-                    // extract powers from each transmitters
-                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.power );
+                    // extract powers from each hardwares
+                    const powers = this.hardwares.map( hardware => +hardware.last_record.power );
 
                     return ( powers.reduce( ( cur, val ) => cur + val, 0 ) / powers.length ).toFixed( 2 );
 
@@ -131,18 +131,18 @@
             },
 
             /**
-             * find the lowest power in available transmitters
-             * 
+             * find the lowest power in available hardwares
+             *
              * @return {Number}
-             * 
+             *
              * @author shad
              */
             lowest_power() {
 
-                if ( this.transmitters.length > 0 ) {
+                if ( this.hardwares.length > 0 ) {
 
-                    // extract powers from each transmitters
-                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.power );
+                    // extract powers from each hardwares
+                    const powers = this.hardwares.map( hardware => +hardware.last_record.power );
 
                     // return lowest power
                     return Math.min.apply( null, powers );
@@ -154,18 +154,18 @@
             },
 
             /**
-             * find the highest power in available transmitters
-             * 
+             * find the highest power in available hardwares
+             *
              * @return {Number}
-             * 
+             *
              * @author shad
              */
             highest_power() {
 
-                if ( this.transmitters.length > 0 ) {
+                if ( this.hardwares.length > 0 ) {
 
-                    // extract powers from each transmitters
-                    const powers = this.transmitters.map( transmitter => +transmitter.last_record.power );
+                    // extract powers from each hardwares
+                    const powers = this.hardwares.map( hardware => +hardware.last_record.power );
 
                     // return max. power
                     return Math.max.apply( null, powers );
@@ -196,11 +196,11 @@
 
 				} };
 
-               	lastRecordPerTransmitterView.find( query )
-            	.then( transmitters => {
+               	lastRecordPerHardwareView.find( query )
+            	.then( hardwares => {
 
-                    // set listing of transmitters
-                    this.transmitters = transmitters;
+                    // set listing of hardwares
+                    this.hardwares = hardwares;
 
                 } )
                 .catch( this.handlingErrors );
@@ -210,21 +210,21 @@
             /**
              * keep last data up-to-date with the server on
              * temperature record creation, which can come from
-             * the 'POWER' transmitters
+             * the 'POWER' hardwares
              */
             keepInSync() {
 
-                // either update the transmitter last record data if found
-                // or reload the transmitter last record list, because if we
-                // haven't found the linked transmitter, means there's a new
+                // either update the hardware last record data if found
+                // or reload the hardware last record list, because if we
+                // haven't found the linked hardware, means there's a new
                 // one not in the list on the first listing check
                 const updateTransmitter = ( record ) => {
 
-                    const transmitter_idx = _findIndex( this.transmitters, { id: record.transmitter_id } );
+                    const hardware_idx = _findIndex( this.hardwares, { id: record.hardware_id } );
 
-                    if ( transmitter_idx !== -1 ) {
+                    if ( hardware_idx !== -1 ) {
 
-                        this.transmitters[ transmitter_idx ].last_record = record;
+                        this.hardwares[ hardware_idx ].last_record = record;
 
                     }
 
@@ -236,14 +236,14 @@
 
                 };
 
-                // sync with 'POWER' transmitters
-                transmitterPowerRecordService.on( 'created', updateTransmitter );
+                // sync with 'POWER' hardwares
+                hardwarePowerRecordService.on( 'created', updateTransmitter );
 
             },
 
             /**
              * change view of data between summary and details
-             * 
+             *
              * @author shad
              */
             alternateView() {
@@ -281,5 +281,3 @@
     }
 
 </style>
-
-

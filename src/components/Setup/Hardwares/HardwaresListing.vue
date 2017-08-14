@@ -16,7 +16,7 @@
 
                     </div>
                     <div class="level-item">
-                        <h5 class="subtitle is-5">Liste des transmetteurs.</h5>
+                        <h5 class="subtitle is-5">Liste des materiels.</h5>
                     </div>
                 </div>
             </div>
@@ -27,8 +27,8 @@
                         <th>Nom</th>
                         <th>
 
-                            <button v-link="{name: 'setup_transmitter_create'}" class="button is-outlined is-success is-pulled-right">
-                                Ajouter un transmetteur
+                            <button v-link="{name: 'setup_hardware_create'}" class="button is-outlined is-success is-pulled-right">
+                                Ajouter un materiel
                             </button>
 
                         </th>
@@ -36,11 +36,11 @@
                 </thead>
                 <tbody>
 
-                    <!-- each transmitter -->
-                    <tr v-for="transmitter in transmitters">
+                    <!-- each hardware -->
+                    <tr v-for="hardware in hardwares">
 
                         <!-- name -->
-                        <td>{{transmitter.name}}</td>
+                        <td>{{hardware.name}}</td>
 
                         <!-- controls -->
                         <td>
@@ -48,13 +48,13 @@
                             <div class="field is-grouped is-pulled-right">
                                 <p class="control">
 
-                                    <!-- edit transmitter -->
+                                    <!-- edit hardware -->
                                     <button class="button is-outlined is-warning" disabled>Editer</button>
 
                                 </p>
                                 <p class="control">
 
-                                    <!-- delete transmitter -->
+                                    <!-- delete hardware -->
                                     <button class="button is-outlined is-danger" disabled>Supprimer</button>
 
                                 </p>
@@ -75,43 +75,43 @@
 <script>
 
     // services
-    import { transmitterService } from 'services';
+    import { hardwareService } from 'services';
 
     export default {
 
         data() {
             return {
 
-                // contain the listing of available transmitters
+                // contain the listing of available hardwares
                 // @type {Array}
-                'transmitters': false
+                'hardwares': false
 
             }
         },
 
         created() {
-            this.findTransmitters();
+            this.findHardwares();
         },
 
         methods: {
 
             /**
-             * find the listing of available (registered) transmitters
-             * 
+             * find the listing of available (registered) hardwares
+             *
              * @author shad
-             */ 
-            findTransmitters() {
+             */
+            findHardwares() {
 
-                transmitterService.find()
-                .then( transmitters => this.transmitters = transmitters )
+                hardwareService.find()
+                .then( hardwares => this.hardwares = hardwares )
                 .catch( this.handlingErrors );
 
             }
 
         }
-    
+
     }
-    
+
 </script>
 
 <style lang="scss" scoped>
@@ -121,4 +121,3 @@
     }
 
 </style>
-

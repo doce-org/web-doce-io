@@ -1,5 +1,5 @@
 <template>
-  
+
     <div id="dashboard-temperature-component" class="tile is-child">
 
         <div class="columns is-vcentered is-marginless has-text-centered">
@@ -51,17 +51,17 @@
                 <table class="table">
                     <tbody>
 
-                        <!-- for each transmitter -->
-                        <tr v-for="transmitter in transmitters">
+                        <!-- for each hardware -->
+                        <tr v-for="hardware in hardwares">
 
                             <!-- name -->
-                            <td>{{transmitter.name}}</td>
+                            <td>{{hardware.name}}</td>
 
                             <!-- temperature value -->
-                            <td>{{transmitter.last_record.temperature}} °C</td>
+                            <td>{{hardware.last_record.temperature}} °C</td>
 
                             <!-- when -->
-                            <td>{{transmitter.last_record.created_at | timeFromNow}}</td>
+                            <td>{{hardware.last_record.created_at | timeFromNow}}</td>
 
                         </tr>
 
@@ -91,18 +91,18 @@
     import moment from 'moment';
     import chartJs from 'chart.js';
     // services
-    import { lastRecordPerTransmitterView, transmitterTemperatureRecordService, 
-        transmitterHumidityRecordService, recordTemperatureAvgLast24HoursView } from 'services';
+    import { lastRecordPerHardwareView, hardwareTemperatureRecordService,
+        hardwareHumidityRecordService, recordTemperatureAvgLast24HoursView } from 'services';
 
     export default {
 
         data() {
             return {
 
-				// contain the listing of transmitter sensors
+				// contain the listing of hardware sensors
                 // of temperatures type
 				// @type {Array}
-                'transmitters': [],
+                'hardwares': [],
 
                 // contain the last 6 hours of avg temp. per 30 minutes batch
                 // @type {Array}
@@ -128,19 +128,19 @@
         computed : {
 
             /**
-             * calculate the average temperature amongs all 
-             * currently available transmitters
-             * 
+             * calculate the average temperature amongs all
+             * currently available hardwares
+             *
              * @return {String}
-             * 
+             *
              * @author shad
              */
             average_temperature() {
 
-                if ( this.transmitters.length > 0 ) {
+                if ( this.hardwares.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
+                    // extract temperatures from each hardwares
+                    const temperatures = this.hardwares.map( hardware => +hardware.last_record.temperature );
 
                     return ( temperatures.reduce( ( cur, val ) => cur + val, 0 ) / temperatures.length ).toFixed( 2 );
 
@@ -151,18 +151,18 @@
             },
 
             /**
-             * find the lowest temperature in available transmitters
-             * 
+             * find the lowest temperature in available hardwares
+             *
              * @return {Number}
-             * 
+             *
              * @author shad
              */
             lowest_temperature() {
 
-                if ( this.transmitters.length > 0 ) {
+                if ( this.hardwares.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
+                    // extract temperatures from each hardwares
+                    const temperatures = this.hardwares.map( hardware => +hardware.last_record.temperature );
 
                     // return lowest temperature
                     return Math.min.apply( null, temperatures );
@@ -174,18 +174,18 @@
             },
 
             /**
-             * find the highest temperature in available transmitters
-             * 
+             * find the highest temperature in available hardwares
+             *
              * @return {Number}
-             * 
+             *
              * @author shad
              */
             highest_temperature() {
 
-                if ( this.transmitters.length > 0 ) {
+                if ( this.hardwares.length > 0 ) {
 
-                    // extract temperatures from each transmitters
-                    const temperatures = this.transmitters.map( transmitter => +transmitter.last_record.temperature );
+                    // extract temperatures from each hardwares
+                    const temperatures = this.hardwares.map( hardware => +hardware.last_record.temperature );
 
                     // return max. temperature
                     return Math.max.apply( null, temperatures );
@@ -217,11 +217,11 @@
 
 				} };
 
-               	lastRecordPerTransmitterView.find( query )
-            	.then( transmitters => {
+               	lastRecordPerHardwareView.find( query )
+            	.then( hardwares => {
 
-                    // set listing of transmitters
-                    this.transmitters = transmitters;
+                    // set listing of hardwares
+                    this.hardwares = hardwares;
 
                 } )
                 .catch( this.handlingErrors );
@@ -231,7 +231,7 @@
             /**
              * get a listing per 30 minutes batch of the last
              * 6 hours temperatures averages data
-             * 
+             *
              * @author shad
              */
             findAvgTemperatures() {
@@ -268,21 +268,21 @@
             /**
              * keep last data up-to-date with the server on
              * temperature record creation, which can come from
-             * both the 'TEMPERATURE' or 'HUMIDITY' transmitters
+             * both the 'TEMPERATURE' or 'HUMIDITY' hardwares
              */
             keepInSync() {
 
-                // either update the transmitter last record data if found
-                // or reload the transmitter last record list, because if we
-                // haven't found the linked transmitter, means there's a new
+                // either update the hardware last record data if found
+                // or reload the hardware last record list, because if we
+                // haven't found the linked hardware, means there's a new
                 // one not in the list on the first listing check
                 const updateTransmitter = ( record ) => {
 
-                    const transmitter_idx = _findIndex( this.transmitters, { id: record.transmitter_id } );
+                    const hardware_idx = _findIndex( this.hardwares, { id: record.hardware_id } );
 
-                    if ( transmitter_idx !== -1 ) {
+                    if ( hardware_idx !== -1 ) {
 
-                        this.transmitters[ transmitter_idx ].last_record = record;
+                        this.hardwares[ hardware_idx ].last_record = record;
 
                     }
 
@@ -294,17 +294,17 @@
 
                 };
 
-                // sync with 'TEMPERATURE' transmitters
-                transmitterTemperatureRecordService.on( 'created', updateTransmitter );
+                // sync with 'TEMPERATURE' hardwares
+                hardwareTemperatureRecordService.on( 'created', updateTransmitter );
 
-                // sync with 'HUMIDITY' transmitters
-                transmitterHumidityRecordService.on( 'created', updateTransmitter );
+                // sync with 'HUMIDITY' hardwares
+                hardwareHumidityRecordService.on( 'created', updateTransmitter );
 
             },
 
             /**
              * change view of data between summary and details
-             * 
+             *
              * @author shad
              */
             alternateView() {
@@ -315,7 +315,7 @@
 
             /**
              * build the average temperature chart
-             * 
+             *
              * @author shad
              */
             buildAvgChart() {
@@ -334,7 +334,7 @@
                         labels: this.temperatures_avg_last_6_hours.map( avg => avg.current_interval_time ),
 
                         datasets: [ {
-                            data: this.temperatures_avg_last_6_hours.map( avg => avg.avg_temperature ),
+                            data: this.temperatures_avg_last_6_hours.map( avg => avg.temperature ),
                             backgroundColor: [ '#fceceb' ],
                             borderColor: [ '#fadcd9' ]
                         } ]
@@ -428,5 +428,3 @@
     }
 
 </style>
-
-

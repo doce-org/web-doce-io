@@ -1,5 +1,5 @@
 <template>
-  
+
     <div class="columns is-gapless is-centered is-vcentered">
         <div class="column is-4">
 
@@ -10,7 +10,7 @@
                 <div class="field">
                     <label class="label">Nom</label>
                     <div class="control">
-                        <input v-model="transmitter.name" class="input" type="text" placeholder="Nom du transmetteur...">
+                        <input v-model="hardware.name" class="input" type="text" placeholder="Nom du transmetteur...">
                     </div>
                 </div>
 
@@ -18,9 +18,9 @@
                     <label class="label">Transmetteur disponible</label>
                     <div class="control">
                         <div class="select">
-                        <select v-model="transmitter.identifier">
-                            <option v-for="transmitter in ready_registering_transmitters" v-bind:value="transmitter.identifier">
-                                {{transmitter.identifier}} - {{transmitter.type}}
+                        <select v-model="hardware.identifier">
+                            <option v-for="hardware in ready_registering_hardwares" v-bind:value="hardware.identifier">
+                                {{hardware.identifier}} - {{hardware.type}}
                             </option>
                         </select>
                         </div>
@@ -31,7 +31,7 @@
                     <label class="label">Pieces disponible</label>
                     <div class="control">
                         <div class="select">
-                        <select v-model="transmitter.room_id">
+                        <select v-model="hardware.room_id">
                             <option v-for="room in rooms" v-bind:value="room.id">
                                 {{room.name}}
                             </option>
@@ -41,7 +41,7 @@
                 </div>
 
                 <button type="submit" class="button is-outlined is-success">Sauvegarder</button>
-                <button v-link="{name: 'setup_transmitters_listing'}" type="button" class="button is-outlined is-danger">Annuler</button>
+                <button v-link="{name: 'setup_hardwares_listing'}" type="button" class="button is-outlined is-danger">Annuler</button>
 
             </form>
 
@@ -55,43 +55,43 @@
     // lib
     import _find from 'lodash/find';
     // services
-    import { transmitterService, transmitterSetupService, roomService } from 'services';
+    import { hardwareService, hardwareSetupService, roomService } from 'services';
 
     export default {
 
         data() {
             return {
 
-                // contain the transmitter id in edit mode
+                // contain the hardware id in edit mode
                 // @type {Integer}
-                'transmitter_id': false,
+                'hardware_id': false,
 
                 // contain the listing of ready to be registered
-                // transmitters from the serial port conn.
+                // hardwares from the serial port conn.
                 // @type {Array}
-                'ready_registering_transmitters': false,
+                'ready_registering_hardwares': false,
 
                 // contain the listing of available rooms
                 // @type {Array}
                 'rooms': false,
 
-                // contain the transmitter object
+                // contain the hardware object
                 // @type {Object}
-                'transmitter': {}
+                'hardware': {}
 
             }
         },
 
         created() {
-            this.findTransmittersReadyForRegistering();
+            this.findHardwaresReadyForRegistering();
             this.findRooms();
         },
 
         route: {
 
             data() {
-                this.transmitter_id = this.$route.params[ 'transmitter_id' ];
-                if ( this.transmitter_id ) return this.getTransmitter();
+                this.hardware_id = this.$route.params[ 'hardware_id' ];
+                if ( this.hardware_id ) return this.getTransmitter();
             }
 
         },
@@ -99,21 +99,21 @@
         methods: {
 
             /**
-             * find the listing of ready to be registered transmitters
-             * 
+             * find the listing of ready to be registered hardwares
+             *
              * @author shad
              */
-            findTransmittersReadyForRegistering() {
+            findHardwaresReadyForRegistering() {
 
-                transmitterSetupService.find()
-                .then( transmitters => this.ready_registering_transmitters = transmitters )
+                hardwareSetupService.find()
+                .then( hardwares => this.ready_registering_hardwares = hardwares )
                 .catch( this.handlingErrors );
 
             },
 
             /**
              * find available rooms listing
-             * 
+             *
              * @author shad
              */
             findRooms() {
@@ -125,33 +125,33 @@
             },
 
             /**
-             * get the transmitter by id in edit mode
-             * 
+             * get the hardware by id in edit mode
+             *
              * @return {Promise}
-             * 
+             *
              * @author shad
-             */ 
+             */
             getTransmitter() {
 
-                return transmitterService.get( this.transmitter_id )
-                .then( transmitter => ( { transmitter } ) )
+                return hardwareService.get( this.hardware_id )
+                .then( hardware => ( { hardware } ) )
                 .catch( this.handlingErrors );
 
             },
 
             /**
-             * save the current transmitter by either creating or patching it
-             * 
+             * save the current hardware by either creating or patching it
+             *
              * @author shad
              */
             save() {
 
-                const transmitter_selected = _find( this.ready_registering_transmitters, { identifier: this.transmitter.identifier } );
+                const hardware_selected = _find( this.ready_registering_hardwares, { identifier: this.hardware.identifier } );
 
-                this.transmitter.type = transmitter_selected.type;
+                this.hardware.type = hardware_selected.type;
 
-                transmitterService.create( this.transmitter )
-                .then( () => this.$router.go( { name: 'setup_transmitters_listing' } ) )
+                hardwareService.create( this.hardware )
+                .then( () => this.$router.go( { name: 'setup_hardwares_listing' } ) )
                 .catch( this.handlingErrors );
 
             },
@@ -165,8 +165,7 @@
             }
 
         }
-    
+
     }
 
 </script>
-
