@@ -22,9 +22,10 @@ export default {
             '/rooms': { name: 'setup_rooms_listing', component: RoomsListing },
             '/rooms/create': { name: 'setup_room_create', component: RoomForm },
 
-            // transmitters
-            '/transmitters': { name: 'setup_hardwares_listing', component: HardwaresListing },
-            '/transmitters/create': { name: 'setup_hardware_create', component: HardwareForm }
+            // hardwares
+            '/hardwares': { name: 'setup_hardwares_listing', component: HardwaresListing },
+            '/rooms/:roomid/hardwares/create': { name: 'setup_root_hardware_create', component: HardwareForm },
+            '/rooms/:roomid/hardwares/:parentid/create': { name: 'setup_hardware_create', component: HardwareForm }
 
         }
     }

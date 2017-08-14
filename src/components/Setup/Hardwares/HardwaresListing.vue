@@ -21,51 +21,35 @@
                 </div>
             </div>
 
-            <table class="table is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>
+			<div class="columns is-multiline">
 
-                            <button v-link="{name: 'setup_hardware_create'}" class="button is-outlined is-success is-pulled-right">
-                                Ajouter un materiel
-                            </button>
+				<!-- each rooms -->
+				<div v-for="room in rooms" class="column is-12">
 
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+					<!-- room -->
+					<div v-on:click="this.current_room_id = room.id" class="level">
+						<div class="level-left">
+							<div class="level-item">{{room.name}}</div>
+						</div>
+						<div class="level-right">
+							<div class="level-item">
+								<button v-link="{name: 'setup_root_hardware_create', params: {roomid: room.id}}" class="button is-success is-outlined is-small">
+									<span class="icon is-small"><i class="fa fa-plus"></i></span>
+								</button>
+							</div>
+						</div>
+					</div>
 
-                    <!-- each hardware -->
-                    <tr v-for="hardware in hardwares">
+					<!-- show nested hardwares when selected -->
+					<hardwares-listing-item v-if="current_room_id === room.id"
+						parent_type="room" 
+						:parent_id="room.id"
+						:room_id="room.id">
+					</hardwares-listing-item>
 
-                        <!-- name -->
-                        <td>{{hardware.name}}</td>
+				</div>
 
-                        <!-- controls -->
-                        <td>
-
-                            <div class="field is-grouped is-pulled-right">
-                                <p class="control">
-
-                                    <!-- edit hardware -->
-                                    <button class="button is-outlined is-warning" disabled>Editer</button>
-
-                                </p>
-                                <p class="control">
-
-                                    <!-- delete hardware -->
-                                    <button class="button is-outlined is-danger" disabled>Supprimer</button>
-
-                                </p>
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-            </table>
+			</div>
 
         </div>
     </div>
@@ -75,38 +59,50 @@
 <script>
 
     // services
-    import { hardwareService } from 'services';
+    import { roomService } from 'services';
+	// components
+	import HardwaresListingItem from './HardwaresListingItem.vue';
 
     export default {
+
+		components: {
+
+			HardwaresListingItem
+
+		},
 
         data() {
             return {
 
-                // contain the listing of available hardwares
-                // @type {Array}
-                'hardwares': false
+				// contain the rooms listing
+				// @type {Array}
+				'rooms': false,
+
+				// contain the currently expanded room id
+				// @type {Integer}
+				'current_room_id': false
 
             }
         },
 
         created() {
-            this.findHardwares();
+			this.findRooms();
         },
 
         methods: {
 
-            /**
-             * find the listing of available (registered) hardwares
-             *
-             * @author shad
-             */
-            findHardwares() {
+			/**
+			 * find the listing of available rooms
+			 *
+			 * @author shad
+			 */
+			findRooms() {
 
-                hardwareService.find()
-                .then( hardwares => this.hardwares = hardwares )
-                .catch( this.handlingErrors );
+				roomService.find()
+				.then( rooms => this.rooms = rooms )
+				.catch( this.handlingErrors );
 
-            }
+			}
 
         }
 
@@ -116,8 +112,8 @@
 
 <style lang="scss" scoped>
 
-    .table {
-        background: transparent;
+    .level {
+
     }
 
 </style>

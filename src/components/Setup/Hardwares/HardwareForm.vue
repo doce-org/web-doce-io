@@ -3,44 +3,32 @@
     <div class="columns is-gapless is-centered is-vcentered">
         <div class="column is-4">
 
-            <h4 class="subtitle is-4">Creation / Edition d'un transmetteur.</h4>
+            <h4 class="subtitle is-4">Creation / Edition d'un materiel.</h4>
 
             <form v-on:submit.prevent="save">
 
+				<!-- waiting hardware type -->
+				<div class="box">
+					<p>Type de materiel en attente: {{hardware_in_standby && hardware_in_standby.type || 'Indisponible'}}</p>
+				</div>
+
+				<!-- name -->
                 <div class="field">
                     <label class="label">Nom</label>
                     <div class="control">
-                        <input v-model="hardware.name" class="input" type="text" placeholder="Nom du transmetteur...">
+                        <input v-model="hardware.name" class="input" type="text" placeholder="Nom du materiel...">
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="label">Transmetteur disponible</label>
-                    <div class="control">
-                        <div class="select">
-                        <select v-model="hardware.identifier">
-                            <option v-for="hardware in ready_registering_hardwares" v-bind:value="hardware.identifier">
-                                {{hardware.identifier}} - {{hardware.type}}
-                            </option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
+				<!-- can be used as relay -->
+				<div class="field">
+					<label class="checkbox">
+						<input type="checkbox">
+						Est un relais ?
+					</label>
+				</div>
 
-                <div class="field">
-                    <label class="label">Pieces disponible</label>
-                    <div class="control">
-                        <div class="select">
-                        <select v-model="hardware.room_id">
-                            <option v-for="room in rooms" v-bind:value="room.id">
-                                {{room.name}}
-                            </option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="button is-outlined is-success">Sauvegarder</button>
+                <button v-bind:disabled="!hardware_in_standby" type="submit" class="button is-outlined is-success">Sauvegarder</button>
                 <button v-link="{name: 'setup_hardwares_listing'}" type="button" class="button is-outlined is-danger">Annuler</button>
 
             </form>
@@ -55,7 +43,7 @@
     // lib
     import _find from 'lodash/find';
     // services
-    import { hardwareService, hardwareSetupService, roomService } from 'services';
+    import { hardwareService, hardwareSetupService } from 'services';
 
     export default {
 
@@ -66,14 +54,10 @@
                 // @type {Integer}
                 'hardware_id': false,
 
-                // contain the listing of ready to be registered
-                // hardwares from the serial port conn.
+                // contain the hardware currently in standby
+                // to be registered
                 // @type {Array}
-                'ready_registering_hardwares': false,
-
-                // contain the listing of available rooms
-                // @type {Array}
-                'rooms': false,
+                'hardware_in_standby': false,
 
                 // contain the hardware object
                 // @type {Object}
@@ -84,14 +68,13 @@
 
         created() {
             this.findHardwaresReadyForRegistering();
-            this.findRooms();
         },
 
         route: {
 
             data() {
                 this.hardware_id = this.$route.params[ 'hardware_id' ];
-                if ( this.hardware_id ) return this.getTransmitter();
+                if ( this.hardware_id ) return this.getHardware();
             }
 
         },
@@ -99,27 +82,14 @@
         methods: {
 
             /**
-             * find the listing of ready to be registered hardwares
+             * find the current hardware in standby waiting to be registered
              *
              * @author shad
              */
             findHardwaresReadyForRegistering() {
 
                 hardwareSetupService.find()
-                .then( hardwares => this.ready_registering_hardwares = hardwares )
-                .catch( this.handlingErrors );
-
-            },
-
-            /**
-             * find available rooms listing
-             *
-             * @author shad
-             */
-            findRooms() {
-
-                roomService.find()
-                .then( rooms => this.rooms = rooms )
+                .then( hardwares => this.hardware_in_standby = hardwares && hardwares[ 0 ] )
                 .catch( this.handlingErrors );
 
             },
@@ -131,7 +101,7 @@
              *
              * @author shad
              */
-            getTransmitter() {
+            getHardware() {
 
                 return hardwareService.get( this.hardware_id )
                 .then( hardware => ( { hardware } ) )
@@ -145,10 +115,6 @@
              * @author shad
              */
             save() {
-
-                const hardware_selected = _find( this.ready_registering_hardwares, { identifier: this.hardware.identifier } );
-
-                this.hardware.type = hardware_selected.type;
 
                 hardwareService.create( this.hardware )
                 .then( () => this.$router.go( { name: 'setup_hardwares_listing' } ) )
