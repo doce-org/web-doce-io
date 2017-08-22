@@ -5,8 +5,8 @@
 		<!-- each hardwares -->
 		<div v-for="hardware in hardwares" class="column is-12">
 
-			<!-- hardware (is relay) -->
-			<div v-if="hardware.is_relay" v-on:click="current_hardware_id = hardware.id" class="level">
+			<!-- hardware -->
+			<div class="level">
 				<div class="level-left">
 					<div class="level-item">
 						<div class="icon small">
@@ -16,32 +16,11 @@
 					</div>
 				</div>
 				<div class="level-right">
-					<div class="level-item">
-						<button v-link="{name: 'setup_hardware_create', params: {parentid: hardware.id}}" class="button is-success is-outlined is-small">
-							<span class="icon is-small"><i class="fa fa-plus"></i></span>
-						</button>
-					</div>
+
+
+					
 				</div>
 			</div>
-
-			<!-- hardware (not relay) -->
-			<div v-if="!hardware.is_relay" class="level">
-				<div class="level-left">
-					<div class="level-item">
-						<div class="icon small">
-							<i class="fa fa-level-up"></i>
-						</div>
-						{{hardware.name}}
-					</div>
-				</div>
-			</div>
-
-			<!-- show nested hardwares when selected -->
-			<hardwares-listing-item v-if="current_hardware_id === hardware.id"
-				parent_type="relay"
-				:parent_id="hardware.id"
-				:room_id="room_id">
-			</hardwares-listing-item>
 
 		</div>
 
@@ -62,16 +41,6 @@
 
 		props: [
 
-			// contain the parent type
-			// ex: 'room', 'relay'
-			// @type {String}
-			'parent_type',
-
-			// contain the current parent id
-			// either a room or a relay id
-			// @type {Object}
-			'parent_id',
-
 			// contain the root room id
 			// type {Integer}
 			'room_id'
@@ -88,17 +57,13 @@
 
 				// contain the listing of childs hardwares
 				// @type {Array}
-				'hardwares': false,
-
-				// contain the currently expanded hardware id
-				// @type {Integer}
-				'current_hardware_id': false
+				'hardwares': false
 
 			}
 		},
 
 		created() {
-			this.findChilrensdHardwares();
+			this.findChildrensdHardwares();
 		},
 
 		methods: {
@@ -108,38 +73,16 @@
 			 *
 			 * @author shad
 			 */
-			findChilrensdHardwares() {
+			findChildrensdHardwares() {
 
 				this.is_loading = true;
 
-				let query;
+				let query = { query: {
 
-				// when hardware is a direct child of a room
-				if ( this.parent_type === 'room' ) {
+					// child of room
+					'room_id': this.room_id
 
-					query = { query: {
-
-						// child of current id
-						'room_id': this.parent_id,
-
-						// parent relay id has to be null
-						'parent_relay_id': null
-
-					} };
-
-				}
-
-				// when hardware is direct child of a relay
-				if ( this.parent_type === 'relay' ) {
-
-					query = { query: {
-
-						// parent relay id has to be null
-						'parent_relay_id': this.parent_id
-
-					} };
-
-				}
+				} };
 
 				hardwareService.find( query )
 				.then( hardwares => {

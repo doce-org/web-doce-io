@@ -209,7 +209,7 @@
 
 					// of type 'HUMIDITY'
 					type: {
-                        $in: [ 'HUMIDITY' ]
+                        $in: [ 'TH' ]
                     }
 
 				} };

@@ -1,5 +1,5 @@
 <template>
-  
+
     <div id="dashboard-debug-component" class="tile is-child">
 
         <div class="columns is-vcentered is-marginless has-text-centered">
@@ -26,13 +26,18 @@
                         <div class="field-label is-small">
                             <label class="label">Valeurs</label>
                         </div>
+
                         <div class="field-body">
+
+							<!-- type -->
                             <div class="field">
                                 <div class="control">
                                     <input v-model="command.type" class="input is-small" type="text" placeholder="Type">
                                 </div>
                             </div>
-                            <div class="field">
+
+							<!-- identifier -->
+							<div class="field">
                                 <div class="control">
                                     <input v-model="command.identifier" class="input is-small" type="text" placeholder="Identifiant">
                                 </div>
@@ -40,12 +45,25 @@
                         </div>
                     </div>
 
+					<!-- command -->
                     <div class="field is-horizontal">
                         <div class="field-label"></div>
                         <div class="field-body">
                             <div class="field is-expanded">
                                 <div class="control">
                                     <input v-model="command.value" class="input is-small" type="text" placeholder="Valeur">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<!-- to node -->
+                    <div class="field is-horizontal">
+                        <div class="field-label"></div>
+                        <div class="field-body">
+                            <div class="field is-expanded">
+                                <div class="control">
+                                    <input v-model="command.to_node" class="input is-small" type="text" placeholder="Node ID">
                                 </div>
                             </div>
                         </div>
@@ -64,7 +82,7 @@
                         </div>
                     </div>
 
-                </form> 
+                </form>
 
             </div>
 
@@ -103,7 +121,7 @@
             }
 
         }
-    
+
     }
 
 </script>
@@ -131,4 +149,3 @@
     }
 
 </style>
-

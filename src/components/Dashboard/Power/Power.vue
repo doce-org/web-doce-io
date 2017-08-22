@@ -191,7 +191,7 @@
 
 					// of type 'POWER'
 					type: {
-                        $in: [ 'POWER' ]
+                        $in: [ 'P' ]
                     }
 
 				} };

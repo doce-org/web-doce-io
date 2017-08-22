@@ -33,19 +33,18 @@
 						</div>
 						<div class="level-right">
 							<div class="level-item">
-								<button v-link="{name: 'setup_root_hardware_create', params: {roomid: room.id}}" class="button is-success is-outlined is-small">
+
+								<!-- create new hardware -->
+								<button v-link="{name: 'setup_hardware_create', params: {roomid: room.id}}" class="button is-success is-outlined is-small">
 									<span class="icon is-small"><i class="fa fa-plus"></i></span>
 								</button>
+
 							</div>
 						</div>
 					</div>
 
 					<!-- show nested hardwares when selected -->
-					<hardwares-listing-item v-if="current_room_id === room.id"
-						parent_type="room" 
-						:parent_id="room.id"
-						:room_id="room.id">
-					</hardwares-listing-item>
+					<hardwares-listing-item v-if="current_room_id === room.id" :room_id="room.id"></hardwares-listing-item>
 
 				</div>
 
