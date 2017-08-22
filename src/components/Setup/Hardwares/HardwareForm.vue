@@ -7,11 +7,6 @@
 
             <form v-on:submit.prevent="save">
 
-				<!-- waiting hardware type -->
-				<div class="box">
-					<p>Type de materiel en attente: {{hardware_in_standby && hardware_in_standby.type || 'Indisponible'}}</p>
-				</div>
-
 				<!-- name -->
                 <div class="field">
                     <label class="label">Nom</label>
@@ -20,15 +15,23 @@
                     </div>
                 </div>
 
-				<!-- can be used as relay -->
+				<!-- available setup hardware -->
 				<div class="field">
-					<label class="checkbox">
-						<input type="checkbox">
-						Est un relais ?
-					</label>
+					<label class="label">Materiel</label>
+					<div class="select">
+					  	<select v-model="hardware.identifier">
+
+							<!-- each hardware ready to be registered -->
+					    	<option v-for="hardware_setup in hardwares_setup"
+					    		v-bind:value="hardware_setup.identifier">
+								{{hardware_setup.type}} - {{hardware_setup.identifier}}
+					    	</option>
+
+					  	</select>
+					</div>
 				</div>
 
-                <button v-bind:disabled="!hardware_in_standby" type="submit" class="button is-outlined is-success">Sauvegarder</button>
+                <button v-bind:disabled="hardwares_setup.length === 0" type="submit" class="button is-outlined is-success">Sauvegarder</button>
                 <button v-link="{name: 'setup_hardwares_listing'}" type="button" class="button is-outlined is-danger">Annuler</button>
 
             </form>
@@ -57,7 +60,7 @@
                 // contain the hardware currently in standby
                 // to be registered
                 // @type {Array}
-                'hardware_in_standby': false,
+                'hardwares_setup': false,
 
                 // contain the hardware object
                 // @type {Object}
@@ -73,7 +76,8 @@
         route: {
 
             data() {
-                this.hardware_id = this.$route.params[ 'hardware_id' ];
+                this.hardware_id = this.$route.params[ 'hardwareid' ];
+				this.hardware.room_id = this.$route.params[ 'roomid' ];
                 if ( this.hardware_id ) return this.getHardware();
             }
 
@@ -89,7 +93,7 @@
             findHardwaresReadyForRegistering() {
 
                 hardwareSetupService.find()
-                .then( hardwares => this.hardware_in_standby = hardwares && hardwares[ 0 ] )
+                .then( hardwares => this.hardwares_setup = hardwares )
                 .catch( this.handlingErrors );
 
             },
@@ -116,9 +120,19 @@
              */
             save() {
 
-                hardwareService.create( this.hardware )
-                .then( () => this.$router.go( { name: 'setup_hardwares_listing' } ) )
-                .catch( this.handlingErrors );
+				// obtain all required data
+				const hardware_setup = _find( this.hardwares_setup, { identifier: this.hardware.identifier } );
+
+				if ( hardware_setup ) {
+
+					// set the required hardware type
+					this.hardware.type = hardware_setup.type;
+
+					hardwareService.create( this.hardware )
+					.then( () => this.$router.go( { name: 'setup_hardwares_listing' } ) )
+					.catch( this.handlingErrors );
+
+				}
 
             },
 

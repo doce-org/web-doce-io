@@ -140,7 +140,11 @@
                     // extract humidities from each hardwares
                     const humidities = this.hardwares.map( hardware => +hardware.last_record.humidity );
 
-                    return ( humidities.reduce( ( cur, val ) => cur + val, 0 ) / humidities.length ).toFixed( 2 );
+					if (humidities.length > 0 ) {
+
+						return ( humidities.reduce( ( cur, val ) => cur + val, 0 ) / humidities.length ).toFixed( 2 );
+
+					}
 
                 }
 
@@ -162,8 +166,12 @@
                     // extract humidities from each hardwares
                     const humidities = this.hardwares.map( hardware => +hardware.last_record.humidity );
 
-                    // return lowest humidity
-                    return Math.min.apply( null, humidities );
+					if ( humidities.length > 0 ){
+
+						// return lowest humidity
+						return Math.min.apply( null, humidities );
+
+					}
 
                 }
 
@@ -185,8 +193,12 @@
                     // extract humidities from each hardwares
                     const humidities = this.hardwares.map( hardware => +hardware.last_record.humidity );
 
-                    // return max. humidity
-                    return Math.max.apply( null, humidities );
+					if ( humidities.length > 0 ){
+
+						// return max humidity
+						return Math.max.apply( null, humidities );
+
+					}
 
                 }
 
@@ -285,7 +297,7 @@
 
                     else {
 
-                        this.findLastTemperaturesRecords();
+                        this.findLastHumiditiesRecords();
 
                     }
 

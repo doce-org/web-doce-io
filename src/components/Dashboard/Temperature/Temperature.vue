@@ -142,7 +142,11 @@
                     // extract temperatures from each hardwares
                     const temperatures = this.hardwares.map( hardware => +hardware.last_record.temperature );
 
-                    return ( temperatures.reduce( ( cur, val ) => cur + val, 0 ) / temperatures.length ).toFixed( 2 );
+					if ( temperatures.length > 0 ) {
+
+						return ( temperatures.reduce( ( cur, val ) => cur + val, 0 ) / temperatures.length ).toFixed( 2 );
+
+					}
 
                 }
 
@@ -164,8 +168,12 @@
                     // extract temperatures from each hardwares
                     const temperatures = this.hardwares.map( hardware => +hardware.last_record.temperature );
 
-                    // return lowest temperature
-                    return Math.min.apply( null, temperatures );
+					if ( temperatures.length > 0 ) {
+
+						// return lowest temperature
+						return Math.min.apply( null, temperatures );
+
+					}
 
                 }
 
@@ -187,8 +195,12 @@
                     // extract temperatures from each hardwares
                     const temperatures = this.hardwares.map( hardware => +hardware.last_record.temperature );
 
-                    // return max. temperature
-                    return Math.max.apply( null, temperatures );
+					if ( temperatures.length > 0 ) {
+
+						// return max temperature
+						return Math.max.apply( null, temperatures );
+
+					}
 
                 }
 
@@ -212,7 +224,7 @@
 					// of type 'TEMPERATURE'
                     // OR 'HUMIDITY'
 					type: {
-                        $in: [ 'T', 'H' ]
+                        $in: [ 'T', 'TH' ]
                     }
 
 				} };
